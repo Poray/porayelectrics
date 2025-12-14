@@ -76,12 +76,10 @@ function updateSidePhotos() {
   sidePhotos.forEach((el) => {
     if (el.offsetParent === null) return;
     const rect = el.getBoundingClientRect();
-
-const triggerLine = vh * 0.85; // im większe = wcześniej się pojawi
+    
+const triggerLine = vh * 0.9; // im większe = wcześniej się pojawi
 
 const shouldBeIn = rect.top < triggerLine;
-
-
 
     if (shouldBeIn) {
       if (!el.classList.contains("side-in")) el.classList.add("side-in");
