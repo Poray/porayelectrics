@@ -76,12 +76,13 @@ function updateSidePhotos() {
   sidePhotos.forEach((el) => {
     if (el.offsetParent === null) return;
     const rect = el.getBoundingClientRect();
-    const centerY = rect.top + rect.height / 2;
 
-    const midZone = [vh * 0.1, vh * 0.9];
-    const bottomZone = vh * 0.9;
+const triggerLine = vh * 0.85; // im większe = wcześniej się pojawi
 
-    const shouldBeIn = centerY > midZone[0] && centerY < midZone[1];
+const shouldBeIn = rect.top < triggerLine;
+
+
+
     if (shouldBeIn) {
       if (!el.classList.contains("side-in")) el.classList.add("side-in");
     } else if (centerY > bottomZone) {
@@ -714,4 +715,41 @@ if (form) {
     }
   });
 }
+
+function scrollToAnchorStable(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  const header = document.querySelector(".site-header-inner");
+  const offset = header ? header.offsetHeight + 24 : 110;
+
+  const getY = () =>
+    el.getBoundingClientRect().top + window.pageYOffset - offset;
+
+  // 1) pierwszy scroll (szybki)
+  window.scrollTo({ top: getY(), behavior: "smooth" });
+
+  // 2) korekta po stabilizacji layoutu (KLUCZOWE)
+  setTimeout(() => {
+    window.scrollTo({ top: getY(), behavior: "auto" });
+  }, 120);
+
+  // 3) ostateczna korekta (na wypadek lazy obrazów)
+  setTimeout(() => {
+    window.scrollTo({ top: getY(), behavior: "auto" });
+  }, 260);
+}
+
+document.addEventListener("click", (e) => {
+  const a = e.target.closest('a.nav-cta[href^="#"]');
+  if (!a) return;
+
+  const id = a.getAttribute("href").slice(1);
+  if (!id) return;
+
+  e.preventDefault();
+  scrollToAnchorStable(id);
+});
+
+
 
