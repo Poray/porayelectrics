@@ -26,16 +26,13 @@ body {
 }
 
 :root{
-  /* dopasuj w razie potrzeby (zwykle 96–120px) */
   --anchor-offset: 50px;
 }
 
-/* żeby kliknięcia w #sekcje nie lądowały pod sticky headerem */
 html{
   scroll-padding-top: var(--anchor-offset);
 }
 
-/* dodatkowo “pewne” zachowanie dla konkretnych sekcji */
 #voyager,
 #intruder,
 #musher,
@@ -53,7 +50,7 @@ body {
   color: var(--text);
   line-height: 1.6;
 }
-/* HEADER – Cosmos-style glass bar */
+
 .site-header {
   position: sticky;
   top: 0;
@@ -62,7 +59,7 @@ body {
   background: transparent;
   border-bottom: none;
   backdrop-filter: none;
-  pointer-events: none; /* żeby pill mógł być „oderwany” od tła */
+  pointer-events: none;
 }
 
 .site-header-inner {
@@ -83,13 +80,12 @@ body {
     0 22px 60px rgba(0, 0, 0, 0.9),
     0 0 0 1px rgba(15, 23, 42, 0.9);
   pointer-events: auto;
-  position: relative; /* <–– ważne */
+  position: relative;
 }
 
 .site-header-inner::before {
   content: "";
   position: absolute;
-  /* mniejszy zasięg – glow siedzi przy samym headerze */
   inset: -28% -16%;
   border-radius: 999px;
   background: radial-gradient(
@@ -103,10 +99,6 @@ body {
   pointer-events: none;
   transition: opacity 0.25s ease;
 }
-
-
-
-/* LOGO */
 
 .logo {
   display: inline-flex;
@@ -135,8 +127,6 @@ body {
   color: var(--accent);
 }
 
-/* NAV – desktop */
-
 .main-nav {
   display: flex;
   align-items: center;
@@ -147,10 +137,6 @@ body {
 .nav-item {
   position: relative;
 }
-
-
-
-/* link w headerze */
 
 .nav-link {
   position: relative;
@@ -167,34 +153,25 @@ body {
   text-decoration: none;
 }
 
-/* wyłączamy stare underline / pseudo */
-
 .nav-link::after {
   content: none;
 }
-
-/* Cosmos-style stacked labels – poprawione */
-
-/* Cosmos-style sliding labels – final */
 
 .nav-label {
   position: relative;
   display: inline-block;
   overflow: hidden;
-  height: 1.3em;      /* trochę wyższe okno, zero strzępów */
+  height: 1.3em;
   line-height: 1.3;
 }
 
-/* stos dwóch linii przesuwany w całości */
 .nav-label-inner {
   display: flex;
   flex-direction: column;
-  transform: translateY(0%);  /* start: górna linia w kadrze */
+  transform: translateY(0%);
   transition: transform 0.85s cubic-bezier(0.19, 1, 0.22, 1); 
   will-change: transform;
 }
-
-
 
 .nav-label-line,
 .nav-label-line-alt {
@@ -203,36 +180,23 @@ body {
   color: inherit;
 }
 
-/* dolna linia delikatnie ciemniejsza */
 .nav-label-line-alt {
   opacity: 0.8;
 }
 
-/* powrót jeszcze płynniejszy */
 .nav-link:not(:hover) .nav-label-inner {
   transition-duration: 1.05s;
 }
 
-/* HOVER:
-   stos ma wysokość ~2 linii (200%),
-   przesunięcie o -50% = dolna linia wskakuje idealnie do środka
-*/
 .nav-link:hover .nav-label-inner,
 .nav-link:focus-visible .nav-label-inner {
   transform: translateY(-50%);
 }
 
-/* jednocześnie spokojnie rozjaśniamy kolor linku */
 .nav-link:hover,
 .nav-link:focus-visible {
   color: var(--text);
 }
-
-
-
-
-
-/* mała strzałka przy "Pojazdy" */
 
 .nav-chevron {
   width: 7px;
@@ -249,8 +213,6 @@ body {
   transform: rotate(225deg) translateY(1px);
   opacity: 1;
 }
-
-/* dropdown: Fenix / Musher – cosmos-like floating card */
 
 .nav-dropdown {
   position: absolute;
@@ -272,7 +234,6 @@ body {
 .nav-has-dropdown:focus-within .nav-dropdown {
   display: flex;
 }
-
 
 .nav-dropdown-link {
   position: relative;
@@ -313,14 +274,12 @@ body {
   left: 0;
   right: 0;
   top: 100%;
-  height: 14px;        /* mostek nad dropdownem */
+  height: 14px;
 }
 
 .nav-has-dropdown:hover .nav-dropdown {
   display: flex;
 }
-
-/* Prawa strona headera */
 
 .site-header-actions {
   display: flex;
@@ -357,7 +316,7 @@ body {
     transform 0.15s ease,
     border-color 0.25s ease;
 }
-/* pasek „shine” */
+
 .nav-cta::after {
   content: "";
   position: absolute;
@@ -374,8 +333,8 @@ body {
 }
 
 .nav-cta:hover {
-  background: #f9fafb;            /* biały */
-  color: #020617;                 /* czarny tekst */
+  background: #f9fafb;
+  color: #020617;
   border-color: rgba(191, 219, 254, 0.95);
   box-shadow:
     0 0 40px rgba(248, 250, 252, 1),
@@ -402,9 +361,6 @@ body {
   }
 }
 
-
-/* Mobile nav toggle */
-
 .nav-toggle {
   display: none;
   background: none;
@@ -421,8 +377,6 @@ body {
   margin: 4px 0;
   transition: transform 0.2s, opacity 0.2s;
 }
-
-/* RESPONSYWNOŚĆ HEADERA */
 
 @media (max-width: 960px) {
   .site-header-inner {
@@ -474,7 +428,6 @@ body {
     margin-left: auto;
   }
 
-  /* dropdown w mobilnym menu – niech będzie w linii pod "Pojazdy" */
   .nav-dropdown {
     position: static;
     margin-top: 0.2rem;
@@ -494,9 +447,6 @@ body {
     display: flex;
   }
 }
-
-
-/* Language switch */
 
 .lang-switch {
   display: inline-flex;
@@ -533,12 +483,6 @@ body {
   color: rgba(148, 163, 184, 0.8);
 }
 
-
-
-
-
-/* HERO */
-
 .hero {
   position: relative;
   padding: 5rem 5vw 10rem;
@@ -549,7 +493,6 @@ body {
   min-height: 60vh;
   overflow: hidden;
 }
-
 
 .hero-content {
   max-width: 640px;
@@ -589,12 +532,6 @@ body {
   gap: 1rem;
 }
 
-/* Glowing model pills */
-
-/* === Dynamic glow for model pills === */
-
-/* Glowing model pills – magnet + follow mouse */
-
 .model-pill {
   position: relative;
   display: inline-flex;
@@ -611,17 +548,13 @@ body {
   color: #020617;
   background: linear-gradient(130deg, #38bdf8, #a5b4fc);
   
-
-  /* podstawowy glow */
   box-shadow:
     
     0 0 0 1px rgba(191, 219, 254, 0.6);
 
-  /* NOWE: przycinamy wszystko do pilla */
   overflow: hidden;
   isolation: isolate;
 
-  /* zmienne z JS */
   --mx: 0px;
   --my: 0px;
   --ms: 1;
@@ -638,8 +571,6 @@ body {
     transform 0.15s ease;
 }
 
-
-/* shine – ten sam co w nav-cta */
 .model-pill::after {
   content: "";
   position: absolute;
@@ -655,7 +586,6 @@ body {
   pointer-events: none;
 }
 
-/* HOVER = IDENTYCZNY JAK nav-cta */
 .model-pill:hover {
   background: #f9fafb;
   color: #020617;
@@ -666,31 +596,24 @@ body {
   transform: translateY(-1px);
 }
 
-/* animacja shine */
 .model-pill:hover::after {
   opacity: 1;
   animation: navCtaShine 0.7s ease-out forwards;
 }
-
-/* hotspot światła, który śledzi mysz */
 
 .model-pill::before {
 display: none;
 }
 
-
-
 .model-pill:hover::after {
   opacity: 1;
   animation: navCtaShine 0.7s ease-out forwards;
 }
 
-
 .model-pill-active {
   box-shadow:
     0 0 0 1px rgba(191, 219, 254, 1);
 }
-
 
 .hero-footnote {
   font-size: 0.8rem;
@@ -721,8 +644,6 @@ display: none;
   background: rgba(15, 23, 42, 1);
   border-color: var(--accent);
 }
-
-/* Buttons */
 
 .btn {
   display: inline-flex;
@@ -761,12 +682,9 @@ display: none;
   background: rgba(15, 23, 42, 0.85);
 }
 
-/* Header CTA "Porozmawiajmy" – wymuś biały tekst tylko tutaj */
 .btn-ghost.nav-cta:hover {
   color: #f9fafb !important;
 }
-
-/* HERO VISUAL */
 
 .hero-visual {
   display: flex;
@@ -841,19 +759,15 @@ display: none;
   box-shadow: 0 0 10px #4ade80;
 }
 
-/* SECTIONS */
-
 .section {
   padding: 0.2rem 6vw 7rem;
   content-visibility: auto;
   contain-intrinsic-size: 900px;
 }
 
-/* ujednolicony kontener wewnątrz sekcji (żeby layout nie "kleił" do krawędzi) */
 .section-inner {
   max-width:1120px;
   margin: 0 auto;
-  /* dodatkowy bezpieczny margines – szczególnie dla dwukolumnowych układów */
   padding-inline: clamp(0px, 2vw, 28px);
 }
 
@@ -878,8 +792,6 @@ display: none;
   font-size: 0.95rem;
 }
 
-/* CARDS */
-
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -895,12 +807,10 @@ display: none;
     ),
     radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.96), #020617);
   border: 1px solid var(--border-subtle);
-  padding: 1.1rem 1.1rem 1.0rem;       /* było: 1.5 / 1.5 / 1.3 */
+  padding: 1.1rem 1.1rem 1.0rem;
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.78);
 }
 
-
-/* karty pojazdów – pod glow na krawędzi */
 .product-card {
   position: relative;
   z-index: 0;
@@ -908,16 +818,13 @@ display: none;
   
 }
 
-/* highlight jak świecąca ramka ekranu telefonu */
 .product-card.product-card-highlighted {
-  border-color: rgba(56, 189, 248, 0.95); /* jasny niebieski border */
+  border-color: rgba(56, 189, 248, 0.95);
   box-shadow:
-    0 0 0 1px rgba(56, 189, 248, 0.95),   /* cienka linia na krawędzi */
-    0 0 22px rgba(56, 189, 248, 0.8),     /* miękki glow na zewnątrz */
-    0 22px 60px rgba(15, 23, 42, 0.9);    /* oryginalny cień karty w tle */
+    0 0 0 1px rgba(56, 189, 248, 0.95),
+    0 0 22px rgba(56, 189, 248, 0.8),
+    0 22px 60px rgba(15, 23, 42, 0.9);
 }
-
-
 
 .product-card p {
   color: var(--text-soft);
@@ -948,10 +855,9 @@ display: none;
    
 }
 
-/* zdjęcie zawsze proporcjonalne, z zaokrąglonymi rogami */
 .product-thumb img {
   display: block;
-  width: 100%;           /* DOMYŚLNIE 100% */
+  width: 100%;
   height: auto;
 
   object-fit: contain;
@@ -959,7 +865,6 @@ display: none;
   border-radius: inherit;
   box-shadow: none;
 }
-
 
 .card-cta {
   display: inline-flex;
@@ -988,15 +893,12 @@ display: none;
   border: 1px solid rgba(148, 163, 184, 0.4);
 }
 
-/* TECHNOLOGIA */
-
 .tech-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
   gap: 2.8rem;
   align-items: flex-start;
 
-  /* "okno" dla całej sekcji technologii – bardziej estetycznie i z oddechem */
   max-width: 1120px;
   margin: 0 auto;
   padding: 2rem 2.2rem;
@@ -1048,7 +950,6 @@ display: none;
   gap: 1rem;
 }
 
-/* TECHNOLOGIA – responsywnie */
 @media (max-width: 960px) {
   .tech-layout {
     grid-template-columns: minmax(0, 1fr);
@@ -1073,8 +974,6 @@ display: none;
   color: var(--text-soft);
 }
 
-/* PILLS / BADGES */
-
 .pill {
   display: inline-flex;
   align-items: center;
@@ -1087,8 +986,6 @@ display: none;
   color: var(--text-soft);
   margin-bottom: 0.9rem;
 }
-
-/* ABOUT */
 
 .about-grid {
   display: grid;
@@ -1124,8 +1021,6 @@ display: none;
   color: var(--text-soft);
   margin: 0;
 }
-
-/* KONTAKT */
 
 .contact-layout {
   display: grid;
@@ -1204,15 +1099,12 @@ display: none;
   color: var(--text-soft);
 }
 
-/* VOYAGER – unoszące się iskry w tle */
-
 .product-section#voyager {
   position: relative;
   overflow: hidden;  
       
 }
 
-/* żeby treść była nad iskrami */
 .product-section#voyager > * {
   position: relative;
   z-index: 1;
@@ -1225,8 +1117,6 @@ display: none;
   z-index: 0;
 }
 
-/* pojedyncza iskra */
-/* pojedyncza iskra – większe zróżnicowanie */
 .voyager-spark {
   position: absolute;
   bottom: -20px;
@@ -1235,7 +1125,6 @@ display: none;
   height: 2px;
   border-radius: 50%;
 
-  /* delikatne światło – neutralne bazowe */
   background: rgba(255, 255, 255, 0.55);
   box-shadow:
     0 0 4px rgba(255, 255, 255, 0.35),
@@ -1271,20 +1160,12 @@ display: none;
   }
 }
 
-
-
-
-
-
-
-
 .spec-grid {
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
 }
 
-/* główna karta */
 .spec-card {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
@@ -1371,7 +1252,6 @@ display: none;
     padding: 1.3rem 1.1rem;
   }
 }
-/* FOOTER */
 
 .site-footer {
   padding: 1.5rem 5vw 2rem;
@@ -1384,8 +1264,6 @@ display: none;
 .footer-meta {
   margin-top: 0.2rem;
 }
-
-/* RESPONSYWNOŚĆ */
 
 @media (max-width: 960px) {
   .hero {
@@ -1441,7 +1319,6 @@ display: none;
     display: block;
   }
 }
-/* MUSHER – dwie kolumny, nieregularnie w pionie */
 
 .musher-stack {
   max-width: 980px;
@@ -1459,7 +1336,6 @@ display: none;
   background: #020617;
   box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
 
-  /* mniejsze kafle, 2 na rząd */
   flex: 0 1 calc(50% - 0.8rem);
   max-width: 520px;
 }
@@ -1470,8 +1346,6 @@ display: none;
   object-fit: cover;
   border-radius: inherit;
 }
-
-/* FENIX – dwie kolumny, nieregularnie w pionie */
 
 .fenix-stack {
   max-width: 980px;
@@ -1489,22 +1363,18 @@ display: none;
   background: #020617;
   box-shadow: 0 14px 36px rgba(15, 23, 42, 0.88);
 
-  /* mniejsze kafle, 2 na rząd */
   flex: 0 1 calc(50% - 0.8rem);
   max-width: 520px;
 }
 
-/* Dodatkowe zdjęcia dla Voyager / Intruder – domyślnie ukryte */
 .fenix-photo.fenix-extra {
   display: none;
 }
 
-/* Po rozwinięciu sekcji pokaż wszystkie zdjęcia */
 .product-section.show-all .fenix-photo.fenix-extra {
   display: block;
 }
 
-/* --- Musher: dodatkowe zdjęcia jako "zobacz więcej" --- */
 .musher-photo.musher-extra {
   display: none;
 }
@@ -1513,7 +1383,6 @@ display: none;
   display: block;
 }
 
-/* Przycisk "Pokaż więcej" – nowoczesny (tekst + strzałka) */
 .show-more-photos,
 .show-more-btn{
   appearance: none;
@@ -1565,9 +1434,6 @@ display: none;
   border-radius: 10px;
 }
 
-
-
-/* nieregularne przesunięcia w pionie */
 .fenix-photo:nth-of-type(1) { margin-top: 0; }
 .fenix-photo:nth-of-type(2) { margin-top: 2rem; }
 .fenix-photo:nth-of-type(3) { margin-top: -1rem; }
@@ -1586,8 +1452,6 @@ display: none;
   border-radius: inherit;
 }
 
-/* Mobile – jeden słupek */
-
 @media (max-width: 900px) {
   .musher-stack,
   .fenix-stack {
@@ -1605,8 +1469,6 @@ display: none;
   }
 }
 
-/* --- Slide-in z boków dla zdjęć Musher i Fenix --- */
-
 .musher-photo,
 .fenix-photo {
   opacity: 0;
@@ -1614,7 +1476,6 @@ display: none;
   transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.2s ease;
 }
 
-/* stan startowy – poza ekranem, lewa/prawa strona */
 .musher-photo.photo-from-left,
 .fenix-photo.photo-from-left {
   transform: translateX(-60vw);
@@ -1625,20 +1486,16 @@ display: none;
   transform: translateX(60vw);
 }
 
-/* po wejściu w "widok" – animacja do środka */
 .musher-photo.side-in,
 .fenix-photo.side-in {
   opacity: 1;
   transform: translateX(0);
 }
 
-/* hover – delikatny cień */
 .musher-photo:hover,
 .fenix-photo:hover {
   box-shadow: 0 26px 70px rgba(15, 23, 42, 1);
 }
-
-/* Lightbox – podgląd po kliknięciu */
 
 body.lightbox-open {
   overflow: hidden;
@@ -1684,8 +1541,6 @@ body.lightbox-open {
   object-fit: contain;
 }
 
-/* Cursor dot – desktop only */
-
 .cursor-dot {
   position: fixed;
   top: 0;
@@ -1710,18 +1565,15 @@ body.lightbox-open {
   }
 }
 
-
-/* Voyger airflow w kafelku */
 .product-card--voyager {
   
     --mx: 0;
   --my: 0;
   position: relative;
-  overflow: hidden;      /* klucz: przycina animację do karty */
+  overflow: hidden;
   isolation: isolate;
 }
 
-/* warstwa tła z iskrami */
 .product-card--voyager .card-sparks {
   position: absolute;
   inset: 0;
@@ -1729,12 +1581,10 @@ body.lightbox-open {
   pointer-events: none;
 }
 
-/* treść karty nad iskrami */
 .product-card--voyager > :not(.card-sparks) {
   position: relative;
   z-index: 1;
 }
-
 
 #intruder{
   position: relative;
@@ -1742,7 +1592,6 @@ body.lightbox-open {
   --mx: 0;
   --my: 0;
 }
-
 
 #intruder .intruder-sparks{
   position:absolute;
@@ -1756,18 +1605,15 @@ body.lightbox-open {
   z-index:1;
 }
 
-/* Intruder: agresywne zgliszcza */
 .product-card--intruder{
   position: relative;
   overflow: hidden;
   isolation: isolate;
 
-  /* żeby transformy nie robiły się invalid */
   --mx: 0;
   --my: 0;
 }
 
-/* iskry NA treści/zdjęciu */
 .product-card--intruder .card-sparks{
   position: absolute;
   inset: 0;
@@ -1779,12 +1625,11 @@ body.lightbox-open {
   position: relative;
   z-index: 1;
 }
-/* Intruder: lekkie komety (wydajne) – FIX: prawdziwy przelot po całej sekcji */
+
 .intruder-spark{
   position: absolute;
   bottom: -40px;
 
-  /* pozycja i parametry lecą z JS */
   left: var(--x, 50%);
   --dx: -120px;
   --dy: -120vh;
@@ -1797,7 +1642,6 @@ body.lightbox-open {
   height: calc(3px * var(--scale));
   border-radius: 999px;
 
-  /* główka */
   background: radial-gradient(circle,
     rgba(255, 230, 200, 0.95) 0%,
     rgba(255, 70, 70, 0.85) 35%,
@@ -1833,12 +1677,9 @@ body.lightbox-open {
   }
 }
 
-/* opcjonalnie: szanuj ustawienia systemu */
 @media (prefers-reduced-motion: reduce){
   .intruder-spark{ animation: none !important; opacity: 0 !important; }
 }
-
-
 
 @media (min-width: 1500px) and (max-width: 2200px) {
 
@@ -1848,36 +1689,29 @@ body.lightbox-open {
 
 }
 
-/* VOYAGER – airflow (myszka -> wpływ na trajektorie) */
 #voyager{
   --mx: 0;
   --my: 0;
 }
 
-
-
-/* stałe tło na CAŁĄ stronę (nie zależy od szerokości sekcji) */
 body::before{
   content:"";
   position: fixed;
-  inset: -4px;               /* bleed – nigdy nie pokaże krawędzi */
+  inset: -4px;
   background: radial-gradient(circle at top, #020617 0, #020617 40%, #000 100%);
   z-index: -1;
   pointer-events: none;
 }
 
-/* sekcje nie mogą już nadpisywać tła "w środku" */
 .hero,
 .section-alt{
   background: transparent !important;
 }
 
-/* wyłącz pseudo-tło z section-alt (to robiło optyczne "ramki") */
 .section-alt::before{
   content: none !important;
 }
 
-/* NIE TNJ animacji na krawędziach sekcji (to robi "niewidzialny margines") */
 .product-section,
 .section,
 .hero,
@@ -1885,7 +1719,6 @@ body::before{
   overflow-x: visible !important;
 }
 
-/* poziomy overflow nadal blokujemy globalnie (żeby nie wrócił scrollbar) */
 html,
 body {
   overflow-x: clip;
@@ -1897,19 +1730,14 @@ body {
   }
 }
 
-/* === KILL HORIZONTAL SCROLLBARS (element-level) === */
-
-/* Chrome / Edge / Safari */
 *::-webkit-scrollbar:horizontal {
   height: 0 !important;
 }
 
-/* Firefox */
 * {
   scrollbar-width: none;
 }
 
-/* pewne kontenery ze zdjęciami – NIE mogą scrollować */
 .gallery,
 .image-stack,
 .stack,

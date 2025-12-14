@@ -1,11 +1,8 @@
-// Rok w stopce
 const yearSpan = document.getElementById("year");
 if (yearSpan) {
   yearSpan.textContent = new Date().getFullYear();
 }
 
-
-// === PERF HELPERS (no visual change) ===
 const rafThrottle = (fn) => {
   let scheduled = false;
   let lastArgs = null;
@@ -24,7 +21,6 @@ const rafThrottle = (fn) => {
 
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
-// Animacja pojawiania się elementów przy scrollu (dla ogólnych sekcji .reveal)
 const revealEls = document.querySelectorAll(".reveal");
 
 if ("IntersectionObserver" in window && revealEls.length) {
@@ -45,12 +41,8 @@ if ("IntersectionObserver" in window && revealEls.length) {
   revealEls.forEach((el) => el.classList.add("visible"));
 }
 
-// ---- Zdjęcia sekcji produktów: wyjeżdżanie z boków (pary po dwa) ----
-
-// Zdjęcia w sekcjach produktów (Musher / Intruder / Voyager)
 let sidePhotos = [];
 
-// Ustaw kierunek dla zdjęć *w obrębie każdej sekcji* (na zmianę lewa/prawa)
 function assignSideDirections() {
   sidePhotos = Array.from(
     document.querySelectorAll(".musher-photo, .fenix-photo")
@@ -89,13 +81,12 @@ function updateSidePhotos() {
     const midZone = [vh * 0.1, vh * 0.9];
     const bottomZone = vh * 0.9;
 
-const shouldBeIn = centerY > midZone[0] && centerY < midZone[1];
-if (shouldBeIn) {
-  if (!el.classList.contains("side-in")) el.classList.add("side-in");
-} else if (centerY > bottomZone) {
-  if (el.classList.contains("side-in")) el.classList.remove("side-in");
-}
-
+    const shouldBeIn = centerY > midZone[0] && centerY < midZone[1];
+    if (shouldBeIn) {
+      if (!el.classList.contains("side-in")) el.classList.add("side-in");
+    } else if (centerY > bottomZone) {
+      if (el.classList.contains("side-in")) el.classList.remove("side-in");
+    }
   });
 }
 
@@ -105,8 +96,6 @@ window.addEventListener("scroll", updateSidePhotosRaf, { passive: true });
 window.addEventListener("resize", updateSidePhotosRaf, { passive: true });
 updateSidePhotosRaf();
 
-
-// ---- "Pokaż więcej" – pokazuje resztę zdjęć w sekcji (domyślnie 2) ----
 function bindShowMoreButtons() {
   document
     .querySelectorAll(".show-more-photos, .show-more-btn")
@@ -133,7 +122,6 @@ function bindShowMoreButtons() {
 }
 bindShowMoreButtons();
 
-// ---- Lightbox / powiększanie zdjęcia po kliknięciu ----
 let lightboxOverlay = null;
 let lightboxImage = null;
 
@@ -187,7 +175,6 @@ function bindLightboxToPhotos() {
 }
 bindLightboxToPhotos();
 
-// Mobile nav
 const navToggle = document.querySelector(".nav-toggle");
 const mainNav = document.querySelector(".main-nav");
 
@@ -197,7 +184,6 @@ if (navToggle && mainNav) {
   });
 }
 
-// ---- Cursor dot (desktop only) ----
 if (window.matchMedia("(pointer: fine)").matches) {
   const dot = document.createElement("div");
   dot.className = "cursor-dot";
@@ -234,7 +220,6 @@ if (window.matchMedia("(pointer: fine)").matches) {
     const mx = mouseX;
     const my = mouseY;
 
-    // --- Pills ---
     const maxDistP = 260;
     const maxDistP2 = maxDistP * maxDistP;
 
@@ -247,7 +232,7 @@ if (window.matchMedia("(pointer: fine)").matches) {
       const dy = my - cy;
       const d2 = dx * dx + dy * dy;
 
-      const raw = d2 >= maxDistP2 ? 0 : 1 - d2 / maxDistP2; // ~ to samo co 1 - dist/maxDist
+      const raw = d2 >= maxDistP2 ? 0 : 1 - d2 / maxDistP2;
       const intensity = raw * 0.6;
 
       const maxTranslate = 2;
@@ -265,7 +250,6 @@ if (window.matchMedia("(pointer: fine)").matches) {
       pill.style.setProperty("--gy", `${localY}px`);
     });
 
-    // --- Nav links ---
     const maxDistN = 220;
     const maxDistN2 = maxDistN * maxDistN;
 
@@ -288,7 +272,6 @@ if (window.matchMedia("(pointer: fine)").matches) {
       link.style.setProperty("--hint", intensity.toFixed(3));
     });
 
-    // --- Header halo ---
     if (headerInner) {
       const rect = headerInner.getBoundingClientRect();
       const localX = mx - rect.left;
@@ -328,7 +311,6 @@ if (window.matchMedia("(pointer: fine)").matches) {
   );
 }
 
-// ---- Hero pills -> highlight odpowiedniej karty w sekcji #pojazdy ----
 const modelPills = document.querySelectorAll(".model-pill");
 const vehicleCards = document.querySelectorAll("#pojazdy .product-card");
 
@@ -354,7 +336,6 @@ modelPills.forEach((pill) => {
   });
 });
 
-// ---- Airflow dla sekcji Voyager (wpływ myszki na trajektorie cząstek) ----
 if (window.matchMedia("(pointer: fine)").matches) {
   const voyager = document.getElementById("voyager");
   if (voyager) {
@@ -389,7 +370,6 @@ if (window.matchMedia("(pointer: fine)").matches) {
   }
 }
 
-// ---- Sparks init ----
 function ensureSparks(containerSelector, sparkClass, count) {
   const host = document.querySelector(containerSelector);
   if (!host) return null;
@@ -413,15 +393,13 @@ function initIntruderSectionSparks() {
   host.querySelectorAll(".intruder-spark").forEach((s, i) => {
     const x = Math.random() * 100;
 
-    const dur = 10 + Math.random() * 10; // 10–20s
-    // rozłóż w czasie, żeby nie leciały wszystkie naraz
+    const dur = 10 + Math.random() * 10;
     const delay = -(Math.random() * dur);
 
-    // kierunek: lekko w lewo/prawo, ale zawsze wyraźny
     let dx = Math.random() * 260 - 130;
     if (Math.abs(dx) < 60) dx = dx < 0 ? -80 : 80;
 
-    const dy = -(120 + Math.random() * 60); // -120vh ... -180vh
+    const dy = -(120 + Math.random() * 60);
     const rot = -12 - Math.random() * 22;
     const scale = 0.75 + Math.random() * 1.35;
 
@@ -436,14 +414,13 @@ function initIntruderSectionSparks() {
 }
 
 function initVoyagerSectionSparks() {
-  // więcej cząstek = bardziej "airflow" jak w karcie
   const host = ensureSparks("#voyager .voyager-sparks", "voyager-spark", 70);
   if (!host) return;
 
   host.querySelectorAll(".voyager-spark").forEach((s) => {
     const left = Math.random() * 100;
-    const dur = 7 + Math.random() * 8;      // jak w karcie
-    const delay = Math.random() * 8;        // jak w karcie
+    const dur = 7 + Math.random() * 8;
+    const delay = Math.random() * 8;
     const drift = (Math.random() * 80 - 40).toFixed(1) + "px";
     const scale = (0.9 + Math.random() * 1.2).toFixed(2);
 
@@ -453,11 +430,9 @@ function initVoyagerSectionSparks() {
     s.style.setProperty("--drift-x", drift);
     s.style.setProperty("--scale", scale);
 
-    // identyczny "parallax/airflow" jak w kaflu
     s.style.setProperty("--p", (0.7 + Math.random() * 0.8).toFixed(2));
   });
 }
-
 
 function initVoyagerCardSparks() {
   document
@@ -489,7 +464,7 @@ function initIntruderCardSparks() {
   sparks.forEach((s, i) => {
     const x = Math.random() * 100;
 
-    const dur = 9 + Math.random() * 10; // 9–19s
+    const dur = 9 + Math.random() * 10;
     const base = (dur / n) * i;
     const jitter = Math.random() * (dur / n);
     const delay = -(base + jitter);
@@ -497,7 +472,7 @@ function initIntruderCardSparks() {
     let dx = Math.random() * 240 - 120;
     if (Math.abs(dx) < 55) dx = dx < 0 ? -75 : 75;
 
-    const dy = -(110 + Math.random() * 70); // -110vh ... -180vh
+    const dy = -(110 + Math.random() * 70);
     const rot = -10 - Math.random() * 24;
     const scale = 0.7 + Math.random() * 1.1;
 
@@ -516,9 +491,6 @@ initVoyagerCardSparks();
 initIntruderSectionSparks();
 initIntruderCardSparks();
 
-// =======================
-// i18n (PL/EN) – JEDEN system (JSON) + pełna obsługa atrybutów
-// =======================
 const I18N = {
   current: "pl",
   dict: {},
@@ -539,7 +511,6 @@ function getByPath(obj, path) {
   }, obj);
 }
 
-// Spróbuj kilku możliwych ścieżek (u Ciebie en.json jest często w root)
 const LANG_SOURCES = {
   en: [
     "js/i18n/en.json",
@@ -564,7 +535,6 @@ async function loadLanguage(lang) {
   const target = (lang || "pl").toLowerCase() === "en" ? "en" : "pl";
   I18N.current = target;
 
-  // UI zawsze aktualizujemy od razu (żeby klik był widoczny)
   setLangUI(target);
   document.documentElement.lang = target;
   localStorage.setItem("lang", target);
@@ -585,7 +555,6 @@ async function loadLanguage(lang) {
   if (!res || !res.ok) {
     console.warn("i18n: cannot load js/i18n/en.json", res && res.status);
 
-    // fallback do PL (żeby nie zostać w stanie „EN aktywne, ale bez tłumaczeń”)
     setLangUI("pl");
     document.documentElement.lang = "pl";
     localStorage.setItem("lang", "pl");
@@ -598,23 +567,19 @@ async function loadLanguage(lang) {
   applyTranslations(I18N.dict);
 }
 
-
 function applyTranslations(dict) {
-  // 1) data-i18n (tekst lub atrybut)
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     const key = el.getAttribute("data-i18n");
     if (!key) return;
 
-    const attr = el.getAttribute("data-i18n-attr"); // np. "content"
+    const attr = el.getAttribute("data-i18n-attr");
     const isAttr = !!attr;
 
-    // zapisz bazę PL raz
     if (!el.hasAttribute("data-i18n-base")) {
       const base = isAttr ? el.getAttribute(attr) : el.textContent;
       el.setAttribute("data-i18n-base", (base ?? "").toString());
     }
 
-    // PL: przywróć bazę
     if (!dict) {
       const base = el.getAttribute("data-i18n-base") ?? "";
       if (isAttr) el.setAttribute(attr, base);
@@ -622,7 +587,6 @@ function applyTranslations(dict) {
       return;
     }
 
-    // EN: podstaw z JSON
     const value = getByPath(dict, key);
     if (value == null) return;
 
@@ -630,7 +594,6 @@ function applyTranslations(dict) {
     else el.textContent = value;
   });
 
-  // 2) placeholdery
   document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
     const key = el.getAttribute("data-i18n-placeholder");
     if (!key) return;
@@ -656,7 +619,6 @@ function applyTranslations(dict) {
     el.setAttribute("placeholder", value);
   });
 
-  // 3) Przycisk "Pokaż więcej"
   document.querySelectorAll(".show-more-photos, .show-more-btn").forEach((btn) => {
     if (!btn.hasAttribute("data-i18n-base")) {
       btn.setAttribute("data-i18n-base", btn.textContent.trim());
@@ -666,7 +628,6 @@ function applyTranslations(dict) {
       : btn.getAttribute("data-i18n-base");
   });
 
-  // 4) Linki "Zobacz X ↓"
   document.querySelectorAll(".card-cta").forEach((a) => {
     const current = a.textContent.trim();
     if (!a.hasAttribute("data-i18n-base")) a.setAttribute("data-i18n-base", current);
@@ -683,7 +644,6 @@ function applyTranslations(dict) {
     }
   });
 
-  // 5) Nav: zsynchronizuj drugą linię z pierwszą
   document.querySelectorAll(".nav-label-inner").forEach((wrap) => {
     const main = wrap.querySelector(".nav-label-line");
     const alt = wrap.querySelector(".nav-label-line-alt");
@@ -713,4 +673,3 @@ function initLangSwitch() {
 }
 
 document.addEventListener("DOMContentLoaded", initLangSwitch);
-
