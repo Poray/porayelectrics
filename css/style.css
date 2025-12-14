@@ -1051,6 +1051,7 @@ display: none;
   color: var(--text);
   font-size: 0.9rem;
   outline: none;
+   resize: none;
 }
 
 .contact-form input:focus,
@@ -1180,12 +1181,13 @@ display: none;
 
 .spec-info {
   color: #f9fafb;
+  font-size: clamp(0.92rem, 0.55vw + 0.72rem, 1.18rem);
 }
 
 .spec-label {
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  font-size: 0.72rem;
+ font-size: 0.78em; 
   color: #9ca3af;
   margin-bottom: 0.4rem;
 }
@@ -1227,14 +1229,15 @@ display: none;
 .spec-image {
   border-radius: 1.6rem;
   overflow: hidden;
-  background: #020617;
+  padding: 1.2rem;        /* kontrolujesz margines wizualny */
+ 
 }
 
 .spec-image img {
-  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 1.9rem;  /* opcjonalnie, inner radius */
 }
 .reveal {
   opacity: 0;
@@ -1385,6 +1388,7 @@ display: none;
 
 .show-more-photos,
 .show-more-btn{
+  align-self: flex-end;
   appearance: none;
   -webkit-appearance: none;
   border: 0;
@@ -1396,9 +1400,9 @@ display: none;
   align-items: center;
   gap: .55rem;
 
-  margin: 1.4rem auto 0;
+  margin: 1.4rem 0 0 auto;
   padding: .25rem 0;
-
+  float: right;
   cursor: pointer;
   text-decoration: none;
   border-bottom: 1px solid rgba(148, 163, 184, 0.55);
@@ -1466,6 +1470,8 @@ display: none;
     flex: 1 1 auto;
     width: 100%;
     max-width: min(100%, 520px);
+    will-change: transform, opacity;
+    contain: paint;
   }
 }
 
@@ -1479,17 +1485,20 @@ display: none;
 .musher-photo.photo-from-left,
 .fenix-photo.photo-from-left {
   transform: translateX(-60vw);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.7);
 }
 
 .musher-photo.photo-from-right,
 .fenix-photo.photo-from-right {
   transform: translateX(60vw);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.7);
 }
 
 .musher-photo.side-in,
 .fenix-photo.side-in {
   opacity: 1;
   transform: translateX(0);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
 }
 
 .musher-photo:hover,
@@ -1721,7 +1730,7 @@ body::before{
 
 html,
 body {
-  overflow-x: clip;
+  overflow-x: visible;
 }
 @supports not (overflow: clip) {
   html,
@@ -1746,4 +1755,81 @@ body {
 .product-images,
 .voyager-images {
   overflow-x: hidden !important;
+}
+
+/* >= 2200px (często 4K w oknie / ultrawide) */
+@media (min-width: 2200px) {
+  .spec-card{
+    padding: 1.9rem 2.2rem;
+    gap: 1.8rem;
+    border-radius: 1.9rem;
+  }
+
+  .spec-info{
+    font-size: 1.32rem; /* baza dla całej typografii w specach */
+  }
+
+  .spec-label{
+    font-size: 0.78em;
+    letter-spacing: 0.22em;
+    margin-bottom: 0.55em;
+  }
+
+  .spec-list{
+    gap: 0.7em;
+  }
+
+  .spec-list dt{
+    min-width: 170px;
+    font-size: 0.82em;
+    letter-spacing: 0.11em;
+  }
+
+  .spec-list dd{
+    font-size: 1.08em; /* wartości ciut większe od etykiet */
+  }
+
+  .spec-image{
+    border-radius: 1.9rem;
+  }
+}
+
+/* >= 2800px (pełne 4K / duże monitory) */
+@media (min-width: 2800px) {
+  .spec-card{
+    padding: 2.15rem 2.55rem;
+    gap: 2.1rem;
+  }
+
+  .spec-info{
+    font-size: 1.6rem;
+  }
+
+  .spec-list dt{
+    min-width: 200px;
+  }
+
+  .spec-list dd{
+    font-size: 1.5em;
+  }
+}
+
+/* >= 3400px (5K / bardzo duże ekrany / 4K z dużym viewportem) */
+@media (min-width: 3400px) {
+  .spec-card{
+    padding: 2.4rem 2.9rem;
+    gap: 2.4rem;
+  }
+
+  .spec-info{
+    font-size: 1.62rem;
+  }
+
+  .spec-list dt{
+    min-width: 230px;
+  }
+
+  .spec-list dd{
+    font-size: 1.14em;
+  }
 }
