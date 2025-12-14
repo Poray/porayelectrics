@@ -75,19 +75,27 @@ function updateSidePhotos() {
 
   sidePhotos.forEach((el) => {
     if (el.offsetParent === null) return;
-    const rect = el.getBoundingClientRect();
-    
-const triggerLine = vh * 0.9; // im większe = wcześniej się pojawi
 
-const shouldBeIn = rect.top < triggerLine;
+    const rect = el.getBoundingClientRect();
+    const centerY = rect.top + rect.height / 2;
+
+    // wejście wcześniej: strefa "mid" sięga poniżej ekranu
+    const midTop = vh * 0.10;
+    const midBottom = vh * 1.12;  // było 0.90 -> teraz wcześniej łapie (reguluj 1.05–1.20)
+
+    // usuwanie jak wcześniej: dopiero gdy element jest pod ekranem
+    const bottomZone = vh * 1.22; // było 0.90 -> przesuń też w dół, żeby nie migało
+
+    const shouldBeIn = centerY > midTop && centerY < midBottom;
 
     if (shouldBeIn) {
-      if (!el.classList.contains("side-in")) el.classList.add("side-in");
+      el.classList.add("side-in");
     } else if (centerY > bottomZone) {
-      if (el.classList.contains("side-in")) el.classList.remove("side-in");
+      el.classList.remove("side-in");
     }
   });
 }
+
 
 const updateSidePhotosRaf = rafThrottle(updateSidePhotos);
 
