@@ -197,30 +197,6 @@ if (navToggle && mainNav) {
   });
 }
 
-// Mobile nav: close after clicking any link
-if (navToggle && mainNav) {
-  mainNav.addEventListener("click", (e) => {
-    const link = e.target.closest("a");
-    if (!link) return;
-    mainNav.classList.remove("open");
-  });
-}
-
-// Mobile dropdown: tap to open submenu (instead of hover)
-const vehiclesItem = document.querySelector(".nav-has-dropdown");
-if (vehiclesItem) {
-  const vehiclesLink = vehiclesItem.querySelector(".nav-link");
-  if (vehiclesLink) {
-    vehiclesLink.addEventListener("click", (e) => {
-      if (!window.matchMedia("(max-width: 720px)").matches) return;
-
-      const isOpen = vehiclesItem.classList.toggle("dropdown-open");
-      if (isOpen) e.preventDefault();
-    });
-  }
-}
-
-
 // ---- Cursor dot (desktop only) ----
 if (window.matchMedia("(pointer: fine)").matches) {
   const dot = document.createElement("div");
