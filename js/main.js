@@ -673,3 +673,39 @@ function initLangSwitch() {
 }
 
 document.addEventListener("DOMContentLoaded", initLangSwitch);
+
+
+// === CONTACT FORM (Formspree) ===
+const form = document.getElementById("contact-form");
+const status = document.getElementById("form-status");
+
+if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault(); 
+
+    status.textContent = "Wysyłanie…";
+
+    const data = new FormData(form);
+
+    try {
+      const res = await fetch(form.action, {
+        method: form.method,
+        body: data,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (res.ok) {
+        status.textContent = "Wiadomość została wysłana. Odezwiemy się wkrótce.";
+        form.reset();
+      } else {
+        const result = await res.json();
+        status.textContent =
+          result?.error || "Coś poszło nie tak. Spróbuj ponownie.";
+      }
+    } catch (err) {
+      status.textContent = " Błąd sieci. Sprawdź połączenie.";
+    }
+  });
+}
