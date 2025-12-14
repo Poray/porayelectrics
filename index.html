@@ -590,7 +590,13 @@
   </div>
 
       <div class="contact-layout">
-        <form class="card contact-form">
+        <form
+        <input type="hidden" name="_subject" value="Nowe zapytanie – Poray Electrics">
+        <input type="hidden" name="_template" value="table">
+        class="card contact-form"
+        action="https://formspree.io/f/xvgeyvkb"
+        method="POST"
+>
           <label>
             <span data-i18n="contact.name">Imię</span>
             <input type="text" name="name" placeholder="Imię i nazwisko" data-i18n-placeholder="contact.name" required />
