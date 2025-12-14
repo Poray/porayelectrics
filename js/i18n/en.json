@@ -1,0 +1,148 @@
+{
+    "meta": {
+    "title": "Poray Electrics – Electric vehicles",
+    "description": "Poray Electrics designs and builds modern electric vehicles – scooters, cross bikes and cargo vehicles for businesses."
+  },
+  "nav": {
+    "vehicles": "Vehicles",
+    "technology": "Technology",
+    "about": "About us",
+    "contact": "Contact"
+  },
+  "header": {
+    "cta": "Let’s talk"
+  },
+  "hero": {
+    "eyebrow": "Electric vehicles by Poray Electrics",
+    "title": "Choose your electric vehicle.",
+    "text": "Different in character, built on the same solid platform: Voyager, Intruder and Musher. Scroll down to explore."
+  },
+  "vehicles": {
+    "heading": "Poray Electrics Vehicles",
+    "lead": "Different platforms, one shared goal — fun, safety, performance and longevity."
+  },
+  "cards": {
+    "see": "See",
+    "more": "Show more"
+  },
+  "products": {
+    "musher": {
+      "lead": "Musher combines the agility of a mountain bike with the capabilities of an enduro motorcycle. Designed for mountain trails, forest paths and technical climbs.",
+      "features": [
+        "200 mm front suspension, 223 mm rear",
+        "High ground clearance and off-road tires",
+        "Battery optimized for range",
+        "Progressive linkage inspired by enduro motorcycles",
+        "Planetary gearbox enables efficient pedaling at any speed"
+      ]
+    },
+    "voyager": {
+      "lead": "Lightweight electric cross bike for sport riding. High power in a compact package for riders entering the e-offroad world.",
+      "features": [
+        "12 kW you can genuinely feel off-road",
+        "Geometry designed for riding beyond asphalt",
+        "Suspension tuned to the rider — not the other way around",
+        "Fully protected against overheating"
+      ]
+    },
+    "intruder": {
+      "lead": "Intruder is built for the most demanding users. Higher power and premium components ensure performance and long-term durability.",
+      "features": [
+        "Peak power: 22 kW",
+        "Premium-class suspension and brakes",
+        "Battery pack configured per project"
+      ]
+    }
+  },
+  "sections": {
+    "voyager": {
+      "lead": "A lighter configuration on the same platform — 12 kW of power for sport riding and fast off-road escapes.",
+      "heading": "Voyager"
+    },
+    "intruder": {
+      "lead": "The most powerful platform setup — 22 kW with components selected for intensive riding.",
+      "heading": "Intruder"
+    },
+    "musher": {
+      "lead": "A fusion of MTB geometry with a 6.3 kW electric drive, engineered for maximum off-road capability.",
+      "heading": "Musher"
+    }
+  },
+  "specs": {
+    "maxSpeed": "Top speed",
+    "reverse": "Reverse gear",
+    "modes": "Speed modes",
+    "motor": "Motor",
+    "battery": "Battery",
+    "charging": "Charging",
+    "power": "Power",
+    "weight": "Curb weight",
+    "range": "Range",
+    "geometry": "Geometry",
+    "weightDist": "Weight distribution",
+    "range_offroad": "Up to 80 km in demanding off-road conditions"
+  },
+  "tech": {
+    "heading": "Technology fully under our control",
+    "lead": "We develop our own solutions — from wiring design and electronics to controller tuning and BMS configuration.",
+    "platform": "Poray battery platform",
+    "title": "Battery packs engineered for real-world use.",
+    "text": "Cell selection, pack architecture and safety systems are always tailored to the application — without compromises between range and safety.",
+    "bullets": [
+      "High-voltage battery pack design",
+      "Cell balancing, data logging and thermal protection",
+      "Possibility of building a package for integration with the customer's existing vehicle electronics"
+    ],
+    "cards": {
+      "bms": "Proprietary BMS",
+      "bmsText": "Monitoring of every cell group, remote diagnostics and service logs.",
+      "integration": "Drive integration",
+      "integrationText": "Controllers tuned for specific motors and vehicle use cases.",
+      "testing": "Prototyping & testing",
+      "testingText": "Prototype builds, measurements, refinements and production readiness."
+    }
+  },
+  "about": {
+    "heading": "Who is Poray Electrics?",
+    "lead": "For over six years, we have combined engineering expertise with hands-on experience in electric vehicle development.",
+    "title": "From prototypes to finished vehicles",
+    "text": "Our focus is to build vehicles that are:",
+    "bullets": [
+      "easy to service",
+      "consistent and repeatable",
+      "adapted to real operating conditions"
+    ],
+    "stats": {
+      "projects": "Completed projects",
+      "projectsValue": "20+ vehicles",
+      "projectsSub": "from single units to small test fleets",
+      "scope": "Scope of cooperation",
+      "scopeValue": "from concept to first deliveries",
+      "scopeSub": "design, prototype, deployment and support"
+    }
+  },
+  "contact": {
+    "heading": "Let’s talk about your electric vehicle",
+    "lead": "Describe your project — vehicle type, application and expected range. We’ll get back with the next steps.",
+    "name": "Name",
+    "email": "Email address",
+    "message": "Project description",
+    "send": "Send inquiry",
+    "note": "The form can be connected to your email inbox or CRM.",
+    "details": "Contact details",
+    "location": "Małopolska, Poland",
+    "cta": "Call or message us — we usually respond the same day.",
+    "emailPlaceholder": "name@company.com",
+    "messagePlaceholder": "Briefly describe the vehicle and its use…",
+    "mail": "Email:",
+    "phone": "Phone:",
+    "locationLabel": "Location:"
+  },
+  "footer": {
+    "meta": "Built by Poray Electrics",
+    "rightsTail": "Poray Electrics. All rights reserved."
+  },
+  "common": {
+    "yes": "Yes"
+  }
+}
