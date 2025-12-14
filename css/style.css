@@ -490,9 +490,15 @@ body {
     opacity: 0.9;
   }
 
-  .nav-has-dropdown:hover .nav-dropdown {
+    .nav-item.dropdown-open .nav-dropdown {
     display: flex;
   }
+  
+  .nav-has-dropdown:hover .nav-dropdown {
+    display: none;
+  }
+
+
 }
 
 
@@ -1918,4 +1924,36 @@ body {
 .product-images,
 .voyager-images {
   overflow-x: hidden !important;
+}
+
+/* === MOBILE: sekcja "Pojazdy" jako swipe (horyzontalny slider) === */
+@media (max-width: 720px) {
+  #pojazdy .cards-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.9rem;
+
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 1.2rem;
+
+    padding: 0.2rem 1.2rem 0.6rem;
+    margin: 0 -1.2rem; /* żeby karty dochodziły bliżej krawędzi jak slider */
+  }
+
+  #pojazdy .cards-grid > .product-card {
+    flex: 0 0 86%;
+    scroll-snap-align: start;
+  }
+
+  /* ukryj pasek przewijania */
+  #pojazdy .cards-grid::-webkit-scrollbar {
+    height: 0;
+  }
+  #pojazdy .cards-grid {
+    scrollbar-width: none; /* Firefox */
+  }
 }
