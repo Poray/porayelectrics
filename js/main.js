@@ -677,35 +677,41 @@ document.addEventListener("DOMContentLoaded", initLangSwitch);
 
 // === CONTACT FORM (Formspree) ===
 const form = document.getElementById("contact-form");
-const status = document.getElementById("form-status");
+let status = document.getElementById("form-status");
 
 if (form) {
+  if (!status) {
+    status = document.createElement("p");
+    status.id = "form-status";
+    status.className = "form-note";
+    status.setAttribute("aria-live", "polite");
+    form.appendChild(status);
+  }
+
   form.addEventListener("submit", async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     status.textContent = "Wysyłanie…";
-
     const data = new FormData(form);
 
     try {
       const res = await fetch(form.action, {
         method: form.method,
         body: data,
-        headers: {
-          Accept: "application/json",
-        },
+        headers: { Accept: "application/json" },
       });
 
       if (res.ok) {
         status.textContent = "Wiadomość została wysłana. Odezwiemy się wkrótce.";
         form.reset();
       } else {
-        const result = await res.json();
-        status.textContent =
-          result?.error || "Coś poszło nie tak. Spróbuj ponownie.";
+        let result = null;
+        try { result = await res.json(); } catch {}
+        status.textContent = result?.error || "Coś poszło nie tak. Spróbuj ponownie.";
       }
-    } catch (err) {
-      status.textContent = " Błąd sieci. Sprawdź połączenie.";
+    } catch {
+      status.textContent = "Błąd sieci. Sprawdź połączenie.";
     }
   });
 }
+
