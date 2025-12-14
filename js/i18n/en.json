@@ -83,9 +83,9 @@
     "range_offroad": "Up to 80 km in demanding off-road conditions"
   },
   "tech": {
-    "heading": "Technology fully under our control",
-    "lead": "We develop our own solutions — from wiring design and electronics to controller tuning and BMS configuration.",
-    "platform": "Poray battery platform",
+    "heading": "Technology under control",
+    "lead": "We develop our own solutions — from wiring design to controller tuning and BMS configuration.",
+    "platform": "Battery platform",
     "title": "Battery packs engineered for real-world use.",
     "text": "Cell selection, pack architecture and safety systems are always tailored to the application — without compromises between range and safety.",
     "bullets": [
@@ -94,7 +94,7 @@
       "Possibility of building a package for integration with the customer's existing vehicle electronics"
     ],
     "cards": {
-      "bms": "Proprietary BMS",
+      "bms": "Battery Management System",
       "bmsText": "Monitoring of every cell group, remote diagnostics and service logs.",
       "integration": "Drive integration",
       "integrationText": "Controllers tuned for specific motors and vehicle use cases.",
@@ -103,22 +103,19 @@
     }
   },
   "about": {
-    "heading": "Who is Poray Electrics?",
-    "lead": "For over six years, we have combined engineering expertise with hands-on experience in electric vehicle development.",
+    "heading": "About Poray Electrics",
+    "lead": "For six years, we have combined engineering expertise with hands-on experience in building electric vehicles. Our primary focus is the development of new vehicles from our own lineup, while we also provide modification, servicing, and electric conversion work.",
     "title": "From prototypes to finished vehicles",
     "text": "Our focus is to build vehicles that are:",
     "bullets": [
-      "easy to service",
-      "consistent and repeatable",
-      "adapted to real operating conditions"
+      "Reliability — solutions designed for long-term, trouble-free operation.",
+      "Attention to detail — even where it is not visually apparent, but critical to durability and safety.",
+      "Designed for real-world conditions — construction tailored to the environment and loads the vehicle is actually expected to face."
     ],
     "stats": {
-      "projects": "Completed projects",
-      "projectsValue": "20+ vehicles",
-      "projectsSub": "from single units to small test fleets",
-      "scope": "Scope of cooperation",
-      "scopeValue": "from concept to first deliveries",
-      "scopeSub": "design, prototype, deployment and support"
+      "projects": "Where theory meets practice",
+      "projectsValue": "Our experience comes from hands-on work with electric vehicles — testing, modifications, and riding in the conditions these machines are actually built for. This allows us to distinguish between solutions that truly work and those that only look good on a specification sheet."
+      
     }
   },
   "contact": {
