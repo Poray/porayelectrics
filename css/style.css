@@ -1721,23 +1721,29 @@ body::before{
   content: none !important;
 }
 
-.product-section,
-.section,
-.hero,
-.section-alt {
-  overflow-x: visible !important;
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
-html,
-body {
-  overflow-x: visible;
-}
 @supports not (overflow: clip) {
-  html,
-  body {
-    overflow-x: hidden;
+  html, body { overflow-x: hidden; }
+}
+
+
+@media (max-width: 900px) {
+  .hero, .section, .section-alt, .product-section {
+    overflow-x: clip !important;
+  }
+  @supports not (overflow: clip) {
+    .hero, .section, .section-alt, .product-section { overflow-x: hidden !important; }
   }
 }
+
+
+
 
 *::-webkit-scrollbar:horizontal {
   height: 0 !important;
@@ -1831,5 +1837,69 @@ body {
 
   .spec-list dd{
     font-size: 1.14em;
+  }
+}
+
+/* ===== Mobile drawer menu ===== */
+.nav-backdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+  z-index: 80;
+}
+
+body.nav-open .nav-backdrop{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 720px){
+  /* zostawiamy „pigułkę” z logo + przyciskiem */
+  .site-header-inner{
+    max-width: 100%;
+  }
+
+  /* drawer */
+  .main-nav{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100dvh;
+    width: min(82vw, 320px);
+    padding: 1.1rem 1.1rem 1.4rem;
+
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+
+    background: rgba(15, 23, 42, 0.98);
+    border-right: 1px solid rgba(148, 163, 184, 0.35);
+    border-radius: 0;
+    box-shadow: 18px 0 55px rgba(0,0,0,.55);
+
+    transform: translateX(-105%);
+    transition: transform .22s ease;
+    display: flex; /* ważne: nie chowamy display, tylko transform */
+    z-index: 90;
+  }
+
+  body.nav-open .main-nav{
+    transform: translateX(0);
+  }
+
+  /* dropdown w drawer: jako „lista” pod spodem */
+  .nav-dropdown{
+    display: none;
+  }
+  .nav-item.nav-has-dropdown.open .nav-dropdown{
+    display: flex;
+  }
+
+  /* ukryj hover-trigger na touch */
+  .nav-has-dropdown:hover .nav-dropdown{
+    display: none;
   }
 }
