@@ -1705,10 +1705,7 @@ body.lightbox-open {
 
 body::before{
   content:"";
-  
-  left: 0;
-  right: 0;
-  width: 100%;
+  position: fixed;
   inset: -4px;
   background: radial-gradient(circle at top, #020617 0, #020617 40%, #000 100%);
   z-index: -1;
@@ -1834,13 +1831,5 @@ body {
 
   .spec-list dd{
     font-size: 1.14em;
-  }
-}
-
-@media (max-width: 900px) {
-  .site-header,
-  .hero,
-  .section {
-    padding-inline: 1.2rem;
   }
 }
