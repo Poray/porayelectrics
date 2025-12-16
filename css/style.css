@@ -2651,3 +2651,69 @@ body.no-scroll{
     opacity: 0.92;
   }
 }
+
+
+/* =========================
+   MOBILE: SPEC TEXT – REAL FIX
+   ========================= */
+@media (max-width: 720px){
+
+  /* nagłówek sekcji w ramce (VOYAGER / INTRUDER) */
+  .spec-label{
+    font-size: 0.65rem !important;
+    letter-spacing: 0.18em !important;
+    margin-bottom: 0.6rem !important;
+    opacity: 0.75;
+  }
+
+  /* nazwy parametrów (PRĘDKOŚĆ MAKSYMALNA itd.) */
+  .spec-list dt{
+    font-size: 0.7rem !important;
+    letter-spacing: 0.12em !important;
+    line-height: 1.2 !important;
+  }
+
+  /* wartości (90 km/h, Tak, 5040 Wh…) */
+  .spec-list dd{
+    font-size: 0.9rem !important;
+    line-height: 1.25 !important;
+  }
+
+  /* odstępy między wierszami */
+  .spec-list{
+    gap: 0.45rem !important;
+  }
+}
+
+/* =========================
+   MOBILE: SPEC IMAGE – FULL WIDTH
+   ========================= */
+@media (max-width: 720px){
+
+  /* kontener zdjęcia */
+  .spec-image{
+    width: 100% !important;
+    max-width: 100% !important;
+
+    margin-top: 1rem !important;
+    padding: 0 !important;
+
+    border-radius: 18px !important;
+    overflow: hidden !important;
+
+    background: none !important;
+    box-shadow: none !important;
+  }
+
+  /* samo zdjęcie */
+  .spec-image img{
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+
+    display: block !important;
+    object-fit: cover !important;
+
+    border-radius: 0 !important; /* round bierze kontener */
+  }
+}
