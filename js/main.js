@@ -209,24 +209,26 @@ document.addEventListener("keydown", (e) => {
 });
 
 mainNav?.addEventListener("click", (e) => {
-  const a = e.target.closest('a[href^="#"]');
-  if (!a) return;
+  const isMobile = window.matchMedia("(max-width: 720px)").matches;
+  if (!isMobile) return;
 
-  const dropdownWrap = a.closest(".nav-has-dropdown");
+  // Klik w wiersz "Pojazdy/Vehicles" ma toggle dropdown
+  const dropdownWrap = e.target.closest(".nav-has-dropdown");
+  const clickedTopRow = e.target.closest(".nav-has-dropdown > .nav-link");
 
-  // Mobile: klik w "Pojazdy" ma rozwijać dropdown zamiast scrollować
-  if (
-    dropdownWrap &&
-    a.classList.contains("nav-link") &&
-    window.matchMedia("(max-width: 720px)").matches
-  ) {
+  if (dropdownWrap && clickedTopRow) {
     e.preventDefault();
-    dropdownWrap.classList.toggle("open");
+    dropdownWrap.classList.toggle("open"); // teraz da się też SCHOWAĆ
     return;
   }
 
+  // Klik w jakikolwiek link sekcji zamyka menu
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+
   closeNav();
 });
+
 
 window.addEventListener("resize", () => {
   if (window.matchMedia("(min-width: 721px)").matches) closeNav();

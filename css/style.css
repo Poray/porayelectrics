@@ -2342,3 +2342,79 @@ body.no-scroll{
     width: 100%;
   }
 }
+
+/* =========================
+   MOBILE: zdjęcia w sekcjach full width, jedno pod drugim
+   ========================= */
+@media (max-width: 720px){
+
+  /* stack na 1 kolumnę */
+  .fenix-stack,
+  .musher-stack{
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  /* zdjęcia mają wypełniać szerokość */
+  .fenix-photo,
+  .musher-photo{
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    align-self: stretch !important;
+  }
+
+  /* wyłączamy wszystkie “wjeżdżania” które robią odstępy na boki */
+  .fenix-photo,
+  .musher-photo{
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  /* obrazek ma dojeżdżać do krawędzi kontenera */
+  .fenix-photo img,
+  .musher-photo img{
+    width: 100% !important;
+    display: block !important;
+    border-radius: 18px !important; /* mniejszy round na mobile */
+  }
+}
+
+/* =========================
+   MOBILE: spec-card (ramka) – mniejszy tekst, układ pionowy, mniejszy round zdjęcia
+   ========================= */
+@media (max-width: 720px){
+
+  .spec-card{
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  /* tekst/specy */
+  .spec-list{
+    gap: 0.55rem !important;
+  }
+
+  .spec-list dt{
+    font-size: 0.78rem !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  .spec-list dd{
+    font-size: 0.98rem !important;
+  }
+
+  /* zdjęcie w tej ramce */
+  .spec-image{
+    justify-self: start !important;
+  }
+
+  .spec-image img{
+    border-radius: 16px !important; /* mniejszy round w ramce */
+    max-width: 170px !important;    /* żeby nie rozwalało layoutu */
+    width: 100% !important;
+    height: auto !important;
+  }
+}
