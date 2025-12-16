@@ -2218,3 +2218,127 @@ body.no-scroll{
     grid-row: 2;
   }
 }
+
+
+/* =========================
+   FINAL MOBILE NAV FIX (wins over earlier @media blocks)
+   ========================= */
+@media (max-width: 720px){
+
+  /* warstwy: backdrop < header < menu */
+  .nav-backdrop{ z-index: 900 !important; }
+  .site-header{ z-index: 950 !important; }
+  .main-nav{ z-index: 1000 !important; }
+
+  /* backdrop */
+  .nav-backdrop{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  body.nav-open .nav-backdrop,
+  .nav-backdrop.open{
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* off-canvas panel */
+  .main-nav{
+    position: fixed !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+
+    width: min(86vw, 360px);
+    height: 100dvh;
+
+    display: flex !important;           /* zawsze flex, chowamy transformem */
+    flex-direction: column;
+    gap: 0.35rem;
+
+    padding: 1.1rem 1rem;
+    padding-top: calc(1.1rem + env(safe-area-inset-top));
+    padding-bottom: calc(1.1rem + env(safe-area-inset-bottom));
+
+    background: rgba(10, 14, 28, 0.995) !important;
+    border-left: 1px solid rgba(148, 163, 184, 0.25);
+    box-shadow: -18px 0 60px rgba(0,0,0,0.55);
+
+    transform: translateX(110%);
+    transition: transform 0.25s ease;
+
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    pointer-events: auto;               /* menu MUSI łapać klik */
+  }
+
+  body.nav-open .main-nav,
+  .main-nav.open{
+    transform: translateX(0%);
+  }
+
+  /* blokada scrolla przy otwartym menu */
+  html.no-scroll,
+  body.no-scroll{
+    overflow: hidden !important;
+    touch-action: none;
+  }
+
+  /* tap-friendly linki */
+  .main-nav .nav-link,
+  .nav-dropdown-link{
+    padding: 0.85rem 0.55rem !important;
+    border-radius: 0.9rem;
+    color: rgba(249,250,251,0.96) !important;
+  }
+
+  /* dropdown w menu (klik) */
+  .nav-dropdown{
+    position: static !important;
+    display: none;
+    padding: 0.25rem 0 0.6rem;
+    margin: 0.1rem 0 0.2rem;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+  .nav-has-dropdown.open .nav-dropdown{ display: flex; }
+
+  /* WYŁĄCZ hover-otwieranie na mobile (bo robi syf) */
+  .nav-has-dropdown:hover .nav-dropdown{ display: none !important; }
+}
+
+/* =========================
+   MOBILE: one column layouts for About + Contact
+   ========================= */
+@media (max-width: 720px){
+
+  /* O NAS: tekst -> potem ramka */
+  .about-grid{
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  .about-grid > div:first-child{ grid-row: 1; }
+  .about-grid > div:last-child{ grid-row: 2; }
+
+  /* KONTAKT: formularz full width -> potem dane */
+  .contact-layout{
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  .contact-layout .contact-form{
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+  }
+  .contact-layout .contact-info{
+    grid-column: 1;
+    grid-row: 2;
+    width: 100%;
+  }
+}

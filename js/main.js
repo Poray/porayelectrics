@@ -187,26 +187,14 @@ function setNavState(isOpen) {
   mainNav?.classList.toggle("open", !!isOpen);
   navBackdrop?.classList.toggle("open", !!isOpen);
 
-  // lock scroll on mobile when menu is open
   document.documentElement.classList.toggle("no-scroll", !!isOpen);
   document.body.classList.toggle("no-scroll", !!isOpen);
 
   navToggle?.setAttribute("aria-expanded", isOpen ? "true" : "false");
-
-  if (!isOpen) {
-    // close any mobile dropdowns
-    document
-      .querySelectorAll(".nav-has-dropdown.open")
-      .forEach((el) => el.classList.remove("open"));
-  }
 }
 
-function openNav() {
-  setNavState(true);
-}
-function closeNav() {
-  setNavState(false);
-}
+function openNav(){ setNavState(true); }
+function closeNav(){ setNavState(false); }
 
 if (navToggle && mainNav) {
   navToggle.addEventListener("click", () => {
@@ -225,6 +213,8 @@ mainNav?.addEventListener("click", (e) => {
   if (!a) return;
 
   const dropdownWrap = a.closest(".nav-has-dropdown");
+
+  // Mobile: klik w "Pojazdy" ma rozwijać dropdown zamiast scrollować
   if (
     dropdownWrap &&
     a.classList.contains("nav-link") &&
@@ -238,13 +228,10 @@ mainNav?.addEventListener("click", (e) => {
   closeNav();
 });
 
-window.addEventListener(
-  "resize",
-  () => {
-    if (window.matchMedia("(min-width: 721px)").matches) closeNav();
-  },
-  { passive: true }
-);
+window.addEventListener("resize", () => {
+  if (window.matchMedia("(min-width: 721px)").matches) closeNav();
+}, { passive: true });
+
 
 if (window.matchMedia("(pointer: fine)").matches) {
   const dot = document.createElement("div");
