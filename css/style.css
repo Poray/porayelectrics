@@ -2717,3 +2717,64 @@ body.no-scroll{
     border-radius: 0 !important; /* round bierze kontener */
   }
 }
+
+/* =========================
+   MOBILE – SPEC CARD FINAL FIX
+   ========================= */
+@media (max-width: 720px){
+
+  /* układ: specy -> zdjęcie */
+  .spec-card{
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.9rem !important;
+    padding: 1rem !important;
+  }
+
+  /* ---------- TEKST (MNIEJSZY) ---------- */
+
+  .spec-label{
+    font-size: 0.62rem !important;
+    letter-spacing: 0.16em !important;
+    opacity: 0.7;
+  }
+
+  .spec-list{
+    gap: 0.4rem !important;
+  }
+
+  .spec-list dt{
+    font-size: 0.68rem !important;
+    letter-spacing: 0.1em !important;
+  }
+
+  .spec-list dd{
+    font-size: 0.88rem !important;
+    line-height: 1.25 !important;
+  }
+
+  /* ---------- ZDJĘCIE (DUŻE, FULL WIDTH) ---------- */
+
+  .spec-image{
+    order: 2 !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border-radius: 18px !important;
+    overflow: hidden !important;
+
+    background: none !important;
+    box-shadow: none !important;
+  }
+
+  .spec-image img{
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+
+    object-fit: cover !important;
+    border-radius: 0 !important;
+  }
+}
