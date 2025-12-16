@@ -2583,3 +2583,71 @@ body.no-scroll{
     object-fit: cover !important;
   }
 }
+
+
+/* =========================
+   MOBILE: zdjęcie w spec-card full width pod specyfikacją
+   ========================= */
+@media (max-width: 720px){
+
+  /* układ pionowy: specy -> zdjęcie */
+  .spec-card{
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+  .spec-info{ order: 1 !important; }
+
+  /* pełna szerokość zdjęcia, bez wewnętrznych ramek/paddingów */
+  .spec-image{
+    order: 2 !important;
+
+    width: 100% !important;
+    max-width: none !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    background: transparent !important;
+    border: 0 !important;
+
+    border-radius: 18px !important; /* mniejszy round na mobile */
+    overflow: hidden !important;     /* żeby img trzymał round */
+  }
+
+  .spec-image img{
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+
+    border-radius: 0 !important;     /* round bierze z .spec-image */
+    object-fit: cover !important;
+  }
+}
+
+/* =========================
+   MOBILE: menu "Pojazdy" zawsze rozwinięte
+   ========================= */
+@media (max-width: 720px){
+
+  /* pokaż dropdown zawsze */
+  .nav-has-dropdown .nav-dropdown{
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.2rem !important;
+    margin-top: 0.35rem !important;
+  }
+
+  /* ukryj chevron (nie ma sensu toggle) */
+  .nav-has-dropdown .nav-chevron{
+    display: none !important;
+  }
+
+  /* wiersz "Pojazdy" ma wyglądać jak nagłówek sekcji w menu */
+  .nav-has-dropdown > .nav-link{
+    width: 100% !important;
+    justify-content: flex-start !important;
+    opacity: 0.92;
+  }
+}

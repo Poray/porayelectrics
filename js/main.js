@@ -212,21 +212,20 @@ mainNav?.addEventListener("click", (e) => {
   const isMobile = window.matchMedia("(max-width: 720px)").matches;
   if (!isMobile) return;
 
-  // 1) Klik w cały wiersz "Pojazdy/Vehicles" (gdziekolwiek) => toggle dropdown
-  const topRowLink = e.target.closest(".nav-has-dropdown > .nav-link");
-  if (topRowLink) {
-    e.preventDefault(); // nie scrollujemy do #pojazdy
-    const wrap = topRowLink.closest(".nav-has-dropdown");
-    wrap?.classList.toggle("open");
+  // klik w "Pojazdy" (nagłówek) nie ma scrollować
+  const vehiclesHeader = e.target.closest(".nav-has-dropdown > .nav-link");
+  if (vehiclesHeader) {
+    e.preventDefault();
     return;
   }
 
-  // 2) Klik w link z dropdownu lub inne linki sekcji => zamykamy menu
+  // klik w dowolny link sekcji/pojazdu zamyka menu
   const a = e.target.closest('a[href^="#"]');
   if (!a) return;
 
   closeNav();
 });
+
 
 
 
