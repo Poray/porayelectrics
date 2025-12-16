@@ -1840,66 +1840,97 @@ html, body {
   }
 }
 
-/* ===== Mobile drawer menu ===== */
+/* =========================
+   MOBILE UX PATCH (desktop unchanged)
+   ========================= */
+
+/* Safe-area for iPhone notch + prevent off-center feeling */
+:root{
+  --safe-left: env(safe-area-inset-left);
+  --safe-right: env(safe-area-inset-right);
+}
+body{
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+}
+
+/* Backdrop for mobile nav */
 .nav-backdrop{
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.55);
+  background: rgba(0, 0, 0, 0.55);
   opacity: 0;
   pointer-events: none;
-  transition: opacity .2s ease;
-  z-index: 80;
+  transition: opacity 0.2s ease;
+  z-index: 55; /* below header (60) */
 }
-
-body.nav-open .nav-backdrop{
+body.nav-open .nav-backdrop,
+.nav-backdrop.open{
   opacity: 1;
   pointer-events: auto;
 }
 
+/* lock scroll when menu/lightbox open */
+html.no-scroll,
+body.no-scroll{
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+/* Make menu open logic consistent with JS (body.nav-open) */
 @media (max-width: 720px){
-  /* zostawiamy „pigułkę” z logo + przyciskiem */
-  .site-header-inner{
-    max-width: 100%;
-  }
-
-  /* drawer */
-  .main-nav{
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100dvh;
-    width: min(82vw, 320px);
-    padding: 1.1rem 1.1rem 1.4rem;
-
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-
-    background: rgba(15, 23, 42, 0.98);
-    border-right: 1px solid rgba(148, 163, 184, 0.35);
-    border-radius: 0;
-    box-shadow: 18px 0 55px rgba(0,0,0,.55);
-
-    transform: translateX(-105%);
-    transition: transform .22s ease;
-    display: flex; /* ważne: nie chowamy display, tylko transform */
-    z-index: 90;
-  }
-
-  body.nav-open .main-nav{
-    transform: translateX(0);
-  }
-
-  /* dropdown w drawer: jako „lista” pod spodem */
-  .nav-dropdown{
-    display: none;
-  }
-  .nav-item.nav-has-dropdown.open .nav-dropdown{
+  body.nav-open .main-nav,
+  .main-nav.open{
     display: flex;
   }
 
-  /* ukryj hover-trigger na touch */
-  .nav-has-dropdown:hover .nav-dropdown{
-    display: none;
+  /* bigger tap targets */
+  .main-nav .nav-link,
+  .nav-dropdown-link{
+    padding: 0.65rem 0.15rem;
   }
+
+  .lang-btn{
+    padding: 0.35rem 0.45rem;
+  }
+
+  /* mobile dropdown via click */
+  .nav-has-dropdown.open .nav-dropdown{
+    display: flex;
+  }
+
+  /* anchor offset for sticky header on phone */
+  :root{ --anchor-offset: 92px; }
+}
+
+/* Cards grid: 3 -> 2 -> 1 columns */
+@media (max-width: 960px){
+  .cards-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px){
+  .cards-grid{ grid-template-columns: 1fr; }
+}
+
+/* Show CTA inside mobile menu (keeps desktop identical) */
+.nav-cta-mobile{ display: none; }
+@media (max-width: 720px){
+  .nav-cta-mobile{
+    display: inline-flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 0.2rem;
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.55);
+    background: rgba(15, 23, 42, 0.6);
+    color: var(--text);
+  }
+}
+
+/* Lighter side-photo entrance on phones (less "flying in") */
+@media (max-width: 900px){
+  .musher-photo.photo-from-left,
+  .fenix-photo.photo-from-left{ transform: translateX(-14vw); }
+  .musher-photo.photo-from-right,
+  .fenix-photo.photo-from-right{ transform: translateX(14vw); }
 }
