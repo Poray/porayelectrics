@@ -795,3 +795,30 @@ document.addEventListener("click", (e) => {
   e.preventDefault();
   scrollToAnchorStable(id);
 });
+
+
+// optional: swipe to close nav (mobile)
+(function () {
+  const backdrop = document.querySelector(".nav-backdrop");
+  if (!backdrop) return;
+
+  let x0 = null;
+
+  backdrop.addEventListener("touchstart", (e) => {
+    x0 = e.touches?.[0]?.clientX ?? null;
+  }, { passive: true });
+
+  backdrop.addEventListener("touchend", (e) => {
+    const x1 = e.changedTouches?.[0]?.clientX ?? null;
+    if (x0 == null || x1 == null) return;
+    if (Math.abs(x1 - x0) > 40) {
+      document.body.classList.remove("nav-open");
+      document.documentElement.classList.remove("no-scroll");
+      document.body.classList.remove("no-scroll");
+      document.querySelector(".main-nav")?.classList.remove("open");
+      backdrop.classList.remove("open");
+      document.querySelector(".nav-toggle")?.setAttribute("aria-expanded", "false");
+    }
+    x0 = null;
+  }, { passive: true });
+})();

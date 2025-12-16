@@ -1934,3 +1934,161 @@ body.no-scroll{
   .musher-photo.photo-from-right,
   .fenix-photo.photo-from-right{ transform: translateX(14vw); }
 }
+
+
+/* =========================
+   MOBILE HEADER + OFFCANVAS NAV + SWIPE VEHICLES
+   Desktop unchanged
+   ========================= */
+
+@media (max-width: 720px) {
+
+  /* --- HEADER: logo | CTA | hamburger --- */
+  .site-header { padding: 0.55rem 0.9rem; }
+
+  .site-header-inner{
+    max-width: none;
+    margin: 0.35rem auto;
+    width: 100%;
+    padding: 0.55rem 0.8rem;
+    border-radius: 1.1rem;          /* mniej "piguły" */
+    gap: 0.6rem;
+  }
+
+  /* ustawiamy 3 kolumny: logo / CTA / hamburger */
+  .site-header-inner{
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+  }
+
+  .logo{ justify-self: start; }
+
+  /* CTA w środku, normalny rozmiar na mobile */
+  .nav-cta{
+    justify-self: center;
+    padding: 0.55rem 0.9rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  /* język znika z paska (będzie w menu) */
+  .lang-switch{ display: none; }
+
+  .nav-toggle{
+    display: block;
+    justify-self: end;
+  }
+
+  /* --- OFFCANVAS MENU (wysuwane z boku) --- */
+  .main-nav{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: auto;
+    bottom: 0;
+
+    width: min(86vw, 360px);
+    height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+
+    padding: 1.1rem 1rem;
+    padding-top: calc(1.1rem + env(safe-area-inset-top));
+    padding-bottom: calc(1.1rem + env(safe-area-inset-bottom));
+
+    background: rgba(10, 14, 28, 0.98);
+    border-left: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 0; /* nowocześnie, panel */
+
+    transform: translateX(110%);
+    transition: transform 0.25s ease;
+    z-index: 70;
+
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* otwarcie menu */
+  body.nav-open .main-nav,
+  .main-nav.open{
+    transform: translateX(0%);
+  }
+
+  /* linki w menu większe (tap friendly) */
+  .main-nav .nav-link{
+    padding: 0.85rem 0.5rem;
+    border-radius: 0.9rem;
+  }
+
+  /* dropdown w menu: klik -> rozwija */
+  .nav-dropdown{
+    position: static;
+    display: none;
+    padding: 0.25rem 0 0.6rem;
+    margin: 0.1rem 0 0.2rem;
+  }
+  .nav-has-dropdown.open .nav-dropdown{ display: flex; }
+
+  .nav-dropdown-link{
+    padding: 0.7rem 0.6rem;
+    border-radius: 0.85rem;
+  }
+
+  /* LANG w menu (pokazujemy) */
+  .lang-switch--mobile{
+    display: flex;
+    margin-top: auto;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.18);
+    justify-content: flex-start;
+  }
+  .lang-switch--mobile .lang-btn{ padding: 0.4rem 0.55rem; }
+
+  /* --- BACKDROP dla menu --- */
+  .nav-backdrop{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 65;
+  }
+  body.nav-open .nav-backdrop,
+  .nav-backdrop.open{
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* blokada scrolla gdy menu otwarte */
+  html.no-scroll,
+  body.no-scroll{ overflow: hidden !important; touch-action: none; }
+
+
+  /* --- POJAZDY: swipe carousel (1 karta na ekran) --- */
+  .cards-grid{
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: -1rem;   /* żeby karty były "full-bleed" */
+    margin-right: -1rem;
+  }
+
+  .cards-grid::-webkit-scrollbar{ display: none; }
+  .cards-grid{ scrollbar-width: none; }
+
+  .cards-grid > .card{
+    flex: 0 0 100%;
+    max-width: 100%;
+    scroll-snap-align: center;
+  }
+}
