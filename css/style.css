@@ -2142,3 +2142,79 @@ body.no-scroll{
   /* drugi blok (ramka/statystyka) */
   .about-grid > div:last-child{ order: 2; }
 }
+
+/* =========================
+   FIX: backdrop blokuje menu (stacking context sticky header)
+   MOBILE ONLY – desktop bez zmian
+   ========================= */
+@media (max-width: 720px){
+
+  /* header musi być NAD backdropem */
+  .site-header{ z-index: 200; }
+
+  /* backdrop ma być pod headerem i pod panelem menu */
+  .nav-backdrop{ z-index: 120 !important; }
+
+  /* panel menu musi być najwyżej */
+  .main-nav{ z-index: 220 !important; }
+
+  /* upewniamy się, że menu jest „pełne” i czytelne (nie jak tło) */
+  .main-nav{
+    background: rgba(10, 14, 28, 0.995) !important;
+  }
+
+  /* linki w menu jaśniejsze i pewne kliknięcie */
+  .main-nav .nav-link,
+  .main-nav .nav-dropdown-link,
+  .main-nav .nav-cta-mobile{
+    color: rgba(249, 250, 251, 0.96) !important;
+    pointer-events: auto;
+  }
+
+  /* backdrop tylko łapie klik poza menu */
+  .nav-backdrop{
+    pointer-events: none;
+  }
+  body.nav-open .nav-backdrop,
+  .nav-backdrop.open{
+    pointer-events: auto;
+  }
+}
+
+/* =========================
+   CONTACT: form first on mobile
+   ========================= */
+@media (max-width: 720px){
+  .contact-layout{
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+  .contact-layout .contact-form{
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+  }
+  .contact-layout .contact-info{
+    grid-column: 1;
+    grid-row: 2;
+    width: 100%;
+  }
+}
+
+/* =========================
+   ABOUT: text first on mobile
+   ========================= */
+@media (max-width: 720px){
+  .about-grid{
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+  .about-grid > div:first-child{
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .about-grid > div:last-child{
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
