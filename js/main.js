@@ -228,6 +228,20 @@ function scrollToAnchorStable(id) {
   setTimeout(() => window.scrollTo({ top: getY(), behavior: "auto" }), 320);
 }
 
+function scrollVehicleCardsTo(modelKey) {
+  const isMobile = window.matchMedia("(max-width: 720px)").matches;
+  if (!isMobile) return;
+
+  const card = document.querySelector(`#pojazdy .product-card[data-model="${modelKey}"]`);
+  if (!card) return;
+
+  // przewija poziomą karuzelę (cards-grid na mobile jest scrollable)
+  card.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+
+  // lekki highlight (masz już funkcję, ale zostawiamy też to)
+  card.classList.add("product-card-highlighted");
+  setTimeout(() => card.classList.remove("product-card-highlighted"), 3000);
+}
 
 if (navToggle && mainNav) {
   navToggle.addEventListener("click", () => {
@@ -246,12 +260,13 @@ mainNav?.addEventListener("click", (e) => {
   const isMobile = window.matchMedia("(max-width: 720px)").matches;
   if (!isMobile) return;
 
-  // klik w "Pojazdy" (nagłówek) nie ma scrollować
-  const vehiclesHeader = e.target.closest(".nav-has-dropdown > .nav-link");
-  if (vehiclesHeader) {
-    e.preventDefault();
-    return;
-  }
+const vehiclesHeader = e.target.closest(".nav-has-dropdown > .nav-link");
+if (vehiclesHeader) {
+  e.preventDefault();
+  const wrap = vehiclesHeader.closest(".nav-has-dropdown");
+  wrap?.classList.toggle("open");
+  return;
+}
 
   // klik w dowolny link sekcji/pojazdu -> zamknij menu i dopiero scrolluj stabilnie
   const a = e.target.closest('a[href^="#"]');
@@ -427,11 +442,27 @@ function highlightVehicleCard(modelKey) {
 
 modelPills.forEach((pill) => {
   const modelKey = pill.dataset.model;
-  pill.addEventListener("click", () => {
+pill.addEventListener("click", (e) => {
+  const isMobile = window.matchMedia("(max-width: 720px)").matches;
+
+  if (isMobile) {
+    e.preventDefault();
+
+    // 1) zjedź do sekcji z kartami
+    scrollToAnchorStable("pojazdy");
+
+    // 2) po chwili przewiń karuzelę do wybranej karty
     setTimeout(() => {
-      highlightVehicleCard(modelKey);
-    }, 400);
-  });
+      scrollVehicleCardsTo(modelKey);
+    }, 520);
+
+    return;
+  }
+
+  // desktop zostaje jak było: tylko highlight
+  setTimeout(() => highlightVehicleCard(modelKey), 300);
+});
+
 });
 
 if (window.matchMedia("(pointer: fine)").matches) {

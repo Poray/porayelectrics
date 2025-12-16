@@ -2778,3 +2778,35 @@ body.no-scroll{
     border-radius: 0 !important;
   }
 }
+
+/* =========================
+   MOBILE: NAV "POJAZDY" toggle + chevron back
+   ========================= */
+@media (max-width: 720px){
+
+  /* dropdown domyślnie ZAMKNIĘTY */
+  .nav-has-dropdown .nav-dropdown{
+    display: none !important;
+    flex-direction: column !important;
+    gap: 0.2rem !important;
+    margin-top: 0.35rem !important;
+  }
+
+  /* otwiera tylko klasa .open (ustawiana w JS) */
+  .nav-has-dropdown.open .nav-dropdown{
+    display: flex !important;
+  }
+
+  /* przywróć daszek */
+  .nav-has-dropdown .nav-chevron{
+    display: inline-block !important;
+  }
+
+  /* klik ma działać na cały wiersz */
+  .nav-has-dropdown > .nav-link{
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+}
