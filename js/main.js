@@ -196,6 +196,39 @@ function setNavState(isOpen) {
 function openNav(){ setNavState(true); }
 function closeNav(){ setNavState(false); }
 
+// === MOBILE: stable anchor scrolling (prevents "too high" jump) ===
+function updateAnchorOffset() {
+  const headerInner = document.querySelector(".site-header-inner");
+  const h = headerInner ? headerInner.offsetHeight : 80;
+
+  // + margines bezpieczeństwa (sticky + iOS)
+  const offset = Math.round(h + 18);
+
+  document.documentElement.style.setProperty("--anchor-offset", offset + "px");
+}
+
+updateAnchorOffset();
+window.addEventListener("resize", updateAnchorOffset, { passive: true });
+
+function scrollToAnchorStable(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  updateAnchorOffset();
+
+  const headerInner = document.querySelector(".site-header-inner");
+  const offset = (headerInner ? headerInner.offsetHeight : 80) + 18;
+
+  const getY = () => el.getBoundingClientRect().top + window.pageYOffset - offset;
+
+  window.scrollTo({ top: getY(), behavior: "smooth" });
+
+  // 2 korekty po zamknięciu menu / reflow (iOS Safari)
+  setTimeout(() => window.scrollTo({ top: getY(), behavior: "auto" }), 160);
+  setTimeout(() => window.scrollTo({ top: getY(), behavior: "auto" }), 320);
+}
+
+
 if (navToggle && mainNav) {
   navToggle.addEventListener("click", () => {
     document.body.classList.contains("nav-open") ? closeNav() : openNav();
@@ -208,6 +241,7 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeNav();
 });
 
+
 mainNav?.addEventListener("click", (e) => {
   const isMobile = window.matchMedia("(max-width: 720px)").matches;
   if (!isMobile) return;
@@ -219,12 +253,23 @@ mainNav?.addEventListener("click", (e) => {
     return;
   }
 
-  // klik w dowolny link sekcji/pojazdu zamyka menu
+  // klik w dowolny link sekcji/pojazdu -> zamknij menu i dopiero scrolluj stabilnie
   const a = e.target.closest('a[href^="#"]');
   if (!a) return;
 
+  const id = a.getAttribute("href").slice(1);
+  if (!id) return;
+
+  e.preventDefault();
+
   closeNav();
+
+  // poczekaj aż panel menu się schowa (transform) i layout się uspokoi
+  setTimeout(() => {
+    scrollToAnchorStable(id);
+  }, 260);
 });
+
 
 
 
