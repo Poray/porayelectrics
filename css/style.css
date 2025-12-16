@@ -1438,6 +1438,7 @@ display: none;
   border-radius: 10px;
 }
 
+@media (min-width: 901px){
 .fenix-photo:nth-of-type(1) { margin-top: 0; }
 .fenix-photo:nth-of-type(2) { margin-top: 2rem; }
 .fenix-photo:nth-of-type(3) { margin-top: -1rem; }
@@ -1447,6 +1448,7 @@ display: none;
 .fenix-photo:nth-of-type(7) { margin-top: 2.5rem; }
 .fenix-photo:nth-of-type(8) { margin-top: -1.5rem; }
 .fenix-photo:nth-of-type(9) { margin-top: 3rem; }
+}
 
 .fenix-photo img {
   display: block;
@@ -2416,5 +2418,112 @@ body.no-scroll{
     max-width: 170px !important;    /* żeby nie rozwalało layoutu */
     width: 100% !important;
     height: auto !important;
+  }
+}
+
+/* =========================
+   MOBILE: zdjęcia równo pod sobą (bez "artystycznych" przesunięć)
+   ========================= */
+@media (max-width: 720px){
+
+  /* te reguły nth-of-type rozjeżdżają układ -> kasujemy na mobile */
+  .fenix-photo{ margin-top: 0 !important; }
+  .musher-photo{ margin-top: 0 !important; }
+
+  /* na mobile nie chcemy wjazdów z boku */
+  .musher-photo,
+  .fenix-photo{
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .musher-photo.photo-from-left,
+  .musher-photo.photo-from-right,
+  .fenix-photo.photo-from-left,
+  .fenix-photo.photo-from-right{
+    transform: none !important;
+  }
+
+  /* 1 kolumna, full width */
+  .musher-stack,
+  .fenix-stack{
+    max-width: 100% !important;
+    margin: 1.2rem auto 0 !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 1rem !important;
+  }
+  .musher-photo,
+  .fenix-photo{
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* mniejszy round na mobile */
+  .musher-photo,
+  .fenix-photo{ border-radius: 18px !important; }
+  .musher-photo img,
+  .fenix-photo img{
+    border-radius: inherit !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
+/* =========================
+   MOBILE: spec-card typografia + radius
+   ========================= */
+@media (max-width: 720px){
+
+  .spec-card{
+    grid-template-columns: 1fr !important;
+    padding: 1.1rem 1.0rem !important;
+    border-radius: 1.2rem !important;
+    gap: 1rem !important;
+  }
+
+  .spec-title{
+    font-size: clamp(1.7rem, 7vw, 2.1rem) !important;
+    line-height: 1.05 !important;
+    margin-bottom: 0.9rem !important;
+  }
+
+  .spec-info{
+    font-size: 0.98rem !important;
+  }
+
+  .spec-list{
+    font-size: 0.9rem !important;
+    gap: 0.5rem !important;
+  }
+
+  .spec-image{
+    border-radius: 1.1rem !important;
+    padding: 0.7rem !important;
+  }
+
+  .spec-image img{
+    border-radius: 1.1rem !important; /* mniejszy round w ramce */
+    height: auto !important;
+  }
+}
+
+/* =========================
+   MOBILE: dropdown tylko przez .open (żadnego hover/focus-within)
+   ========================= */
+@media (max-width: 720px){
+
+  /* zabijamy mechanizmy, które utrzymują menu otwarte */
+  .nav-has-dropdown:hover .nav-dropdown{ display: none !important; }
+  .nav-has-dropdown:focus-within .nav-dropdown{ display: none !important; }
+
+  /* jedyne źródło otwarcia: klasa .open */
+  .nav-has-dropdown.open .nav-dropdown{ display: flex !important; }
+
+  /* chevron też ma reagować na open */
+  .nav-has-dropdown.open .nav-chevron{
+    transform: rotate(225deg) translateY(1px) !important;
+    opacity: 1 !important;
   }
 }
