@@ -2092,3 +2092,53 @@ body.no-scroll{
     scroll-snap-align: center;
   }
 }
+
+@media (max-width: 720px){
+  /* backdrop ma być POD menu, ale NAD stroną */
+  .nav-backdrop{ z-index: 60; }
+
+  /* panel menu ma być NAD backdropem */
+  .main-nav{ z-index: 70; }
+
+  /* dodatkowo: upewniamy się że panel przyjmuje kliknięcia */
+  .main-nav{ pointer-events: auto; }
+
+  /* a backdrop tylko kiedy otwarty */
+  .nav-backdrop{ pointer-events: none; }
+  body.nav-open .nav-backdrop,
+  .nav-backdrop.open{ pointer-events: auto; }
+}
+
+@media (max-width: 720px){
+  .contact-layout{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* formularz pierwszy, full width */
+  .contact-form{
+    order: 1;
+    width: 100%;
+  }
+
+  /* dane kontaktowe pod spodem */
+  .contact-info{
+    order: 2;
+    width: 100%;
+  }
+}
+
+@media (max-width: 720px){
+  .about-grid{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* pierwszy blok (tekst) */
+  .about-grid > div:first-child{ order: 1; }
+
+  /* drugi blok (ramka/statystyka) */
+  .about-grid > div:last-child{ order: 2; }
+}
