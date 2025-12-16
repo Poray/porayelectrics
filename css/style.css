@@ -2527,3 +2527,59 @@ body.no-scroll{
     opacity: 1 !important;
   }
 }
+
+/* =========================
+   MOBILE: "Pojazdy" klikalne na całej szerokości wiersza
+   ========================= */
+@media (max-width: 720px){
+  .nav-has-dropdown > .nav-link{
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+
+  .nav-has-dropdown > .nav-link .nav-label{
+    flex: 1 1 auto !important;
+  }
+
+  /* większy "hit area" dla chevrona, ale nadal cały wiersz klika */
+  .nav-has-dropdown > .nav-link .nav-chevron{
+    padding: 0.45rem !important;
+    margin-right: -0.25rem !important;
+  }
+}
+
+/* =========================
+   MOBILE: specyfikacja -> najpierw parametry, potem zdjęcie full width
+   ========================= */
+@media (max-width: 720px){
+
+  /* zamiast grid: kolumna (pewne i proste) */
+  .spec-card{
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  /* specy zawsze pierwsze */
+  .spec-info{ order: 1 !important; }
+
+  /* zdjęcie zawsze pod spodem, na pełną szerokość */
+  .spec-image{
+    order: 2 !important;
+    width: 100% !important;
+
+    padding: 0 !important;          /* usuwamy “ramkę” wewnętrzną */
+    border-radius: 18px !important; /* mniejszy round na mobile */
+  }
+
+  .spec-image img{
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+
+    border-radius: 18px !important; /* ten sam round */
+    object-fit: cover !important;
+  }
+}

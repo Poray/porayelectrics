@@ -212,22 +212,22 @@ mainNav?.addEventListener("click", (e) => {
   const isMobile = window.matchMedia("(max-width: 720px)").matches;
   if (!isMobile) return;
 
-  // Klik w wiersz "Pojazdy/Vehicles" ma toggle dropdown
-  const dropdownWrap = e.target.closest(".nav-has-dropdown");
-  const clickedTopRow = e.target.closest(".nav-has-dropdown > .nav-link");
-
-  if (dropdownWrap && clickedTopRow) {
-    e.preventDefault();
-    dropdownWrap.classList.toggle("open"); // teraz da się też SCHOWAĆ
+  // 1) Klik w cały wiersz "Pojazdy/Vehicles" (gdziekolwiek) => toggle dropdown
+  const topRowLink = e.target.closest(".nav-has-dropdown > .nav-link");
+  if (topRowLink) {
+    e.preventDefault(); // nie scrollujemy do #pojazdy
+    const wrap = topRowLink.closest(".nav-has-dropdown");
+    wrap?.classList.toggle("open");
     return;
   }
 
-  // Klik w jakikolwiek link sekcji zamyka menu
+  // 2) Klik w link z dropdownu lub inne linki sekcji => zamykamy menu
   const a = e.target.closest('a[href^="#"]');
   if (!a) return;
 
   closeNav();
 });
+
 
 
 window.addEventListener("resize", () => {
