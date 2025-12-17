@@ -863,3 +863,20 @@ document.querySelectorAll(".model-pill").forEach((pill) => {
     });
   });
 });
+
+
+function syncMobileHeaderOffset() {
+  if (window.innerWidth > 720) return;
+
+  const header = document.querySelector(".site-header-inner");
+  if (!header) return;
+
+  const h = Math.ceil(header.getBoundingClientRect().height);
+  document.documentElement.style.setProperty(
+    "--header-offset-mobile",
+    `${h + 8}px`
+  );
+}
+
+window.addEventListener("load", syncMobileHeaderOffset);
+window.addEventListener("resize", syncMobileHeaderOffset);
