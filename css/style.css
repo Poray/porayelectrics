@@ -3369,3 +3369,41 @@ body.no-scroll{
     max-width: 120px;    /* klucz dla iPhone */
   }
 }
+
+/* Mobile logo – trochę większe, ale dalej bez overflow */
+@media (max-width: 720px){
+  .logo-image img{
+    height: 26px !important;
+    max-height: 26px !important;
+    max-width: 150px !important;
+  }
+}
+
+/* =========================
+   HARD FIX: hamburger always clickable + menu always above
+   ========================= */
+@media (max-width: 720px){
+
+  .site-header{ position: sticky; top: 0; z-index: 2000 !important; }
+
+  /* hamburger ma być NAJWYŻEJ w headerze */
+  .nav-toggle{
+    position: relative;
+    z-index: 2100 !important;
+    pointer-events: auto !important;
+  }
+
+  /* backdrop pod panelem */
+  .nav-backdrop{ z-index: 1800 !important; }
+
+  /* panel menu nad backdropem */
+  .main-nav{
+    z-index: 2200 !important;
+    pointer-events: auto !important;
+  }
+
+  /* WAŻNE: kiedy menu zamknięte, backdrop nie może łapać klików */
+  .nav-backdrop{ pointer-events: none !important; }
+  body.nav-open .nav-backdrop,
+  .nav-backdrop.open{ pointer-events: auto !important; }
+}
