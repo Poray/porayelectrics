@@ -22,9 +22,8 @@ html,
 body {
   margin: 0;
   padding: 0;
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
 }
-
 
 :root{
   --anchor-offset: 50px;

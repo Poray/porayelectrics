@@ -68,10 +68,7 @@ function assignSideDirections() {
 
 assignSideDirections();
 
-let isAutoScrolling = false;
-
 function updateSidePhotos() {
-  if (isAutoScrolling) return;
   if (!sidePhotos.length) return;
 
   const vh = window.innerHeight;
@@ -213,65 +210,24 @@ function updateAnchorOffset() {
 updateAnchorOffset();
 window.addEventListener("resize", updateAnchorOffset, { passive: true });
 
-
-function animateScrollTop(to, duration = 560) {
-  const start = window.pageYOffset;
-  const change = to - start;
-  const startTime = performance.now();
-
-  const ease = (t) =>
-    t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-  isAutoScrolling = true;
-
-  return new Promise((resolve) => {
-    function step(now) {
-      const t = Math.min(1, (now - startTime) / duration);
-      window.scrollTo(0, start + change * ease(t));
-
-      if (t < 1) {
-        requestAnimationFrame(step);
-      } else {
-        // puść flagę po 1 klatce, żeby scroll eventy się uspokoiły
-        requestAnimationFrame(() => {
-          isAutoScrolling = false;
-          resolve();
-        });
-      }
-    }
-    requestAnimationFrame(step);
-  });
-}
-
-
 function scrollToAnchorStable(id) {
   const el = document.getElementById(id);
-  if (!el) return Promise.resolve();
+  if (!el) return;
 
-  const header = document.querySelector(".site-header-inner");
-  const offset = (header ? header.offsetHeight : 80) + 18;
+  updateAnchorOffset();
 
-  const y = el.getBoundingClientRect().top + window.pageYOffset - offset;
-  return animateScrollTop(y, 560);
+  const headerInner = document.querySelector(".site-header-inner");
+  const offset = (headerInner ? headerInner.offsetHeight : 80) + 18;
+
+  const getY = () => el.getBoundingClientRect().top + window.pageYOffset - offset;
+
+  window.scrollTo({ top: getY(), behavior: "smooth" });
+
+  // 2 korekty po zamknięciu menu / reflow (iOS Safari)
+  setTimeout(() => window.scrollTo({ top: getY(), behavior: "auto" }), 160);
+  setTimeout(() => window.scrollTo({ top: getY(), behavior: "auto" }), 320);
 }
 
-
-
-
-function scrollVehicleCardsTo(modelKey) {
-  const isMobile = window.matchMedia("(max-width: 720px)").matches;
-  if (!isMobile) return;
-
-  const card = document.querySelector(`#pojazdy .product-card[data-model="${modelKey}"]`);
-  if (!card) return;
-
-  // przewija poziomą karuzelę (cards-grid na mobile jest scrollable)
-  card.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-
-  // lekki highlight (masz już funkcję, ale zostawiamy też to)
-  card.classList.add("product-card-highlighted");
-  setTimeout(() => card.classList.remove("product-card-highlighted"), 3000);
-}
 
 if (navToggle && mainNav) {
   navToggle.addEventListener("click", () => {
@@ -284,19 +240,16 @@ navBackdrop?.addEventListener("click", closeNav);
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeNav();
 });
-
-
 mainNav?.addEventListener("click", (e) => {
   const isMobile = window.matchMedia("(max-width: 720px)").matches;
   if (!isMobile) return;
 
-const vehiclesHeader = e.target.closest(".nav-has-dropdown > .nav-link");
-if (vehiclesHeader) {
-  e.preventDefault();
-  const wrap = vehiclesHeader.closest(".nav-has-dropdown");
-  wrap?.classList.toggle("open");
-  return;
-}
+  // klik w "Pojazdy" (nagłówek) nie ma scrollować
+  const vehiclesHeader = e.target.closest(".nav-has-dropdown > .nav-link");
+  if (vehiclesHeader) {
+    e.preventDefault();
+    return;
+  }
 
   // klik w dowolny link sekcji/pojazdu -> zamknij menu i dopiero scrolluj stabilnie
   const a = e.target.closest('a[href^="#"]');
@@ -472,24 +425,11 @@ function highlightVehicleCard(modelKey) {
 
 modelPills.forEach((pill) => {
   const modelKey = pill.dataset.model;
-pill.addEventListener("click", (e) => {
-  const isMobile = window.matchMedia("(max-width: 720px)").matches;
-
-  if (isMobile) {
-    e.preventDefault();
-
-scrollToAnchorStable("pojazdy").then(() => {
-  scrollVehicleCardsTo(modelKey);
-});
-
-
-    return;
-  }
-
-  // desktop zostaje jak było: tylko highlight
-  setTimeout(() => highlightVehicleCard(modelKey), 300);
-});
-
+  pill.addEventListener("click", () => {
+    setTimeout(() => {
+      highlightVehicleCard(modelKey);
+    }, 400);
+  });
 });
 
 if (window.matchMedia("(pointer: fine)").matches) {
@@ -880,16 +820,12 @@ document.addEventListener("click", (e) => {
   const a = e.target.closest('a.nav-cta[href^="#"]');
   if (!a) return;
 
-  const isMobile = window.matchMedia("(max-width: 720px)").matches;
-  if (isMobile) return;
-
   const id = a.getAttribute("href").slice(1);
   if (!id) return;
 
   e.preventDefault();
   scrollToAnchorStable(id);
 });
-
 
 
 // optional: swipe to close nav (mobile)
