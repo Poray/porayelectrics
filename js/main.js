@@ -753,36 +753,7 @@ if (form) {
   });
 }
 
-function scrollToAnchorStable(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
 
-  const header = document.querySelector(".site-header-inner");
-  const offset = header ? header.offsetHeight + 24 : 110;
-
-  const getY = () => el.getBoundingClientRect().top + window.pageYOffset - offset;
-
-  window.scrollTo({ top: getY(), behavior: "smooth" });
-
-  setTimeout(() => {
-    window.scrollTo({ top: getY(), behavior: "auto" });
-  }, 120);
-
-  setTimeout(() => {
-    window.scrollTo({ top: getY(), behavior: "auto" });
-  }, 260);
-}
-
-document.addEventListener("click", (e) => {
-  const a = e.target.closest('a.nav-cta[href^="#"]');
-  if (!a) return;
-
-  const id = a.getAttribute("href").slice(1);
-  if (!id) return;
-
-  e.preventDefault();
-  scrollToAnchorStable(id);
-});
 
 
 // optional: swipe to close nav (mobile)
@@ -810,3 +781,85 @@ document.addEventListener("click", (e) => {
     x0 = null;
   }, { passive: true });
 })();
+
+// ===== SMOOTH SCROLL + VEHICLES CAROUSEL CONTROL (mobile) =====
+
+let isAutoScrolling = false;
+
+// podczepiamy się pod Twoją funkcję updateSidePhotos (żeby nie klatkowała podczas auto-scroll)
+const _updateSidePhotosOriginal = updateSidePhotos;
+updateSidePhotos = function () {
+  if (isAutoScrolling) return;
+  return _updateSidePhotosOriginal();
+};
+
+function animateScrollTop(to, duration = 560) {
+  const start = window.pageYOffset;
+  const change = to - start;
+  const startTime = performance.now();
+
+  const ease = (t) =>
+    t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  isAutoScrolling = true;
+
+  return new Promise((resolve) => {
+    function step(now) {
+      const t = Math.min(1, (now - startTime) / duration);
+      window.scrollTo(0, start + change * ease(t));
+
+      if (t < 1) {
+        requestAnimationFrame(step);
+      } else {
+        requestAnimationFrame(() => {
+          isAutoScrolling = false;
+          resolve();
+        });
+      }
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+function scrollToAnchorStable(id) {
+  const el = document.getElementById(id);
+  if (!el) return Promise.resolve();
+
+  const header = document.querySelector(".site-header-inner");
+  const offset = (header ? header.offsetHeight : 80) + 18;
+
+  const y = el.getBoundingClientRect().top + window.pageYOffset - offset;
+  return animateScrollTop(y, 560);
+}
+
+function scrollVehicleCardsTo(modelKey) {
+  if (!modelKey) return;
+
+  const cardsGrid = document.querySelector("#pojazdy .cards-grid");
+  if (!cardsGrid) return;
+
+  const card = cardsGrid.querySelector(`[data-model="${modelKey}"]`);
+  if (!card) return;
+
+  // przewijanie poziome kontenera (bardziej przewidywalne na iOS niż scrollIntoView)
+  const left =
+    card.offsetLeft - (cardsGrid.clientWidth - card.clientWidth) / 2;
+
+  cardsGrid.scrollTo({
+    left: Math.max(0, left),
+    behavior: "smooth",
+  });
+}
+
+// Klik w duże przyciski (Musher/Voyager/Intruder) => scroll do sekcji + przewinięcie w bok
+document.querySelectorAll(".model-pill").forEach((pill) => {
+  pill.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const modelKey = pill.dataset.model;
+    scrollToAnchorStable("pojazdy").then(() => {
+      scrollVehicleCardsTo(modelKey);
+      highlightVehicleCard(modelKey);
+    });
+  });
+});
