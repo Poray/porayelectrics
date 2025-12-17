@@ -2829,3 +2829,26 @@ body.no-scroll{
     scroll-margin-top: var(--header-offset-mobile, 88px);
   }
 }
+/* === FIX: mobile dropdown "Pojazdy" in hamburger === */
+@media (max-width: 720px) {
+  /* domyślnie ukryte */
+  .nav-dropdown{
+    display: none !important;
+    position: static !important;
+    margin-top: .35rem !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* otwierane TYLKO klasą .open (JS) */
+  .nav-has-dropdown.open .nav-dropdown{
+    display: flex !important;
+  }
+
+  /* większy klik */
+  .nav-has-dropdown > .nav-link{
+    width: 100%;
+  }
+}
