@@ -880,3 +880,66 @@ function syncMobileHeaderOffset() {
 
 window.addEventListener("load", syncMobileHeaderOffset);
 window.addEventListener("resize", syncMobileHeaderOffset);
+
+/* =========================
+   MUSHER – SOFT RAIN INIT (full width, starts under spec-card)
+   ========================= */
+
+(function initMusherRain(){
+  const section = document.getElementById("musher");
+  const rainHost = section?.querySelector(".musher-rain");
+  const specCard = section?.querySelector(".spec-card");
+
+  if (!section || !rainHost || !specCard) return;
+
+  // delikatniej: mniej kropli
+  const DROP_COUNT = 55;
+
+  function spawnRain(){
+    rainHost.innerHTML = "";
+
+    const sectionRect = section.getBoundingClientRect();
+    const specRect = specCard.getBoundingClientRect();
+
+    // START pod kontenerem (spec-card)
+    const startY = Math.max(0, (specRect.bottom - sectionRect.top));
+
+    // Ustawiamy rain overlay tak, by zaczynał się dopiero od startY
+    rainHost.style.top = `${startY}px`;
+
+    // pełna szerokość sekcji
+    const w = sectionRect.width;
+
+    for(let i = 0; i < DROP_COUNT; i++){
+      const drop = document.createElement("i");
+      drop.className = "musher-drop";
+
+      // pełna szerokość
+      const x = Math.random() * w;
+
+      // łagodniej: wolniej + różne długości
+      const dur = 1.6 + Math.random() * 1.8; // 1.6–3.4s
+      const delay = Math.random() * -dur;
+
+      // lekki "wiatr" minimalny
+      const dx = (Math.random() * 10 - 5).toFixed(1) + "px";
+
+      // delikatniejsza widoczność
+      const op = (0.18 + Math.random() * 0.18).toFixed(2); // 0.18–0.36
+      const h = (45 + Math.random() * 55).toFixed(0) + "px"; // 45–100px
+
+      drop.style.left = x + "px";
+      drop.style.height = h;
+      drop.style.animationDuration = dur + "s";
+      drop.style.animationDelay = delay + "s";
+      drop.style.setProperty("--dx", dx);
+      drop.style.setProperty("--op", op);
+
+      rainHost.appendChild(drop);
+    }
+  }
+
+  spawnRain();
+  window.addEventListener("resize", spawnRain, { passive: true });
+})();
+

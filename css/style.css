@@ -2852,3 +2852,474 @@ body.no-scroll{
     width: 100%;
   }
 }
+
+/* =========================
+   MUSHER – SOFT RAIN (full width, starts under spec-card)
+   ========================= */
+
+#musher{
+  position: relative;
+  overflow: hidden;
+}
+
+.musher-rain{
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* top ustawiamy w JS, żeby startował pod kontenerem */
+  top: 0;
+  bottom: 0;
+
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* treść sekcji NAD deszczem */
+#musher > *:not(.musher-rain){
+  position: relative;
+  z-index: 1;
+}
+
+.musher-drop{
+  position: absolute;
+  top: -80px;
+
+  width: 1px;
+  height: 60px;
+
+  /* delikatny, miękki "smug" */
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(180,220,255,0.22),
+    rgba(180,220,255,0.06)
+  );
+
+  opacity: 0.35;
+  filter: blur(0.2px);
+  will-change: transform, opacity;
+
+  animation: musherRainFall linear infinite;
+}
+
+@keyframes musherRainFall{
+  from{
+    transform: translate3d(var(--dx, 0px), -12vh, 0);
+    opacity: 0;
+  }
+  12% { opacity: var(--op, 0.35); }
+  80% { opacity: calc(var(--op, 0.35) * 0.7); }
+  to{
+    transform: translate3d(var(--dx, 0px), 120vh, 0);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .musher-drop{ animation: none !important; opacity: 0 !important; }
+}
+
+/* =========================
+   HEADER – COMPACT MODE (prevents breaking on narrow desktop)
+   ========================= */
+@media (max-width: 920px){
+
+  /* mniej powietrza w pigułce */
+  .site-header-inner{
+    gap: 1rem !important;
+    padding: 0.5rem 0.9rem !important;
+  }
+
+  /* nawigacja nie może wypychać prawej strony */
+  .main-nav{
+    gap: 1.05rem !important;
+    font-size: 0.84rem !important;
+  }
+
+  /* CTA nie może być tak szerokie */
+  .nav-cta{
+    padding-inline: 0.9rem !important;
+    font-size: 0.78rem !important;
+  }
+
+  /* przełącznik języka węższy */
+  .lang-switch{
+    padding: 0.15rem 0.35rem !important;
+    font-size: 0.68rem !important;
+    white-space: nowrap !important;
+  }
+
+  /* zabezpieczenie: nic nie może „wyjść” poza header */
+  .site-header-inner{
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+}
+
+/* =========================
+   EVEN NARROWER DESKTOP (hide language pill to avoid overflow)
+   ========================= */
+@media (max-width: 860px){
+  /* na tych szerokościach najczęściej psuje się prawa strona */
+  .lang-switch{ display: none !important; }
+
+  /* opcjonalnie: pokaż hamburger wcześniej (żeby nie cisnąć w jednej linii) */
+  .nav-toggle{ display: block !important; }
+
+  /* i chowamy główne linki (jak w mobile), bo inaczej i tak będzie ścisk */
+  .main-nav{ display: none !important; }
+
+  /* CTA zostaje, ale mniejsze */
+  .nav-cta{
+    display: inline-flex !important;
+    padding: 0.5rem 0.85rem !important;
+  }
+}
+
+
+/* =========================
+   LOGO IMAGE (Poray Electrics)
+   ========================= */
+
+.logo-image{
+  display: flex;
+  align-items: center;
+}
+
+.logo-image img{
+  display: block;
+  height: 50px;          /* desktop */
+  width: auto;
+  filter: drop-shadow(0 0 6px rgba(255,200,40,0.35));
+}
+
+/* tablet / wąskie okna */
+@media (max-width: 920px){
+  .logo-image img{
+    height: 24px;
+  }
+}
+
+/* mobile */
+@media (max-width: 720px){
+  .logo-image img{
+    height: 22px;
+  }
+}
+
+/* =========================
+   MODEL BUTTONS – GLASS / LOG IN STYLE
+   ========================= */
+
+.model-pill{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.65rem 1.4rem;
+  border-radius: 999px;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+
+  color: rgba(249, 250, 251, 0.92);
+  text-decoration: none;
+
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(148, 163, 184, 0.35);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 10px 30px rgba(0,0,0,0.45);
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.15s ease,
+    color 0.25s ease;
+}
+
+/* hover – jak "Log In" */
+.model-pill:hover{
+  background: rgba(30, 41, 59, 0.75);
+  border-color: rgba(226, 232, 240, 0.55);
+  color: #fff;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.14),
+    0 14px 40px rgba(0,0,0,0.6);
+
+  transform: translateY(-1px);
+}
+
+/* active / klik */
+.model-pill:active{
+  transform: translateY(0);
+  box-shadow:
+    inset 0 2px 6px rgba(0,0,0,0.45);
+}
+
+/* zaznaczony model */
+.model-pill-active{
+  background: rgba(15, 23, 42, 0.85);
+  border-color: rgba(249, 250, 251, 0.8);
+  color: #fff;
+}
+
+/* mobile – trochę większe tap targety */
+@media (max-width: 720px){
+  .model-pill{
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* =========================
+   MODEL BUTTONS – BORDER FIX (no heavy outline on light bg)
+   ========================= */
+
+.model-pill{
+  /* ramka słabsza + neutralna */
+  border: 1px solid rgba(148, 163, 184, 0.22);
+
+  /* mniej kontrastowe tło, żeby nie „łapało” gradientu sekcji */
+  background: rgba(15, 23, 42, 0.45);
+
+  /* usuwamy wrażenie drugiej ramki */
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 8px 22px rgba(0,0,0,0.35);
+}
+
+/* hover – ramka wyraźniejsza, ALE dalej premium */
+.model-pill:hover{
+  border-color: rgba(226, 232, 240, 0.55);
+  background: rgba(30, 41, 59, 0.7);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    0 14px 36px rgba(0,0,0,0.55);
+}
+
+/* aktywny (klik) */
+.model-pill:active{
+  border-color: rgba(226, 232, 240, 0.65);
+  box-shadow:
+    inset 0 2px 6px rgba(0,0,0,0.45);
+}
+
+/* zaznaczony model – delikatnie, BEZ neonów */
+.model-pill-active{
+  border-color: rgba(226, 232, 240, 0.6);
+  background: rgba(15, 23, 42, 0.7);
+}
+
+/* =========================
+   MODEL BUTTONS – HARD FIX
+   (no backdrop-filter, no halo)
+   ========================= */
+
+.model-pill{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.65rem 1.4rem;
+  border-radius: 999px;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+
+  color: rgba(249, 250, 251, 0.92);
+  text-decoration: none;
+
+  /* KLUCZ: brak blur -> brak różnic */
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  /* ramka RYSOWANA, a nie „łapana z tła” */
+  box-shadow:
+    inset 0 0 0 1px rgba(148, 163, 184, 0.28),
+    0 8px 22px rgba(0,0,0,0.35);
+
+  border: none;
+
+  transition:
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    transform 0.15s ease,
+    color 0.25s ease;
+}
+
+/* hover – ramka się wzmacnia */
+.model-pill:hover{
+  background: rgba(30, 41, 59, 0.85);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(226, 232, 240, 0.65),
+    0 14px 36px rgba(0,0,0,0.55);
+
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* klik */
+.model-pill:active{
+  transform: translateY(0);
+  box-shadow:
+    inset 0 0 0 1px rgba(226, 232, 240, 0.75),
+    inset 0 2px 6px rgba(0,0,0,0.45);
+}
+
+/* zaznaczony */
+.model-pill-active{
+  background: rgba(15, 23, 42, 0.85);
+  box-shadow:
+    inset 0 0 0 1px rgba(226, 232, 240, 0.7),
+    0 10px 28px rgba(0,0,0,0.45);
+}
+
+/* =========================
+   MODEL BUTTONS – ISOLATED RENDER FIX
+   ========================= */
+
+.model-pill{
+  position: relative;
+  isolation: isolate; /* 🔒 odcina od tła i gradientów */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.65rem 1.4rem;
+  border-radius: 999px;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+
+  color: rgba(249,250,251,0.95);
+  text-decoration: none;
+
+  /* TŁO STAŁE – NIE PRZEZROCZYSTE */
+  background: #0b1220;
+
+  border: none;
+  box-shadow: none;
+
+  transition:
+    transform 0.15s ease,
+    color 0.2s ease;
+}
+
+/* RAMKA – JAKO OSOBNA WARSTWA */
+.model-pill::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  pointer-events: none;
+
+  border: 1px solid rgba(148,163,184,0.28);
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* hover – ramka się wzmacnia */
+.model-pill:hover::before{
+  border-color: rgba(226,232,240,0.65);
+  box-shadow: 0 0 0 1px rgba(226,232,240,0.25);
+}
+
+/* hover – mikro feedback */
+.model-pill:hover{
+  transform: translateY(-1px);
+  color: #fff;
+}
+
+/* active */
+.model-pill:active{
+  transform: translateY(0);
+}
+
+/* aktywny (jeśli używasz .model-pill-active) */
+.model-pill-active::before{
+  border-color: rgba(226,232,240,0.7);
+  box-shadow: 0 0 0 1px rgba(226,232,240,0.3);
+}
+
+/* =========================
+   MODEL PILL – SOFT COLORED GLOW
+   ========================= */
+
+.model-pill{
+  position: relative;
+  isolation: isolate; /* ważne */
+}
+
+/* glow layer */
+.model-pill::after{
+  content: "";
+  position: absolute;
+  inset: -4px;              /* jak daleko wychodzi glow */
+  border-radius: inherit;
+  pointer-events: none;
+
+  opacity: 0;
+  filter: blur(12px);
+
+  /* kolor glowa – DOMYŚLNY */
+  background: radial-gradient(
+    60% 60% at 50% 50%,
+    rgba(120, 180, 255, 0.35),
+    rgba(120, 180, 255, 0.0) 70%
+  );
+
+  transition: opacity 0.25s ease;
+  z-index: -1;
+}
+
+/* hover – glow się pojawia */
+.model-pill:hover::after{
+  opacity: 1;
+}
+
+/* active / selected */
+.model-pill-active::after{
+  opacity: 0.9;
+}
+.model-pill[data-model="voyager"]::after{
+  background: radial-gradient(
+    60% 60% at 50% 50%,
+    rgba(120, 180, 255, 0.35),
+    rgba(120, 180, 255, 0) 70%
+  );
+}
+
+.model-pill[data-model="intruder"]::after{
+  background: radial-gradient(
+    60% 60% at 50% 50%,
+    rgba(255, 120, 120, 0.35),
+    rgba(255, 120, 120, 0) 70%
+  );
+}
+
+.model-pill[data-model="musher"]::after{
+  background: radial-gradient(
+    60% 60% at 50% 50%,
+    rgba(160, 255, 160, 0.35),
+    rgba(160, 255, 160, 0) 70%
+  );
+}
