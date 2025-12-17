@@ -459,6 +459,18 @@ body {
   font-size: 0.72rem;
 }
 
+/* LANG switch: mobile version hidden on desktop */
+.lang-switch--mobile {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .lang-switch--mobile {
+    display: inline-flex;
+  }
+}
+
+
 .lang-btn {
   border: none;
   background: transparent;

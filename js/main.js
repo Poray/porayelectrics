@@ -211,7 +211,7 @@ updateAnchorOffset();
 window.addEventListener("resize", updateAnchorOffset, { passive: true });
 
 
-function animateScrollTop(to, duration = 520) {
+function animateScrollTop(to, duration = 560) {
   const start = window.pageYOffset;
   const change = to - start;
   const startTime = performance.now();
@@ -219,34 +219,30 @@ function animateScrollTop(to, duration = 520) {
   const ease = (t) =>
     t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-  function step(now) {
-    const t = Math.min(1, (now - startTime) / duration);
-    window.scrollTo(0, start + change * ease(t));
-    if (t < 1) requestAnimationFrame(step);
-  }
-
-  requestAnimationFrame(step);
+  return new Promise((resolve) => {
+    function step(now) {
+      const t = Math.min(1, (now - startTime) / duration);
+      window.scrollTo(0, start + change * ease(t));
+      if (t < 1) requestAnimationFrame(step);
+      else resolve();
+    }
+    requestAnimationFrame(step);
+  });
 }
-
 
 function scrollToAnchorStable(id) {
   const el = document.getElementById(id);
-  if (!el) return;
+  if (!el) return Promise.resolve();
 
   const header = document.querySelector(".site-header-inner");
   const offset = (header ? header.offsetHeight : 80) + 18;
 
+  // policz docelowy Y raz (bez późniejszych "korekt" setTimeoutami)
   const y = el.getBoundingClientRect().top + window.pageYOffset - offset;
 
-  // jedna płynna animacja, bez "schodków"
-  animateScrollTop(y, 560);
-
-  // jedna lekka korekta po reflow (iOS), ale bez efektu skoków
-  setTimeout(() => {
-    const y2 = el.getBoundingClientRect().top + window.pageYOffset - offset;
-    window.scrollTo({ top: y2, behavior: "auto" });
-  }, 620);
+  return animateScrollTop(y, 560);
 }
+
 
 
 function scrollVehicleCardsTo(modelKey) {
@@ -469,13 +465,10 @@ pill.addEventListener("click", (e) => {
   if (isMobile) {
     e.preventDefault();
 
-    // 1) zjedź do sekcji z kartami
-    scrollToAnchorStable("pojazdy");
+scrollToAnchorStable("pojazdy").then(() => {
+  scrollVehicleCardsTo(modelKey);
+});
 
-    // 2) po chwili przewiń karuzelę do wybranej karty
-    setTimeout(() => {
-      scrollVehicleCardsTo(modelKey);
-    }, 520);
 
     return;
   }
