@@ -3323,3 +3323,49 @@ body.no-scroll{
     rgba(160, 255, 160, 0) 70%
   );
 }
+
+/* =========================
+   MOBILE FIX: LOGO IMG MUST NOT OVERFLOW
+   ========================= */
+
+/* header nie może „rosnąć” od logo */
+.site-header,
+.site-header-inner{
+  overflow: hidden;
+}
+
+/* logo jako flex item: nie rozpychaj */
+.logo-image{
+  display: flex;
+  align-items: center;
+  flex: 0 1 auto;
+  min-width: 0;          /* pozwala się ścinać w flex */
+}
+
+/* TWARDY LIMIT logo */
+.logo-image img{
+  display: block;
+  height: 28px;          /* desktop bazowo */
+  max-height: 28px;
+  width: auto;
+  max-width: 160px;      /* klucz: nie rozpycha */
+  object-fit: contain;
+}
+
+/* tablet */
+@media (max-width: 920px){
+  .logo-image img{
+    height: 24px;
+    max-height: 24px;
+    max-width: 140px;
+  }
+}
+
+/* mobile */
+@media (max-width: 720px){
+  .logo-image img{
+    height: 22px;
+    max-height: 22px;
+    max-width: 120px;    /* klucz dla iPhone */
+  }
+}
