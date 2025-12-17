@@ -2076,7 +2076,7 @@ body.no-scroll{
     gap: 1rem;
     overflow-x: auto;
     overflow-y: visible;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
 
     padding-left: 1rem;
