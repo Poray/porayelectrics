@@ -68,7 +68,10 @@ function assignSideDirections() {
 
 assignSideDirections();
 
+let isAutoScrolling = false;
+
 function updateSidePhotos() {
+  if (isAutoScrolling) return;
   if (!sidePhotos.length) return;
 
   const vh = window.innerHeight;
@@ -219,16 +222,27 @@ function animateScrollTop(to, duration = 560) {
   const ease = (t) =>
     t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
+  isAutoScrolling = true;
+
   return new Promise((resolve) => {
     function step(now) {
       const t = Math.min(1, (now - startTime) / duration);
       window.scrollTo(0, start + change * ease(t));
-      if (t < 1) requestAnimationFrame(step);
-      else resolve();
+
+      if (t < 1) {
+        requestAnimationFrame(step);
+      } else {
+        // puść flagę po 1 klatce, żeby scroll eventy się uspokoiły
+        requestAnimationFrame(() => {
+          isAutoScrolling = false;
+          resolve();
+        });
+      }
     }
     requestAnimationFrame(step);
   });
 }
+
 
 function scrollToAnchorStable(id) {
   const el = document.getElementById(id);
@@ -237,11 +251,10 @@ function scrollToAnchorStable(id) {
   const header = document.querySelector(".site-header-inner");
   const offset = (header ? header.offsetHeight : 80) + 18;
 
-  // policz docelowy Y raz (bez późniejszych "korekt" setTimeoutami)
   const y = el.getBoundingClientRect().top + window.pageYOffset - offset;
-
   return animateScrollTop(y, 560);
 }
+
 
 
 
