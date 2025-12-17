@@ -228,56 +228,20 @@ function scrollToAnchorStable(id) {
   setTimeout(() => window.scrollTo({ top: getY(), behavior: "auto" }), 320);
 }
 
-function animateScrollLeft(el, to, duration = 520) {
-  const start = el.scrollLeft;
-  const change = to - start;
-  const startTime = performance.now();
-
-  // easeInOutCubic
-  const ease = (t) =>
-    t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-  function step(now) {
-    const elapsed = now - startTime;
-    const t = Math.min(1, elapsed / duration);
-    el.scrollLeft = start + change * ease(t);
-    if (t < 1) requestAnimationFrame(step);
-  }
-
-  requestAnimationFrame(step);
-}
-
 function scrollVehicleCardsTo(modelKey) {
   const isMobile = window.matchMedia("(max-width: 720px)").matches;
   if (!isMobile) return;
 
-  const grid = document.querySelector("#pojazdy .cards-grid");
   const card = document.querySelector(`#pojazdy .product-card[data-model="${modelKey}"]`);
-  if (!grid || !card) return;
+  if (!card) return;
 
-  // docelowo: środek karty na środku viewportu karuzeli
-  const gridRect = grid.getBoundingClientRect();
-  const cardRect = card.getBoundingClientRect();
+  // przewija poziomą karuzelę (cards-grid na mobile jest scrollable)
+  card.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
 
-  const current = grid.scrollLeft;
-
-  const cardCenterInViewport = (cardRect.left - gridRect.left) + cardRect.width / 2;
-  const target = current + cardCenterInViewport - gridRect.width / 2;
-
-  // na czas animacji wyłącz snap (żeby nie szarpało)
-  const prevSnap = grid.style.scrollSnapType;
-  grid.style.scrollSnapType = "none";
-
-  animateScrollLeft(grid, target, 560);
-
-  // przywróć snap po animacji + dociągnij do snap pointu
-  setTimeout(() => {
-    grid.style.scrollSnapType = prevSnap || "";
-    // delikatny "finish" w snap (pozwala Safari dociągnąć bez szarpania)
-    grid.scrollTo({ left: grid.scrollLeft, behavior: "smooth" });
-  }, 600);
+  // lekki highlight (masz już funkcję, ale zostawiamy też to)
+  card.classList.add("product-card-highlighted");
+  setTimeout(() => card.classList.remove("product-card-highlighted"), 3000);
 }
-
 
 if (navToggle && mainNav) {
   navToggle.addEventListener("click", () => {
