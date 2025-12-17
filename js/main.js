@@ -874,12 +874,16 @@ document.addEventListener("click", (e) => {
   const a = e.target.closest('a.nav-cta[href^="#"]');
   if (!a) return;
 
+  const isMobile = window.matchMedia("(max-width: 720px)").matches;
+  if (isMobile) return;
+
   const id = a.getAttribute("href").slice(1);
   if (!id) return;
 
   e.preventDefault();
   scrollToAnchorStable(id);
 });
+
 
 
 // optional: swipe to close nav (mobile)
