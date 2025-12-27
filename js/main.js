@@ -961,3 +961,35 @@ window.addEventListener("resize", syncMobileHeaderOffset);
   window.addEventListener("resize", spawnRain, { passive: true });
 })();
 
+
+
+
+function initMobileCardsArrows() {
+  const grid = document.querySelector("#pojazdy .cards-grid");
+  const prev = document.querySelector("#pojazdy .cards-prev");
+  const next = document.querySelector("#pojazdy .cards-next");
+  if (!grid || !prev || !next) return;
+
+  const update = () => {
+    const maxScroll = grid.scrollWidth - grid.clientWidth;
+    const x = grid.scrollLeft;
+
+    prev.classList.toggle("is-hidden", x <= 4);
+    next.classList.toggle("is-hidden", x >= maxScroll - 4);
+  };
+
+  prev.addEventListener("click", () => {
+    grid.scrollBy({ left: -grid.clientWidth * 0.9, behavior: "smooth" });
+  });
+
+  next.addEventListener("click", () => {
+    grid.scrollBy({ left: grid.clientWidth * 0.9, behavior: "smooth" });
+  });
+
+  grid.addEventListener("scroll", rafThrottle(update));
+  window.addEventListener("resize", rafThrottle(update));
+
+  update();
+}
+
+document.addEventListener("DOMContentLoaded", initMobileCardsArrows);

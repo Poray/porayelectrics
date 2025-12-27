@@ -3399,3 +3399,66 @@ body.no-scroll{
   body.nav-open .nav-backdrop,
   .nav-backdrop.open{ pointer-events: auto !important; }
 }
+
+
+
+/* ===============================
+   MOBILE CARDS ARROWS (ONLY)
+   =============================== */
+@media (max-width: 720px){
+
+  #pojazdy .cards-wrap{
+    position: relative;
+  }
+
+  /* strzałki */
+  #pojazdy .cards-prev,
+  #pojazdy .cards-next{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+
+    display: grid;
+    place-items: center;
+
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    color: rgba(255,255,255,0.9);
+    cursor: pointer;
+  }
+
+  #pojazdy .cards-prev{ left: 10px; }
+  #pojazdy .cards-next{ right: 10px; }
+
+#pojazdy .cards-prev span,
+#pojazdy .cards-next span{
+  display: block;
+  font-size: 30px;
+  line-height: 1;
+
+  /* optyczne centrowanie glyphu */
+  transform: translateX(1px) translateY(-3px);
+}
+
+  /* ukrywanie gdy nieaktywne */
+  #pojazdy .is-hidden{
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+/* DESKTOP: NIGDY NIE POKAZUJ STRZAŁEK */
+@media (min-width: 721px){
+  #pojazdy .cards-prev,
+  #pojazdy .cards-next{
+    display: none !important;
+  }
+}
