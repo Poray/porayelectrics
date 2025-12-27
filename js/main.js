@@ -191,7 +191,14 @@ function setNavState(isOpen) {
   document.body.classList.toggle("no-scroll", !!isOpen);
 
   navToggle?.setAttribute("aria-expanded", isOpen ? "true" : "false");
+
+  // reset dropdownów po zamknięciu menu mobilnego
+  if (!isOpen) {
+    mainNav?.querySelectorAll(".nav-has-dropdown.open")
+      .forEach((el) => el.classList.remove("open"));
+  }
 }
+
 
 function openNav(){ setNavState(true); }
 function closeNav(){ setNavState(false); }
