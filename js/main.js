@@ -970,6 +970,38 @@ function initMobileCardsArrows() {
   const next = document.querySelector("#pojazdy .cards-next");
   if (!grid || !prev || !next) return;
 
+  const cards = Array.from(grid.querySelectorAll(".product-card"));
+  if (!cards.length) return;
+
+  const cardCenterLeft = (card) =>
+    card.offsetLeft + card.offsetWidth / 2;
+
+  const scrollToCardIndex = (idx) => {
+    const card = cards[idx];
+    if (!card) return;
+
+    const targetCenter = cardCenterLeft(card);
+    const targetLeft = Math.round(targetCenter - grid.clientWidth / 2);
+
+    grid.scrollTo({ left: targetLeft, behavior: "smooth" });
+  };
+
+  const getCurrentIndex = () => {
+    const viewportCenter = grid.scrollLeft + grid.clientWidth / 2;
+
+    let bestIdx = 0;
+    let bestDist = Infinity;
+
+    for (let i = 0; i < cards.length; i++) {
+      const dist = Math.abs(cardCenterLeft(cards[i]) - viewportCenter);
+      if (dist < bestDist) {
+        bestDist = dist;
+        bestIdx = i;
+      }
+    }
+    return bestIdx;
+  };
+
   const update = () => {
     const maxScroll = grid.scrollWidth - grid.clientWidth;
     const x = grid.scrollLeft;
@@ -979,17 +1011,19 @@ function initMobileCardsArrows() {
   };
 
   prev.addEventListener("click", () => {
-    grid.scrollBy({ left: -grid.clientWidth * 0.9, behavior: "smooth" });
+    const i = getCurrentIndex();
+    scrollToCardIndex(Math.max(0, i - 1));
   });
 
   next.addEventListener("click", () => {
-    grid.scrollBy({ left: grid.clientWidth * 0.9, behavior: "smooth" });
+    const i = getCurrentIndex();
+    scrollToCardIndex(Math.min(cards.length - 1, i + 1));
   });
 
   grid.addEventListener("scroll", rafThrottle(update));
   window.addEventListener("resize", rafThrottle(update));
-
   update();
 }
 
 document.addEventListener("DOMContentLoaded", initMobileCardsArrows);
+
