@@ -2957,25 +2957,18 @@ body.no-scroll{
   }
 }
 
-/* =========================
-   EVEN NARROWER DESKTOP (hide language pill to avoid overflow)
-   ========================= */
-@media (max-width: 860px){
-  /* na tych szerokościach najczęściej psuje się prawa strona */
+/* było: @media (max-width: 860px) */
+@media (min-width: 721px) and (max-width: 860px){
   .lang-switch{ display: none !important; }
-
-  /* opcjonalnie: pokaż hamburger wcześniej (żeby nie cisnąć w jednej linii) */
   .nav-toggle{ display: block !important; }
-
-  /* i chowamy główne linki (jak w mobile), bo inaczej i tak będzie ścisk */
   .main-nav{ display: none !important; }
 
-  /* CTA zostaje, ale mniejsze */
   .nav-cta{
     display: inline-flex !important;
     padding: 0.5rem 0.85rem !important;
   }
 }
+
 
 
 /* =========================
@@ -3328,10 +3321,9 @@ body.no-scroll{
    MOBILE FIX: LOGO IMG MUST NOT OVERFLOW
    ========================= */
 
-/* header nie może „rosnąć” od logo */
 .site-header,
 .site-header-inner{
-  overflow: hidden;
+  overflow: visible !important;
 }
 
 /* logo jako flex item: nie rozpychaj */

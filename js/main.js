@@ -212,12 +212,23 @@ mainNav?.addEventListener("click", (e) => {
   const isMobile = window.matchMedia("(max-width: 720px)").matches;
   if (!isMobile) return;
 
-  // klik w "Pojazdy" (nagłówek) nie ma scrollować
   const vehiclesHeader = e.target.closest(".nav-has-dropdown > .nav-link");
   if (vehiclesHeader) {
     e.preventDefault();
+
+    const item = vehiclesHeader.closest(".nav-has-dropdown");
+    if (!item) return;
+
+    // zamknij inne dropdowny
+    mainNav.querySelectorAll(".nav-has-dropdown.open").forEach((el) => {
+      if (el !== item) el.classList.remove("open");
+    });
+
+    // przełącz aktualny
+    item.classList.toggle("open");
     return;
   }
+
 
   // klik w dowolny link sekcji/pojazdu zamyka menu
   const a = e.target.closest('a[href^="#"]');
