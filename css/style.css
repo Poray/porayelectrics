@@ -1764,7 +1764,7 @@ html, body {
 }
 
 * {
-  scrollbar-width: none;
+  scrollbar-width: auto;
 }
 
 .gallery,
@@ -2103,7 +2103,7 @@ body.no-scroll{
   }
 
   .cards-grid::-webkit-scrollbar{ display: none; }
-  .cards-grid{ scrollbar-width: none; }
+  .cards-grid{ scrollbar-width: auto; }
 
   .cards-grid > .card{
     flex: 0 0 100%;
@@ -3467,3 +3467,20 @@ body.no-scroll{
     display: none !important;
   }
 }
+
+/* === CENTER VOYAGER + INTRUDER (2 cards only) === */
+#pojazdy .cards-grid {
+  justify-content: center;
+}
+
+#pojazdy .cards-grid > .product-card {
+  max-width: 360px;
+}
+
+/* gdy są dokładnie 2 karty */
+@media (min-width: 721px) {
+  #pojazdy .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 360px));
+  }
+}
+
