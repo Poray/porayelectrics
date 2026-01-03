@@ -1299,17 +1299,3 @@ document.querySelectorAll('a[href^="#"]').forEach((a) => {
     }
   });
 });
-
-/* =========================
-   HANDLE DIRECT HASH LOAD
-   ========================= */
-window.addEventListener("load", () => {
-  const hash = location.hash.replace("#", "");
-  if (!hash) return;
-
-  const target = document.getElementById(hash);
-  if (!target) return;
-
-  setTimeout(() => scrollToSection(hash), 50);
-  setTimeout(() => scrollToSection(hash), 250);
-});
