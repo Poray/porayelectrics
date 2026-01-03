@@ -219,23 +219,32 @@ mainNav?.addEventListener("click", (e) => {
   const isMobile = window.matchMedia("(max-width: 720px)").matches;
   if (!isMobile) return;
 
-  const vehiclesHeader = e.target.closest(".nav-has-dropdown > .nav-link");
-  if (vehiclesHeader) {
-    e.preventDefault();
+const vehiclesHeader = e.target.closest(".nav-has-dropdown > .nav-link");
+if (vehiclesHeader) {
+  e.preventDefault();
 
-    const item = vehiclesHeader.closest(".nav-has-dropdown");
-    if (!item) return;
+  const item = vehiclesHeader.closest(".nav-has-dropdown");
+  if (!item) return;
 
-    // zamknij inne dropdowny
-    mainNav.querySelectorAll(".nav-has-dropdown.open").forEach((el) => {
-      if (el !== item) el.classList.remove("open");
-    });
+  const isOpen = item.classList.contains("open");
 
-    // przełącz aktualny
-    item.classList.toggle("open");
-    vehiclesHeader.blur?.();
-    return;
-  }
+  // zamknij inne dropdowny
+  mainNav.querySelectorAll(".nav-has-dropdown.open").forEach((el) => {
+    if (el !== item) el.classList.remove("open");
+  });
+
+  // toggle aktualny
+  item.classList.toggle("open");
+
+  // 🔑 KLUCZ: zdejmij focus/active z linku (iOS fix)
+  requestAnimationFrame(() => {
+    vehiclesHeader.blur();
+    document.activeElement?.blur?.();
+  });
+
+  return;
+}
+
 
 
   // klik w dowolny link sekcji/pojazdu zamyka menu
