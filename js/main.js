@@ -1002,13 +1002,21 @@ function initMobileCardsArrows() {
     return bestIdx;
   };
 
-  const update = () => {
-    const maxScroll = grid.scrollWidth - grid.clientWidth;
-    const x = grid.scrollLeft;
+const update = () => {
+  const maxScroll = grid.scrollWidth - grid.clientWidth;
+  const x = grid.scrollLeft;
 
-    prev.classList.toggle("is-hidden", x <= 4);
-    next.classList.toggle("is-hidden", x >= maxScroll - 4);
-  };
+  // JEŚLI NIE MA REALNEGO SCROLLA → UKRYJ OBA
+  if (maxScroll <= 8) {
+    prev.classList.add("is-hidden");
+    next.classList.add("is-hidden");
+    return;
+  }
+
+  prev.classList.toggle("is-hidden", x <= 8);
+  next.classList.toggle("is-hidden", x >= maxScroll - 8);
+};
+
 
   prev.addEventListener("click", () => {
     const i = getCurrentIndex();
