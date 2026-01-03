@@ -3,6 +3,27 @@ if (yearSpan) {
   yearSpan.textContent = new Date().getFullYear();
 }
 
+function updateAnchorOffset() {
+  const inner = document.querySelector(".site-header-inner");
+  const header = document.querySelector(".site-header");
+  if (!inner && !header) return;
+
+  // Najpewniejsze: ile pikseli od TOP do dolnej krawędzi "piguły"
+  const bottom = inner ? inner.getBoundingClientRect().bottom
+                       : header.getBoundingClientRect().bottom;
+
+  // +10px to “oddech”, żeby tytuł sekcji nie kleił się do headera
+  document.documentElement.style.setProperty("--anchor-offset", `${Math.ceil(bottom + 10)}px`);
+}
+
+
+window.addEventListener("load", updateAnchorOffset, { passive: true });
+window.addEventListener("resize", updateAnchorOffset, { passive: true });
+
+// i na wypadek późnego przeliczenia layoutu na iOS (fonty, paski itp.)
+setTimeout(updateAnchorOffset, 50);
+setTimeout(updateAnchorOffset, 250);
+
 const rafThrottle = (fn) => {
   let scheduled = false;
   let lastArgs = null;
@@ -18,6 +39,34 @@ const rafThrottle = (fn) => {
     });
   };
 };
+
+/* =========================
+   PERFECT ANCHOR SCROLL
+   ========================= */
+function getHeaderOffsetPx() {
+  const inner = document.querySelector(".site-header-inner");
+  const header = document.querySelector(".site-header");
+  const el = inner || header;
+  if (!el) return 0;
+
+  const bottom = el.getBoundingClientRect().bottom;
+  return Math.ceil(bottom + 12); // regulacja w px
+}
+
+function scrollToSection(id) {
+  const target = document.getElementById(id);
+  if (!target) return;
+
+  const offset = getHeaderOffsetPx();
+  const y =
+    target.getBoundingClientRect().top +
+    window.pageYOffset -
+    offset;
+
+  window.scrollTo({ top: y, behavior: "smooth" });
+  history.replaceState(null, "", `#${id}`);
+}
+
 
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
@@ -398,16 +447,21 @@ if (vehiclesHeader) {
     if (el !== item) el.classList.remove("open");
   });
 
-  // toggle aktualny
-  item.classList.toggle("open");
+// przełącz aktualny
+item.classList.toggle("open");
 
-  // 🔑 KLUCZ: zdejmij focus/active z linku (iOS fix)
-  requestAnimationFrame(() => {
-    vehiclesHeader.blur();
-    document.activeElement?.blur?.();
-  });
+// iOS: zdejmij focus z linku (inaczej "Pojazdy" zostaje w stanie po kliknięciu)
+vehiclesHeader.blur();
+document.activeElement?.blur?.();
 
-  return;
+// czasem Safari iOS odpala focus z opóźnieniem — dobijamy w następnej klatce
+requestAnimationFrame(() => {
+  vehiclesHeader.blur();
+  document.activeElement?.blur?.();
+});
+
+return;
+
 }
 
 
@@ -1059,9 +1113,11 @@ function scrollVehicleCardsTo(modelKey) {
   });
 }
 
-// Klik w duże przyciski (Musher/Voyager/Intruder) => scroll do sekcji + przewinięcie w bok
 document.querySelectorAll(".model-pill").forEach((pill) => {
   pill.addEventListener("click", (e) => {
+    const isMobile = window.matchMedia("(max-width: 720px)").matches;
+    if (!isMobile) return; // desktop: nie ruszaj, niech działa normalny anchor
+
     e.preventDefault();
 
     const modelKey = pill.dataset.model;
@@ -1071,6 +1127,7 @@ document.querySelectorAll(".model-pill").forEach((pill) => {
     });
   });
 });
+
 
 
 function syncMobileHeaderOffset() {
@@ -1221,3 +1278,38 @@ const update = () => {
 
 document.addEventListener("DOMContentLoaded", initMobileCardsArrows);
 
+/* =========================
+   OVERRIDE ALL ANCHOR CLICKS
+   ========================= */
+document.querySelectorAll('a[href^="#"]').forEach((a) => {
+  const href = a.getAttribute("href");
+  if (!href || href === "#") return;
+
+  const id = href.slice(1);
+  const target = document.getElementById(id);
+  if (!target) return;
+
+  a.addEventListener("click", (e) => {
+    e.preventDefault();
+    scrollToSection(id);
+
+    // zamknij menu mobilne po kliknięciu
+    if (a.closest(".main-nav")) {
+      try { closeNav(); } catch (_) {}
+    }
+  });
+});
+
+/* =========================
+   HANDLE DIRECT HASH LOAD
+   ========================= */
+window.addEventListener("load", () => {
+  const hash = location.hash.replace("#", "");
+  if (!hash) return;
+
+  const target = document.getElementById(hash);
+  if (!target) return;
+
+  setTimeout(() => scrollToSection(hash), 50);
+  setTimeout(() => scrollToSection(hash), 250);
+});

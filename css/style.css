@@ -25,13 +25,9 @@ body {
   scroll-behavior: smooth;
 }
 
-:root{
-  --anchor-offset: 50px;
-}
 
-html{
-  scroll-padding-top: var(--anchor-offset);
-}
+
+
 
 #voyager,
 #intruder,
@@ -230,10 +226,11 @@ body {
   pointer-events: auto;
 }
 
-.nav-has-dropdown:hover .nav-dropdown,
-.nav-has-dropdown:focus-within .nav-dropdown {
+
+.nav-has-dropdown:hover .nav-dropdown {
   display: flex;
 }
+
 
 .nav-dropdown-link {
   position: relative;
@@ -1913,8 +1910,7 @@ body.no-scroll{
     display: flex;
   }
 
-  /* anchor offset for sticky header on phone */
-  :root{ --anchor-offset: 92px; }
+
 }
 
 /* Cards grid: 3 -> 2 -> 1 columns */
@@ -3500,5 +3496,28 @@ body.no-scroll{
   /* chevron do góry TYLKO gdy faktycznie jest .open */
   .nav-has-dropdown.open .nav-chevron{
     transform: rotate(225deg) translateY(1px) !important;
+  }
+}
+
+@media (max-width: 720px){
+
+  /* iOS sticky focus/hover – wyłączamy animację labela na mobile */
+  .main-nav .nav-link .nav-label-inner{
+    transform: translateY(0) !important;
+    transition: none !important;
+  }
+
+  /* chevron tylko po .open (a nie focus/hover) */
+  .nav-has-dropdown:hover .nav-chevron,
+  .nav-has-dropdown:focus-within .nav-chevron{
+    transform: rotate(45deg) translateY(-1px) !important;
+  }
+  .nav-has-dropdown.open .nav-chevron{
+    transform: rotate(225deg) translateY(1px) !important;
+  }
+
+  /* usuń iOS tap highlight (często wygląda jak "wyszarzenie") */
+  .main-nav .nav-link{
+    -webkit-tap-highlight-color: transparent;
   }
 }
