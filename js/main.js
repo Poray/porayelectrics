@@ -1003,19 +1003,15 @@ function initMobileCardsArrows() {
   };
 
 const update = () => {
-  const maxScroll = grid.scrollWidth - grid.clientWidth;
-  const x = grid.scrollLeft;
+  const i = getCurrentIndex();
 
-  // JEŚLI NIE MA REALNEGO SCROLLA → UKRYJ OBA
-  if (maxScroll <= 8) {
-    prev.classList.add("is-hidden");
-    next.classList.add("is-hidden");
-    return;
-  }
+  // pierwsza karta -> ukryj lewą
+  prev.classList.toggle("is-hidden", i <= 0);
 
-  prev.classList.toggle("is-hidden", x <= 8);
-  next.classList.toggle("is-hidden", x >= maxScroll - 8);
+  // ostatnia karta -> ukryj prawą
+  next.classList.toggle("is-hidden", i >= cards.length - 1);
 };
+
 
 
   prev.addEventListener("click", () => {
