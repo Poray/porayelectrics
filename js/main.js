@@ -252,6 +252,48 @@ function setNavState(isOpen) {
 function openNav(){ setNavState(true); }
 function closeNav(){ setNavState(false); }
 
+
+/* =========================
+   ONE ANCHOR HANDLER (MOBILE FIX)
+   ========================= */
+document.addEventListener(
+  "click",
+  (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+
+    const href = a.getAttribute("href");
+    if (!href || href === "#") return;
+
+    // jeśli coś innego już przejęło klik (np. pill/slider), nie wchodzimy
+    if (e.defaultPrevented) return;
+
+    const id = href.slice(1);
+    const target = document.getElementById(id);
+    if (!target) return;
+
+    // zatrzymaj domyślny skok przeglądarki
+    e.preventDefault();
+
+    const clickedInsideNav = !!a.closest(".main-nav");
+
+    // 1) najpierw zamknij mobilne menu (zmienia layout!)
+    if (clickedInsideNav) {
+      try { closeNav(); } catch (_) {}
+    }
+
+    // 2) poczekaj aż layout się przeliczy i dopiero scrolluj
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        scrollToSection(id);
+      });
+    });
+  },
+  { passive: false }
+);
+
+
+
 // =========================
 // MOBILE NAV: SWIPE / DRAG
 // =========================
@@ -1278,24 +1320,4 @@ const update = () => {
 
 document.addEventListener("DOMContentLoaded", initMobileCardsArrows);
 
-/* =========================
-   OVERRIDE ALL ANCHOR CLICKS
-   ========================= */
-document.querySelectorAll('a[href^="#"]').forEach((a) => {
-  const href = a.getAttribute("href");
-  if (!href || href === "#") return;
 
-  const id = href.slice(1);
-  const target = document.getElementById(id);
-  if (!target) return;
-
-  a.addEventListener("click", (e) => {
-    e.preventDefault();
-    scrollToSection(id);
-
-    // zamknij menu mobilne po kliknięciu
-    if (a.closest(".main-nav")) {
-      try { closeNav(); } catch (_) {}
-    }
-  });
-});
