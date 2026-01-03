@@ -57,15 +57,33 @@ function scrollToSection(id) {
   const target = document.getElementById(id);
   if (!target) return;
 
-  const offset = getHeaderOffsetPx();
-  const y =
-    target.getBoundingClientRect().top +
-    window.pageYOffset -
-    offset;
+  // dynamiczny offset: header + safe-area (jeśli masz) + mały margines
+  const header = document.querySelector(".site-header");
+  const headerH = header ? header.getBoundingClientRect().height : 0;
+  const extra = 10; // mały bufor, możesz zmienić np. 6–14
+  const offset = headerH + extra;
 
-  window.scrollTo({ top: y, behavior: "smooth" });
-  history.replaceState(null, "", `#${id}`);
+  const go = () => {
+    const y = target.getBoundingClientRect().top + window.pageYOffset - offset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  };
+
+  go();
+
+  // Korekta po zakończeniu animacji / po layout-shiftach (pierwsze kliknięcie)
+  setTimeout(() => {
+    const yNow = target.getBoundingClientRect().top;
+    // jeśli cel dalej nie jest blisko górnego offsetu, popraw
+    if (Math.abs(yNow - offset) > 6) go();
+  }, 450);
+
+  // Druga, delikatna korekta (na wypadek doczytania obrazków/fontów)
+  setTimeout(() => {
+    const yNow = target.getBoundingClientRect().top;
+    if (Math.abs(yNow - offset) > 6) go();
+  }, 1100);
 }
+
 
 
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
