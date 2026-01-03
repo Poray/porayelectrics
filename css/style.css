@@ -3484,3 +3484,21 @@ body.no-scroll{
   }
 }
 
+/* tytuł karty produktu */
+.product-card h3{
+  padding-left: 15px;   /* ← zmień na 4–10px wg uznania */
+}
+
+@media (max-width: 720px){
+
+  /* na mobile NIE ufamy :hover/:focus-within */
+  .nav-has-dropdown:hover .nav-chevron,
+  .nav-has-dropdown:focus-within .nav-chevron{
+    transform: rotate(45deg) translateY(-1px) !important;
+  }
+
+  /* chevron do góry TYLKO gdy faktycznie jest .open */
+  .nav-has-dropdown.open .nav-chevron{
+    transform: rotate(225deg) translateY(1px) !important;
+  }
+}

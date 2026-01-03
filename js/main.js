@@ -233,6 +233,7 @@ mainNav?.addEventListener("click", (e) => {
 
     // przełącz aktualny
     item.classList.toggle("open");
+    vehiclesHeader.blur?.();
     return;
   }
 
