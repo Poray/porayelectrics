@@ -203,6 +203,171 @@ function setNavState(isOpen) {
 function openNav(){ setNavState(true); }
 function closeNav(){ setNavState(false); }
 
+// =========================
+// MOBILE NAV: SWIPE / DRAG
+// =========================
+(function initNavSwipe() {
+  const nav = document.querySelector(".main-nav");
+  const backdrop = document.querySelector(".nav-backdrop");
+  const edge = document.querySelector(".nav-edge");
+  if (!nav || !backdrop || !edge) return;
+
+  const isMobile = () => window.matchMedia("(max-width: 720px)").matches;
+
+  let dragging = false;
+  let startX = 0;
+  let startNavX = 1; // 1 closed, 0 open
+  let navW = 360;
+
+  const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
+
+  const setNavX = (x01) => {
+    nav.style.setProperty("--nav-x", String(clamp01(x01)));
+    // delikatnie dopasuj opacity tła do stanu
+    const op = 1 - clamp01(x01);
+    backdrop.style.opacity = String(op);
+    backdrop.style.pointerEvents = op > 0.01 ? "auto" : "none";
+  };
+
+  const beginDrag = (clientX, fromOpenState) => {
+    if (!isMobile()) return;
+    dragging = true;
+    document.body.classList.add("nav-dragging");
+
+    navW = nav.getBoundingClientRect().width || 360;
+    startX = clientX;
+
+    // jeśli startujemy z zamkniętego, to pozycja = 1, jeśli z otwartego = 0
+    startNavX = fromOpenState ? 0 : 1;
+
+    // gdy zaczynamy “otwierać” z krawędzi, ustaw stan open,
+    // żeby backdrop i blokada scrolla weszły od razu
+    if (!fromOpenState && !document.body.classList.contains("nav-open")) {
+      openNav();
+    }
+
+    setNavX(startNavX);
+  };
+
+  const moveDrag = (clientX) => {
+    if (!dragging) return;
+
+    const dx = clientX - startX;
+
+    // Zamknięte -> otwieramy: dx w lewo (ujemne)
+    // Otwarte -> zamykamy: dx w prawo (dodatnie)
+    let x01;
+    if (startNavX === 1) {
+      // opening: 1 -> 0
+      x01 = 1 + dx / navW; // dx ujemny zmniejsza
+    } else {
+      // closing: 0 -> 1
+      x01 = dx / navW; // dx dodatni zwiększa
+    }
+
+    setNavX(clamp01(x01));
+  };
+
+  const endDrag = () => {
+    if (!dragging) return;
+    dragging = false;
+    document.body.classList.remove("nav-dragging");
+
+    const x01 = Number(getComputedStyle(nav).getPropertyValue("--nav-x")) || 0;
+
+    // próg: jak bardziej otwarte niż 50% -> zostaw otwarte
+    if (x01 > 0.5) {
+      closeNav();
+      // po closeNav transform wraca z CSS, ale czyścimy inline
+      nav.style.removeProperty("--nav-x");
+      backdrop.style.removeProperty("opacity");
+      backdrop.style.removeProperty("pointerEvents");
+    } else {
+      openNav();
+      nav.style.removeProperty("--nav-x");
+      backdrop.style.removeProperty("opacity");
+      backdrop.style.removeProperty("pointerEvents");
+    }
+  };
+
+  // --- SWIPE CLOSE: łap na samym panelu ---
+  nav.addEventListener(
+    "touchstart",
+    (e) => {
+      if (!isMobile()) return;
+      if (!document.body.classList.contains("nav-open")) return;
+      const t = e.touches && e.touches[0];
+      if (!t) return;
+      // start drag tylko gdy zaczynasz blisko prawej krawędzi panelu (naturalne “domykanie”)
+      beginDrag(t.clientX, true);
+    },
+    { passive: true }
+  );
+
+  nav.addEventListener(
+    "touchmove",
+    (e) => {
+      if (!dragging) return;
+      const t = e.touches && e.touches[0];
+      if (!t) return;
+      moveDrag(t.clientX);
+    },
+    { passive: true }
+  );
+
+  nav.addEventListener(
+    "touchend",
+    () => endDrag(),
+    { passive: true }
+  );
+
+  // --- SWIPE OPEN: łap na niewidocznej strefie przy prawej krawędzi ---
+  edge.addEventListener(
+    "touchstart",
+    (e) => {
+      if (!isMobile()) return;
+      if (document.body.classList.contains("nav-open")) return;
+      const t = e.touches && e.touches[0];
+      if (!t) return;
+      beginDrag(t.clientX, false);
+    },
+    { passive: true }
+  );
+
+  edge.addEventListener(
+    "touchmove",
+    (e) => {
+      if (!dragging) return;
+      const t = e.touches && e.touches[0];
+      if (!t) return;
+      moveDrag(t.clientX);
+    },
+    { passive: true }
+  );
+
+  edge.addEventListener(
+    "touchend",
+    () => endDrag(),
+    { passive: true }
+  );
+
+  // sanity: po resize na desktop – sprzątnij inline
+  window.addEventListener(
+    "resize",
+    () => {
+      if (!isMobile()) {
+        nav.style.removeProperty("--nav-x");
+        backdrop.style.removeProperty("opacity");
+        backdrop.style.removeProperty("pointerEvents");
+        document.body.classList.remove("nav-dragging");
+      }
+    },
+    { passive: true }
+  );
+})();
+
+
+
 if (navToggle && mainNav) {
   navToggle.addEventListener("click", () => {
     document.body.classList.contains("nav-open") ? closeNav() : openNav();
@@ -849,7 +1014,7 @@ function animateScrollTop(to, duration = 560) {
   });
 }
 
-function scrollToAnchorStable(id) {
+function scrollToAnchorStable(id, duration = 380) {
   const el = document.getElementById(id);
   if (!el) return Promise.resolve();
 
@@ -857,8 +1022,23 @@ function scrollToAnchorStable(id) {
   const offset = (header ? header.offsetHeight : 80) + 18;
 
   const y = el.getBoundingClientRect().top + window.pageYOffset - offset;
-  return animateScrollTop(y, 560);
+  return animateScrollTop(y, duration);
 }
+
+// CTA "Porozmawiajmy" -> zawsze do kontaktu, bez laga
+document.querySelectorAll('a[href="#kontakt"]').forEach((a) => {
+  a.addEventListener("click", (e) => {
+    const isMobile = window.matchMedia("(max-width: 720px)").matches;
+    if (!isMobile) return; // desktop zostaw natywnie
+
+    e.preventDefault();
+    closeNav(); // jeśli menu było otwarte
+
+    // start natychmiast (bez czekania)
+    scrollToAnchorStable("kontakt", 380);
+  });
+});
+
 
 function scrollVehicleCardsTo(modelKey) {
   if (!modelKey) return;
