@@ -3489,3 +3489,156 @@ body.no-scroll{
 .product-card h3{
   padding-left: 15px;   /* ← zmień na 4–10px wg uznania */
 }
+
+/* =========================
+   HAMBURGER: 3 LINES + X ANIM
+   ========================= */
+.nav-toggle{
+  display: none;
+  background: none;
+  border: none;
+  padding: 0.45rem;
+  cursor: pointer;
+}
+
+.nav-toggle span{
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: rgba(249,250,251,0.92);
+  margin: 5px 0;
+  border-radius: 999px;
+  transition: transform 0.22s ease, opacity 0.18s ease;
+  transform-origin: center;
+}
+
+/* X on open */
+body.nav-open .nav-toggle span:nth-child(1){
+  transform: translateY(7px) rotate(45deg);
+}
+body.nav-open .nav-toggle span:nth-child(2){
+  opacity: 0;
+}
+body.nav-open .nav-toggle span:nth-child(3){
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* =========================
+   MOBILE NAV: MODERN ACCORDION (FINAL OVERRIDE)
+   ========================= */
+@media (max-width: 720px){
+
+  /* “Pojazdy” jako wiersz-accordion */
+  .nav-has-dropdown > .nav-link{
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0.9rem 0.7rem !important;
+    border-radius: 1rem !important;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(148,163,184,0.16);
+  }
+
+  /* chevron: delikatniejszy + animacja na open */
+  .nav-chevron{
+    width: 9px;
+    height: 9px;
+    border-right: 1px solid rgba(226,232,240,0.9);
+    border-bottom: 1px solid rgba(226,232,240,0.9);
+    opacity: 0.9;
+    transform: rotate(45deg);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .nav-has-dropdown.open .nav-chevron{
+    transform: rotate(225deg);
+    opacity: 1;
+  }
+
+  /* dropdown jako accordion (płynny) */
+  .nav-dropdown{
+    position: static !important;
+
+    /* zamiast display none/flex — robimy animację wysokości */
+    display: block !important;
+    max-height: 0;
+    overflow: hidden;
+
+    opacity: 0;
+    transform: translateY(-6px);
+
+    margin: 0 !important;
+    padding: 0 0.2rem !important;
+
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+
+    transition:
+      max-height 0.28s ease,
+      opacity 0.22s ease,
+      transform 0.22s ease;
+  }
+
+  /* otwarty */
+  .nav-has-dropdown.open .nav-dropdown{
+    max-height: 220px; /* wystarczy na 2–4 linki */
+    opacity: 1;
+    transform: translateY(0);
+    padding-top: 0.55rem !important;
+    padding-bottom: 0.25rem !important;
+  }
+
+  /* linki w dropdown: nowoczesne “pille” */
+  .nav-dropdown-link{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0.85rem 0.75rem !important;
+    margin: 0.35rem 0;
+
+    border-radius: 0.95rem;
+    background: rgba(255,255,255,0.035);
+    border: 1px solid rgba(148,163,184,0.14);
+
+    color: rgba(249,250,251,0.92) !important;
+    text-decoration: none;
+
+    transition: transform 0.16s ease, background 0.16s ease, border-color 0.16s ease;
+  }
+
+  .nav-dropdown-link:hover{
+    transform: translateX(2px);
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(148,163,184,0.22);
+  }
+
+  /* delikatna strzałka po prawej */
+  .nav-dropdown-link::after{
+    content: "›";
+    opacity: 0.75;
+    transform: translateX(-2px);
+    transition: transform 0.16s ease, opacity 0.16s ease;
+    border: 0 !important;
+    width: auto !important;
+    height: auto !important;
+  }
+  .nav-dropdown-link:hover::after{
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* ważne: na mobile WYŁĄCZ hover-otwieranie dropdowna */
+  .nav-has-dropdown:hover .nav-dropdown{ max-height: 0 !important; opacity: 0 !important; transform: translateY(-6px) !important; }
+  .nav-has-dropdown.open:hover .nav-dropdown{ max-height: 220px !important; opacity: 1 !important; transform: translateY(0) !important; }
+}
+
+/* pokaż hamburger na mobile + wąskie okna (żeby nie było "szarej strefy") */
+@media (max-width: 920px){
+  .nav-toggle{
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+}
