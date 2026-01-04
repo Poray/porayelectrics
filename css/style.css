@@ -2963,17 +2963,7 @@ body.no-scroll{
   }
 }
 
-/* było: @media (max-width: 860px) */
-@media (min-width: 721px) and (max-width: 860px){
-  .lang-switch{ display: none !important; }
-  .nav-toggle{ display: block !important; }
-  .main-nav{ display: none !important; }
 
-  .nav-cta{
-    display: inline-flex !important;
-    padding: 0.5rem 0.85rem !important;
-  }
-}
 
 
 
@@ -3634,11 +3624,70 @@ body.nav-open .nav-toggle span:nth-child(3){
   .nav-has-dropdown.open:hover .nav-dropdown{ max-height: 220px !important; opacity: 1 !important; transform: translateY(0) !important; }
 }
 
-/* pokaż hamburger na mobile + wąskie okna (żeby nie było "szarej strefy") */
-@media (max-width: 920px){
+
+
+.nav-toggle{
+  display: none; /* default: desktop */
+}
+
+@media (max-width: 720px){
+  .nav-toggle{
+    display: block;
+  }
+  .nav-toggle span{
+    display: block;
+  }
+}
+
+@media (max-width: 720px){
+  .nav-backdrop{
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 900; /* albo wg Twoich finalnych override’ów */
+  }
+
+  body.nav-open .nav-backdrop,
+  .nav-backdrop.open{
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* =========================
+   NAV BREAKPOINTS – ONE SOURCE OF TRUTH
+   Desktop: >720  => show .main-nav, hide hamburger
+   Mobile : <=720 => hide .main-nav (closed), show hamburger, open via .open
+   ========================= */
+
+/* desktop – hamburger nigdy */
+@media (min-width: 721px){
+  .nav-toggle{ display: none !important; }
+  .main-nav{ display: flex !important; }
+}
+
+/* mobile – hamburger zawsze, menu jako panel */
+@media (max-width: 720px){
   .nav-toggle{
     display: inline-flex !important;
+    flex-direction: column !important;  /* TO naprawia - - - */
+    gap: 6px !important;
     align-items: center;
     justify-content: center;
   }
+
+  .nav-toggle span{
+    margin: 0 !important;              /* zamiast margin 5px 0 */
+    width: 22px;
+    height: 2px;
+    border-radius: 999px;
+  }
+
+  /* menu zamknięte domyślnie, otwierane klasą .open */
+  .main-nav{ display: none; }
+  .main-nav.open{ display: flex; }
 }
