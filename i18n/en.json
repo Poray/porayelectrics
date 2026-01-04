@@ -15,7 +15,7 @@
   "hero": {
     "eyebrow": "Electric vehicles by Poray Electrics",
     "title": "Choose your electric vehicle.",
-    "text": "Different in character, built on the same solid platform: Voyager, Intruder and Musher. Scroll down to explore."
+    "text": "Different in character, built on the same solid platform: Voyager and Intruder. Scroll down to explore."
   },
   "vehicles": {
     "heading": "Poray Electrics Vehicles",
@@ -56,7 +56,7 @@
   },
   "sections": {
     "voyager": {
-      "lead": "A lighter configuration on the same platform — 12 kW of power for sport riding and fast off-road escapes.",
+      "lead": "A lighter configuration — 12 kW of power for sport riding and fast off-road escapes.",
       "heading": "Voyager"
     },
     "intruder": {
