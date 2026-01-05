@@ -3812,10 +3812,10 @@ body.nav-open .nav-toggle span:nth-child(3){
 
 /* AUTO: co kilka sekund robi „mix” (zwraca uwagę) */
 .instagram-link{
-  --igCycle: 9s;                 /* zmień np. na 7s / 12s */
+  --igCycle: 5s;                 /* zmień np. na 7s / 12s */
 }
 .instagram-link::before{
-  animation: igSwirl var(--igCycle) ease-in-out infinite;
+  animation: igSwirl var(--igCycle) cubic-bezier(.2,.9,.2,1) infinite;
 }
 
 .instagram-link svg{
@@ -3843,19 +3843,17 @@ body.nav-open .nav-toggle span:nth-child(3){
   /* dociągnięcie */
   86%  { transform: rotate(720deg) scale(1.02); }
 
-  /* powrót do równego 0deg */
-  100% { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(720deg) scale(1); }
+
 }
 
 /* Hover: mocniej i natychmiast */
 .instagram-link:hover::before{
-  animation-duration: 1.25s;
-  opacity: 0.65;              /* dużo bardziej soczyste */
+  /* bez zmiany speed animacji */
+  opacity: 0.65;                 /* soczyste */
   filter: blur(18px) saturate(1.8);
 }
-.instagram-link:hover svg{
-  animation-duration: 1.25s;
-}
+
 
 /* Respect: reduced motion */
 @media (prefers-reduced-motion: reduce){
@@ -3893,7 +3891,7 @@ body.nav-open .nav-toggle span:nth-child(3){
 
 /* hover: kręci częściej/szybciej (opcjonalnie) */
 .instagram-link:hover svg{
-  animation-duration: 1.2s;
+  animation-duration: 1.9s;
 }
 
 /* prefers-reduced-motion: wyłącz */
