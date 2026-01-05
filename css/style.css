@@ -498,12 +498,12 @@ body {
 
 .hero {
   position: relative;
-  padding: 5rem 5vw 10rem;
+  padding: 1rem 5vw 1vw;
   max-width: 1040px;
   margin: 0 auto;
   display: flex;
   align-items: center;
-  min-height: 60vh;
+  min-height: 50vh;
   overflow: hidden;
 }
 
