@@ -4161,3 +4161,125 @@ body.page-loaded .page-loader{
     contain-intrinsic-size: auto;
   }
 }
+
+/* =========================
+   MOBILE HEADER – NO PILL
+   ========================= */
+@media (max-width: 720px){
+
+  /* usuń pigułę */
+  .site-header-inner{
+    background: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    padding: 0.75rem 1rem !important;
+  }
+
+  /* header jako zwykły flex */
+  .site-header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
+}
+
+@media (max-width: 720px){
+  .site-logo{
+    font-size: 0.95rem;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+@media (max-width: 720px){
+  .header-cta{
+    background: none;
+    box-shadow: none;
+    border: 0;
+
+    padding: 0.4rem 0.6rem;
+    font-weight: 500;
+  }
+}
+
+@media (max-width: 720px){
+  .nav-toggle{
+    position: absolute;
+    right: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+@media (max-width: 720px){
+  .site-header-inner{
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+/* =========================
+   MOBILE HEADER – ALIGN FIX
+   ========================= */
+@media (max-width: 720px){
+
+  /* siatka zamiast zgadywania flexem */
+  .site-header-inner{
+    display: grid !important;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    padding: 0.75rem 1rem !important;
+  }
+
+  /* logo po lewej – bez zmian */
+  .site-logo{
+    justify-self: start;
+  }
+
+  /* Instagram – idealnie na środku */
+  .header-instagram,
+  .instagram-link,
+  .ig-link{
+    justify-self: center;
+    margin: 0 !important;
+  }
+
+  /* Let's talk – lekko w lewo */
+  .header-cta{
+    justify-self: end;
+    margin-right: 0.4rem;
+  }
+
+  /* Hamburger – przy prawej krawędzi */
+  .nav-toggle{
+    justify-self: end;
+    margin-right: -0.2rem; /* mikro korekta optyczna */
+  }
+}
+
+/* =========================
+   MOBILE MICRO-ALIGN (IG + CTA)
+   ========================= */
+@media (max-width: 720px){
+
+  /* IG ikonka (pod headerem) -> lekko w prawo */
+  .instagram-bar{ justify-content: center; }
+  .instagram-link{ margin-left: 12px; }
+
+  /* CTA w headerze -> lekko w lewo */
+  .site-header-actions .nav-cta{
+    transform: translateX(-10px);
+  }
+
+  /* hamburger minimalnie bliżej prawej krawędzi (opcjonalnie) */
+  .site-header-actions .nav-toggle{
+    margin-right: -4px;
+  }
+}
