@@ -4596,3 +4596,32 @@ body.page-loaded .page-loader{
 @keyframes peRevealVar{
   to { --revealR: 160vmax; }
 }
+
+
+/* =========================
+   iOS: remove white side bars (background + overflow)
+   ========================= */
+html, body{
+  background: #020617;          /* to samo co klimat strony */
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* iOS 16+ lepiej znosi "clip" (mniej artefaktów niż hidden) */
+@supports (overflow: clip){
+  html, body{ overflow-x: clip; }
+}
+
+/* jeśli gdzieś masz elementy na 100vw (częsty winowajca), to to pomaga */
+body{
+  position: relative;
+}
+
+/* opcjonalnie: ogranicz elementy fixed do szerokości viewportu */
+.site-header,
+.page-loader{
+  left: 0;
+  right: 0;
+  width: 100%;
+}
