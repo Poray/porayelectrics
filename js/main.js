@@ -3,6 +3,44 @@ if (yearSpan) {
   yearSpan.textContent = new Date().getFullYear();
 }
 
+/* =========================
+   COSMOS-STYLE INTRO LOADER
+   ========================= */
+(function initPageLoader(){
+  const loader = document.getElementById("page-loader");
+  if (!loader) return;
+
+  // block scroll while intro is visible
+  document.body.classList.add("page-loading");
+
+  const started = (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
+  const MIN_SHOW_MS = 650; // minimum time to feel intentional (avoid flash)
+
+  window.addEventListener(
+    "load",
+    () => {
+      const now = (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
+      const elapsed = now - started;
+      const wait = Math.max(0, MIN_SHOW_MS - elapsed);
+
+      setTimeout(() => {
+document.body.classList.remove("page-loading");
+document.body.classList.add("page-loaded"); // najpierw pokaż stronę pod spodem
+
+// teraz zrób "prześwit" od środka
+loader.classList.add("reveal");
+loader.setAttribute("aria-hidden", "true");
+
+// po animacji usuń loader
+setTimeout(() => loader.remove(), 1100);
+
+      }, wait);
+    },
+    { once: true, passive: true }
+  );
+})();
+
+
 function updateAnchorOffset() {
   const inner = document.querySelector(".site-header-inner");
   const header = document.querySelector(".site-header");

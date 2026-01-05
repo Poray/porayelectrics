@@ -3898,3 +3898,266 @@ body.nav-open .nav-toggle span:nth-child(3){
 @media (prefers-reduced-motion: reduce){
   .instagram-link svg{ animation: none !important; }
 }
+
+
+/* =========================
+   COSMOS-STYLE PAGE LOADER
+   ========================= */
+
+body.page-loading{
+  overflow: hidden;
+}
+
+/* fade-in content after loader */
+body:not(.page-loaded) .site-header,
+body:not(.page-loaded) main,
+body:not(.page-loaded) .site-footer{
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+body.page-loaded .site-header,
+body.page-loaded main,
+body.page-loaded .site-footer{
+  opacity: 1;
+  transform: none;
+  transition: opacity 650ms ease, transform 650ms ease;
+}
+
+.page-loader{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+
+  /* dark, soft vignette like Cosmos */
+  background:
+    radial-gradient(120% 120% at 50% 45%, rgba(255,255,255,0.06), transparent 55%),
+    radial-gradient(120% 120% at 50% 45%, rgba(56,189,248,0.08), transparent 60%),
+    radial-gradient(circle at top, #020617 0, #020617 40%, #000 100%);
+
+  opacity: 1;
+  transition: opacity 520ms ease;
+ --revealR: 0vmax;
+  --revealFeather: 28px;
+
+  -webkit-mask-image: radial-gradient(
+    circle at 50% 50%,
+    transparent 0,
+    transparent var(--revealR),
+    rgba(0,0,0,1) calc(var(--revealR) + var(--revealFeather)),
+    rgba(0,0,0,1) 100%
+  );
+  mask-image: radial-gradient(
+    circle at 50% 50%,
+    transparent 0,
+    transparent var(--revealR),
+    rgba(0,0,0,1) calc(var(--revealR) + var(--revealFeather)),
+    rgba(0,0,0,1) 100%
+  );
+}
+
+.page-loader__inner{
+  display: grid;
+  place-items: center;
+  transform: scale(1);
+  opacity: 1;
+  transition: transform 800ms cubic-bezier(.2,.9,.2,1), opacity 520ms ease;
+}
+
+.page-loader__logo{
+  width: min(46vw, 420px);
+  max-width: 520px;
+  height: auto;
+
+  /* grayscale like the Cosmos intro */
+  filter: grayscale(1) contrast(0.95) brightness(1.05);
+  opacity: 0.72;
+
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* outro */
+/* nie chowaj loadera gdy jest .reveal — bo wtedy animacja ma działać */
+body.page-loaded .page-loader:not(.reveal){
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+body.page-loaded .page-loader__inner{
+  transform: scale(0.92);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce){
+  body:not(.page-loaded) .site-header,
+  body:not(.page-loaded) main,
+  body:not(.page-loaded) .site-footer{
+    transform: none;
+  }
+  .page-loader,
+  .page-loader__inner{
+    transition: none !important;
+  }
+}
+
+/* =========================
+   TOPO LINES – FULL PAGE OVERLAY
+   ========================= */
+
+body{
+  position: relative;
+}
+
+/* warstwa linii */
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  background-image: url("img/topo.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  opacity: 0.22; /* ogólna intensywność */
+  mix-blend-mode: screen; /* ładnie na ciemnym tle */
+}
+
+/* upewnij się, że Twoja treść jest nad overlayem */
+header, main, footer{
+  position: relative;
+  z-index: 1;
+}
+
+.page-loader__logo{
+  display: block;
+  width: 100%;
+  height: auto;
+
+  -webkit-mask-image: radial-gradient(
+    70% 70% at 50% 50%,
+    rgba(0,0,0,1) 18%,
+    rgba(0,0,0,0.85) 35%,
+    rgba(0,0,0,0.45) 52%,
+    rgba(0,0,0,0.15) 62%,
+    rgba(0,0,0,0) 70%
+  );
+
+  mask-image: radial-gradient(
+    70% 70% at 50% 50%,
+    rgba(0,0,0,1) 18%,
+    rgba(0,0,0,0.85) 35%,
+    rgba(0,0,0,0.45) 52%,
+    rgba(0,0,0,0.15) 62%,
+    rgba(0,0,0,0) 70%
+  );
+}
+
+
+
+/* =========================
+   HIDE CUSTOM CURSOR DURING INTRO
+   ========================= */
+
+body:not(.page-loaded) .cursor-dot,
+body:not(.page-loaded) .cursor-outline,
+body:not(.page-loaded) .custom-cursor{
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* rosnący "prześwit" jak Cosmos */
+@keyframes loaderReveal {
+  from { --revealR: 0vmax; }
+  to   { --revealR: 160vmax; }
+}
+
+/* uruchomienie reveal */
+.page-loader.reveal{
+  animation: loaderReveal 900ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+/* logo w tym czasie delikatnie znika/oddala się */
+.page-loader.reveal .page-loader__inner{
+  transform: scale(0.96);
+  opacity: 0;
+  transition: transform 900ms cubic-bezier(.2,.9,.2,1), opacity 650ms ease;
+}
+
+/* =========================
+   COSMOS REVEAL LOADER (HOLE EXPANDS)
+   ========================= */
+
+/* animowalna zmienna (ważne!) */
+@property --hole {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+.page-loader{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+
+  background:
+    radial-gradient(120% 120% at 50% 45%, rgba(255,255,255,0.06), transparent 55%),
+    radial-gradient(120% 120% at 50% 45%, rgba(56,189,248,0.08), transparent 60%),
+    radial-gradient(circle at top, #020617 0, #020617 40%, #000 100%);
+
+  opacity: 1;
+  transition: opacity 520ms ease;
+
+  /* HOLE reveal */
+  --hole: 0px;
+  --feather: 26px;
+
+  -webkit-mask-image: radial-gradient(
+    circle at 50% 50%,
+    transparent 0,
+    transparent var(--hole),
+    rgba(0,0,0,1) calc(var(--hole) + var(--feather)),
+    rgba(0,0,0,1) 100%
+  );
+  mask-image: radial-gradient(
+    circle at 50% 50%,
+    transparent 0,
+    transparent var(--hole),
+    rgba(0,0,0,1) calc(var(--hole) + var(--feather)),
+    rgba(0,0,0,1) 100%
+  );
+}
+
+.page-loader__inner{
+  transition: transform 900ms cubic-bezier(.2,.9,.2,1), opacity 650ms ease;
+}
+
+/* START REVEAL */
+.page-loader.reveal{
+  animation: holeGrow 900ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+.page-loader.reveal .page-loader__inner{
+  transform: scale(0.96);
+  opacity: 0;
+}
+
+@keyframes holeGrow{
+  from { --hole: 0px; }
+  to   { --hole: 200vmax; } /* pokrywa rogi na każdym ekranie */
+}
+
+/* UWAGA: nie chowaj loadera od razu po page-loaded */
+body.page-loaded .page-loader{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* dopiero po zakończeniu animacji JS usuwa loader z DOM */

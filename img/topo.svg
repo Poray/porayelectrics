@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">
+  <defs>
+    <!-- mocniejsze, organiczne pofalowanie -->
+    <filter id="warp" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.010" numOctaves="4" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="70" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+
+    <!-- delikatna zmiana grubości optycznie (opcjonalnie) -->
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.20"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0.14"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Jeden "wulkan": wszystkie pętle ze wspólnego centrum -->
+  <g filter="url(#warp)" fill="none" stroke="url(#fade)" stroke-width="1.15">
+
+    <!-- centrum (wierzchołek) -->
+    <g transform="translate(960 540)">
+      <!-- dużo zamkniętych pętli, coraz większe -->
+      <ellipse rx="40"  ry="24"/>
+      <ellipse rx="70"  ry="40"/>
+      <ellipse rx="105" ry="62"/>
+      <ellipse rx="145" ry="86"/>
+      <ellipse rx="190" ry="112"/>
+      <ellipse rx="240" ry="140"/>
+      <ellipse rx="295" ry="170"/>
+      <ellipse rx="355" ry="204"/>
+      <ellipse rx="420" ry="240"/>
+      <ellipse rx="490" ry="280"/>
+      <ellipse rx="565" ry="322"/>
+      <ellipse rx="645" ry="368"/>
+      <ellipse rx="730" ry="416"/>
+      <ellipse rx="820" ry="468"/>
+      <ellipse rx="915" ry="520"/>
+      <ellipse rx="1015" ry="575"/>
+      <ellipse rx="1120" ry="630"/>
+    </g>
+  </g>
+</svg>
