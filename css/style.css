@@ -4391,3 +4391,56 @@ body.page-loaded .page-loader{
     padding-top: calc(var(--anchor-offset, 88px) + 55px);
   }
 }
+
+/* =========================
+   MOBILE CTA – SUBTLE BACKGROUND
+   ========================= */
+@media (max-width: 720px){
+
+  .site-header-actions .nav-cta{
+    background: rgba(255, 255, 255, 0.06); /* bardzo delikatne */
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #fff;
+  }
+
+}
+
+
+
+/* =========================
+   HEADER UNDERLAY – ALWAYS DARKER BACKGROUND
+   ========================= */
+
+/* dotyczy mobile (możesz usunąć media query, jeśli chcesz też na desktop) */
+@media (max-width: 720px){
+
+  .site-header{
+    position: fixed; /* już masz, ale zostawiamy jawnie */
+    z-index: 20;
+  }
+
+  /* warstwa pod menu */
+  .site-header::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+    z-index: -1;
+
+     height: 78px;
+    /* BARDZO DELIKATNE przyciemnienie */
+    background: linear-gradient(
+      to bottom,
+      rgba(2, 6, 23, 0.55) 0%,
+      rgba(2, 6, 23, 0.35) 60%,
+      rgba(2, 6, 23, 0.15) 100%
+    );
+
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+}
