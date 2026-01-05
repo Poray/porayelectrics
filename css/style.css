@@ -4656,7 +4656,7 @@ body{
     background-color: rgba(10, 14, 28, 0.78) !important;
 
     /* szkło */
-    backdrop-filter: blur(14px) saturate(130%) !important;
+    backdrop-filter: blur(5px) saturate(130%) !important;
     -webkit-backdrop-filter: blur(14px) saturate(130%) !important;
   }
 }
@@ -4683,4 +4683,56 @@ body{
   }
 }
 
+
+/* =========================
+   MOBILE NAV – REMOVE TOP GAP
+   ========================= */
+@media (max-width: 720px){
+
+  .main-nav{
+    top: 0 !important;
+    margin-top: 0 !important;
+
+    /* usuń tę "szparę" */
+    padding-top: env(safe-area-inset-top) !important;
+
+    /* resztę paddingów możesz zostawić jak chcesz:
+       (daje odstęp po bokach i na dole, ale nie robi luki u góry) */
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    padding-bottom: 2rem !important;
+  }
+}
+
+
+/* =========================
+   MOBILE NAV – MOVE CONTENT DOWN FROM TOP
+   ========================= */
+@media (max-width: 720px){
+
+  /* kontener menu */
+  .main-nav{
+    padding-top: calc(env(safe-area-inset-top) + 28px) !important;
+  }
+}
+
+
+/* =========================
+   MOBILE NAV – REMOVE EDGE LIGHT STRIP
+   ========================= */
+@media (max-width: 720px){
+
+  .main-nav{
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  /* jeśli listwa pochodzi z pseudo-elementu */
+  .main-nav::before,
+  .main-nav::after{
+    display: none !important;
+    content: none !important;
+  }
+}
 
