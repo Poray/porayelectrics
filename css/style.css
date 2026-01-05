@@ -4444,3 +4444,21 @@ body.page-loaded .page-loader{
     -webkit-backdrop-filter: blur(4px);
   }
 }
+
+/* =========================
+   MOBILE: don't keep CTA focused after tap
+   ========================= */
+@media (max-width: 720px){
+
+  /* na dotyk: nie pokazuj stałego focusu */
+  .site-header-actions .nav-cta:focus{
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  /* ale dla klawiatury (desktop / accessibility) zostaw */
+  .site-header-actions .nav-cta:focus-visible{
+    outline: 2px solid rgba(56, 189, 248, 0.45);
+    outline-offset: 2px;
+  }
+}

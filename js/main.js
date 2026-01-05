@@ -1191,6 +1191,26 @@ document.querySelectorAll('a[href="#kontakt"]').forEach((a) => {
   });
 });
 
+// iOS/Android: zdejmij focus z CTA po tapnięciu (żeby nie zostawało podświetlone)
+document.querySelectorAll('.nav-cta, .nav-cta-mobile, a[href="#kontakt"]').forEach((a) => {
+  a.addEventListener("click", () => {
+    // Safari lubi trzymać focus — dobijamy w kolejnych klatkach
+    a.blur?.();
+    document.activeElement?.blur?.();
+
+    requestAnimationFrame(() => {
+      a.blur?.();
+      document.activeElement?.blur?.();
+    });
+
+    setTimeout(() => {
+      a.blur?.();
+      document.activeElement?.blur?.();
+    }, 60);
+  }, { passive: true });
+});
+
+
 
 function scrollVehicleCardsTo(modelKey) {
   if (!modelKey) return;
