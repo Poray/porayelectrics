@@ -4283,3 +4283,46 @@ body.page-loaded .page-loader{
     margin-right: -4px;
   }
 }
+
+/* =========================
+   HEADER – MOBILE ALIGN FIX
+   ========================= */
+@media (max-width: 720px) {
+
+  .site-header-inner {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+  }
+
+  /* CTA "Porozmawiajmy" – bardziej w lewo */
+  .site-header-actions .nav-cta {
+    margin-right: 0.5rem;
+  }
+
+  /* Hamburger – bardziej w prawo */
+  .nav-toggle {
+    margin-left: 0.75rem;
+  }
+
+  /* Instagram – przenieś optycznie do headera */
+  .instagram-bar {
+    position: absolute;
+    top: 50%;
+    right: 4.25rem; /* między CTA a hamburgerem */
+    transform: translateY(-50%);
+    margin: 0;
+    z-index: 20;
+  }
+
+  .instagram-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .instagram-link svg {
+    width: 22px;
+    height: 22px;
+  }
+}
