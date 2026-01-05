@@ -4552,3 +4552,47 @@ body.page-loaded .page-loader{
     );
   }
 }
+
+/* =========================
+   iOS SAFE REVEAL: animate radius variable (no mask-image keyframes)
+   ========================= */
+
+/* pozwala płynnie animować długość (iOS/Chrome lubi to bardziej niż keyframes na mask-image) */
+@property --revealR {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+.page-loader{
+  --revealR: 0px;
+
+  /* prawdziwe wycięcie: środek transparent -> widać stronę pod spodem */
+  -webkit-mask-image: radial-gradient(
+    circle at 50% 50%,
+    transparent var(--revealR),
+    #fff calc(var(--revealR) + 1px)
+  );
+  mask-image: radial-gradient(
+    circle at 50% 50%,
+    transparent var(--revealR),
+    #fff calc(var(--revealR) + 1px)
+  );
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+
+  /* pomaga WebKitowi */
+  transform: translateZ(0);
+  will-change: -webkit-mask-image, mask-image;
+}
+
+.page-loader.reveal{
+  animation: peRevealVar 1100ms cubic-bezier(.16,.84,.28,1) forwards;
+}
+
+@keyframes peRevealVar{
+  to { --revealR: 160vmax; }
+}
