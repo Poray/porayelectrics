@@ -4641,3 +4641,46 @@ body{
     top: calc(50% - 1px) !important;
   }
 }
+
+
+/* =========================
+   FINAL OVERRIDE: MOBILE MENU TRANSPARENCY (wins)
+   ========================= */
+@media (max-width: 720px){
+
+  .main-nav{
+    /* usuń ewentualne gradienty z wcześniejszych bloków */
+    background-image: none !important;
+
+    /* LEKKA przezroczystość (to jest cel) */
+    background-color: rgba(10, 14, 28, 0.78) !important;
+
+    /* szkło */
+    backdrop-filter: blur(14px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(130%) !important;
+  }
+}
+
+/* =========================
+   MOBILE NAV – REMOVE TILE / PILL EFFECT
+   ========================= */
+@media (max-width: 720px){
+
+  /* nagłówek dropdownu "Vehicles" */
+  .main-nav .nav-has-dropdown > .nav-link{
+    background: none !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0.75rem 0 !important; /* zostaw tylko rytm pionowy */
+  }
+
+  /* wrapper tekstu (jeśli istnieje) */
+  .main-nav .nav-label-inner{
+    background: none !important;
+    box-shadow: none !important;
+  }
+}
+
+
