@@ -3754,6 +3754,10 @@ body.nav-open .nav-toggle span:nth-child(3){
   border-radius: 999px;
   z-index: -1;
 
+    transition:
+    filter 0.35s ease,
+    opacity 0.35s ease;
+
   background: conic-gradient(
     from 0deg,
     rgba(255, 0, 128, 0.95),
@@ -3765,8 +3769,8 @@ body.nav-open .nav-toggle span:nth-child(3){
     rgba(255, 0, 128, 0.95)
   );
 
-  filter: blur(12px);
-  opacity: 0;                   /* normalnie niewidoczne */
+  filter: blur(18px);
+  opacity: 0.18;                   /* normalnie niewidoczne */
   transform: scale(0.85) rotate(0deg);
 }
 
@@ -3786,12 +3790,16 @@ body.nav-open .nav-toggle span:nth-child(3){
 }
 
 /* animacja: swirl -> powrót do normalu */
+
 @keyframes igSwirl {
-  0%   { opacity: 0; transform: scale(0.82) rotate(0deg); }
-  10%  { opacity: 1; transform: scale(1.05) rotate(90deg); }
-  55%  { opacity: 1; transform: scale(1.12) rotate(520deg); }
-  100% { opacity: 0; transform: scale(0.85) rotate(720deg); }
+  0%   { opacity: 0.18; transform: scale(0.86) rotate(0deg); }
+  10%  { opacity: 0.32; transform: scale(1.02) rotate(90deg); }
+  55%  { opacity: 0.40; transform: scale(1.10) rotate(520deg); }
+  100% { opacity: 0.22; transform: scale(0.90) rotate(720deg); }
 }
+
+
+
 
 /* ikona lekko „miesza się” razem z wirem */
 @keyframes igWobble {
@@ -3810,15 +3818,40 @@ body.nav-open .nav-toggle span:nth-child(3){
   animation: igSwirl var(--igCycle) ease-in-out infinite;
 }
 
-/* ikonę animujemy tylko podczas „okna” swirl */
 .instagram-link svg{
   transform-origin: 50% 50%;
-  animation: igWobble var(--igCycle) ease-in-out infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+
+  /* spin w tym samym cyklu co farba */
+  animation: igSpinSync var(--igCycle) cubic-bezier(.2,.9,.2,1) infinite;
+}
+
+
+@keyframes igSpinSync{
+  /* pauza */
+  0%   { transform: rotate(0deg) scale(1); }
+  55%  { transform: rotate(0deg) scale(1); }
+
+  /* start razem z pojawieniem się farby */
+  62%  { transform: rotate(0deg) scale(1.03); }
+
+  /* dynamiczny spin */
+  78%  { transform: rotate(520deg) scale(1.07); }
+
+  /* dociągnięcie */
+  86%  { transform: rotate(720deg) scale(1.02); }
+
+  /* powrót do równego 0deg */
+  100% { transform: rotate(0deg) scale(1); }
 }
 
 /* Hover: mocniej i natychmiast */
 .instagram-link:hover::before{
   animation-duration: 1.25s;
+  opacity: 0.65;              /* dużo bardziej soczyste */
+  filter: blur(18px) saturate(1.8);
 }
 .instagram-link:hover svg{
   animation-duration: 1.25s;
@@ -3837,16 +3870,7 @@ body.nav-open .nav-toggle span:nth-child(3){
    INSTAGRAM: CYCLIC DYNAMIC SPIN (Origin-style)
    ========================= */
 
-/* obracamy tylko ikonę (svg), nie cały przycisk */
-.instagram-link svg{
-  transform-origin: 50% 50%;
-  will-change: transform;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 
-  /* cykl: 5.5s (w tym krótki spin + pauza) */
-  animation: igSpinCycle 5.5s infinite;
-}
 
 /* dynamiczny spin + powrót do 0 + pauza */
 @keyframes igSpinCycle{
