@@ -3769,7 +3769,7 @@ body.nav-open .nav-toggle span:nth-child(3){
     rgba(255, 0, 128, 0.95)
   );
 
-  filter: blur(18px);
+  filter: blur(12px);
   opacity: 0.18;                   /* normalnie niewidoczne */
   transform: scale(0.85) rotate(0deg);
 }
