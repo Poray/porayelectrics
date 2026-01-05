@@ -14,7 +14,7 @@ if (yearSpan) {
   document.body.classList.add("page-loading");
 
   const started = (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
-  const MIN_SHOW_MS = 650; // minimum time to feel intentional (avoid flash)
+  const MIN_SHOW_MS = 900; // minimum time to feel intentional (avoid flash)
 
   window.addEventListener(
     "load",

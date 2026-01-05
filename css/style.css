@@ -3919,10 +3919,11 @@ body:not(.page-loaded) .site-footer{
 body.page-loaded .site-header,
 body.page-loaded main,
 body.page-loaded .site-footer{
-  opacity: 1;
-  transform: none;
-  transition: opacity 650ms ease, transform 650ms ease;
+  transition:
+    opacity 1200ms ease,
+    transform 1200ms cubic-bezier(.16,.84,.28,1);
 }
+
 
 .page-loader{
   position: fixed;
@@ -4072,23 +4073,8 @@ body:not(.page-loaded) .custom-cursor{
   visibility: hidden !important;
 }
 
-/* rosnący "prześwit" jak Cosmos */
-@keyframes loaderReveal {
-  from { --revealR: 0vmax; }
-  to   { --revealR: 160vmax; }
-}
 
-/* uruchomienie reveal */
-.page-loader.reveal{
-  animation: loaderReveal 900ms cubic-bezier(.2,.9,.2,1) forwards;
-}
 
-/* logo w tym czasie delikatnie znika/oddala się */
-.page-loader.reveal .page-loader__inner{
-  transform: scale(0.96);
-  opacity: 0;
-  transition: transform 900ms cubic-bezier(.2,.9,.2,1), opacity 650ms ease;
-}
 
 /* =========================
    COSMOS REVEAL LOADER (HOLE EXPANDS)
@@ -4107,11 +4093,12 @@ body:not(.page-loaded) .custom-cursor{
   z-index: 9999;
   display: grid;
   place-items: center;
+  will-change: opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 
   background:
-    radial-gradient(120% 120% at 50% 45%, rgba(255,255,255,0.06), transparent 55%),
-    radial-gradient(120% 120% at 50% 45%, rgba(56,189,248,0.08), transparent 60%),
-    radial-gradient(circle at top, #020617 0, #020617 40%, #000 100%);
+   linear-gradient(180deg, #020617 0%, #020617 45%, #000 100%);
 
   opacity: 1;
   transition: opacity 520ms ease;
@@ -4142,12 +4129,17 @@ body:not(.page-loaded) .custom-cursor{
 
 /* START REVEAL */
 .page-loader.reveal{
-  animation: holeGrow 900ms cubic-bezier(.2,.9,.2,1) forwards;
+   animation: holeGrow 1500ms cubic-bezier(.16,.84,.28,1) forwards;
 }
 .page-loader.reveal .page-loader__inner{
-  transform: scale(0.96);
+  transform: scale(0.94);
   opacity: 0;
+  transition:
+    transform 1400ms cubic-bezier(.16,.84,.28,1), opacity 1100ms ease;
+    
+    
 }
+
 
 @keyframes holeGrow{
   from { --hole: 0px; }
