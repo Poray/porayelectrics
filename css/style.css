@@ -4431,7 +4431,7 @@ body.page-loaded .page-loader{
     pointer-events: none;
     z-index: -1;
 
-     height: 78px;
+     height: 68px;
     /* BARDZO DELIKATNE przyciemnienie */
     background: linear-gradient(
       to bottom,
@@ -4624,4 +4624,20 @@ body{
   left: 0;
   right: 0;
   width: 100%;
+}
+
+/* =========================
+   MOBILE: move header content up inside blur strip
+   ========================= */
+@media (max-width: 720px){
+
+  /* przesuń CAŁY kontent paska lekko do góry */
+  .site-header-inner{
+    transform: translateY(-14px) !important;
+  }
+
+  /* jeśli gdzieś nadal masz hamburger jako absolute (u Ciebie jest) – to też podciągnij */
+  .nav-toggle{
+    top: calc(50% - 1px) !important;
+  }
 }
