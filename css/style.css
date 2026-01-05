@@ -4375,3 +4375,19 @@ body.page-loaded .page-loader{
   display: flex;
   align-items: center;
 }
+
+/* =========================
+   HERO OFFSET FROM HEADER – FINAL FIX
+   ========================= */
+
+/* Desktop */
+.hero{
+  padding-top: calc(var(--anchor-offset, 96px) + 32px);
+}
+
+/* Mobile – trochę więcej oddechu */
+@media (max-width: 720px){
+  .hero{
+    padding-top: calc(var(--anchor-offset, 88px) + 55px);
+  }
+}
