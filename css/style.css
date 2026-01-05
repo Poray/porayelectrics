@@ -4366,7 +4366,7 @@ body.page-loaded .page-loader{
 /* MOBILE */
 @media (max-width: 720px){
   .logo-image img{
-    height: 38px !important; /* trochę mniejsze, żeby header był lekki */
+    height: 44px !important; /* trochę mniejsze, żeby header był lekki */
   }
 }
 
