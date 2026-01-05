@@ -2978,7 +2978,7 @@ body.no-scroll{
 
 .logo-image img{
   display: block;
-  height: 50px;          /* desktop */
+  height: 60px;          /* desktop */
   width: auto;
   filter: drop-shadow(0 0 6px rgba(255,200,40,0.35));
 }
@@ -2986,14 +2986,14 @@ body.no-scroll{
 /* tablet / wąskie okna */
 @media (max-width: 920px){
   .logo-image img{
-    height: 24px;
+    height: 30px;
   }
 }
 
 /* mobile */
 @media (max-width: 720px){
   .logo-image img{
-    height: 22px;
+    height: 30px;
   }
 }
 
@@ -4265,64 +4265,113 @@ body.page-loaded .page-loader{
 }
 
 /* =========================
-   MOBILE MICRO-ALIGN (IG + CTA)
+   HEADER MOBILE: CTA + IG + HAMBURGER ALIGN
    ========================= */
 @media (max-width: 720px){
 
-  /* IG ikonka (pod headerem) -> lekko w prawo */
-  .instagram-bar{ justify-content: center; }
-  .instagram-link{ margin-left: 12px; }
-
-  /* CTA w headerze -> lekko w lewo */
-  .site-header-actions .nav-cta{
-    transform: translateX(-10px);
+  .site-header-actions{
+    display: flex;
+    align-items: center;
+    gap: 25px;
   }
 
-  /* hamburger minimalnie bliżej prawej krawędzi (opcjonalnie) */
+  /* CTA bardziej w lewo (zostaje pierwsze) */
+  .site-header-actions .nav-cta{
+    margin-right: 5px;
+  }
+
+  /* Instagram – ta sama wysokość co reszta */
+  .instagram-link--header{
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    flex: 0 0 auto;
+  }
+
+  /* Hamburger bardziej w prawo */
   .site-header-actions .nav-toggle{
-    margin-right: -4px;
+    margin-left: 6px;
+  }
+}
+
+@media (max-width: 720px){
+  .hero{
+    padding-top: calc(1rem + 6rem); /* ~ +48px => wraca jak było */
   }
 }
 
 /* =========================
-   HEADER – MOBILE ALIGN FIX
+   FINAL: MOBILE HEADER SPACING (IG vs HAMBURGER)
    ========================= */
-@media (max-width: 720px) {
+@media (max-width: 720px){
 
-  .site-header-inner {
-    display: grid;
-    grid-template-columns: auto 1fr auto auto;
-    align-items: center;
+
+
+  /* porządny układ akcji po prawej */
+  .site-header-actions{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 20px !important;          /* ogólny odstęp między elementami */
   }
 
-  /* CTA "Porozmawiajmy" – bardziej w lewo */
-  .site-header-actions .nav-cta {
-    margin-right: 0.5rem;
+  /* Instagram: zawsze widoczny + lekko odsunięty od hamburgera */
+  .site-header-actions .instagram-link{
+    display: grid !important;
+    place-items: center !important;
+    width: 42px !important;
+    height: 42px !important;
+    flex: 0 0 auto !important;
+    margin-right: 40px !important;  /* KLUCZ: dystans od hamburgera */
   }
 
-  /* Hamburger – bardziej w prawo */
-  .nav-toggle {
-    margin-left: 0.75rem;
+  /* hamburger jeszcze bliżej prawej krawędzi (optycznie) */
+  .site-header-actions .nav-toggle{
+    margin-left: 2px !important;
+  }
+}
+
+/* =========================
+   MOBILE HEADER – LOGO SIZE FIX
+   ========================= */
+@media (max-width: 720px){
+
+  .logo-image img{
+    height: 38px !important;   /* było ~26–30 */
+    width: auto !important;
+    max-height: none !important;
+    transform: none !important;
   }
 
-  /* Instagram – przenieś optycznie do headera */
-  .instagram-bar {
-    position: absolute;
-    top: 50%;
-    right: 4.25rem; /* między CTA a hamburgerem */
-    transform: translateY(-50%);
-    margin: 0;
-    z-index: 20;
-  }
-
-  .instagram-link {
+  .logo{
     display: flex;
     align-items: center;
-    justify-content: center;
   }
+}
 
-  .instagram-link svg {
-    width: 22px;
-    height: 22px;
+/* =========================
+   HEADER LOGO – FINAL SIZE (DESKTOP + MOBILE)
+   ========================= */
+
+/* DOMYŚLNIE (PC) */
+.logo-image img{
+  height: 44px !important;   /* PC – wyraźne, premium */
+  width: auto !important;
+  max-height: none !important;
+  transform: none !important;
+}
+
+/* MOBILE */
+@media (max-width: 720px){
+  .logo-image img{
+    height: 38px !important; /* trochę mniejsze, żeby header był lekki */
   }
+}
+
+/* wyrównanie pionowe */
+.logo{
+  display: flex;
+  align-items: center;
 }
