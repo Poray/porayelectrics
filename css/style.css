@@ -4153,3 +4153,11 @@ body.page-loaded .page-loader{
 }
 
 /* dopiero po zakończeniu animacji JS usuwa loader z DOM */
+
+/* === MOBILE: stop flicker (iOS/Chrome) === */
+@media (max-width: 720px){
+  .section{
+    content-visibility: visible;
+    contain-intrinsic-size: auto;
+  }
+}
