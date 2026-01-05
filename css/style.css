@@ -3988,10 +3988,12 @@ body.page-loaded .page-loader:not(.reveal){
 }
 
 
-body.page-loaded .page-loader__inner{
+/* nie gaś inner podczas reveal, tylko gdy loader znika bez reveal */
+body.page-loaded .page-loader:not(.reveal) .page-loader__inner{
   transform: scale(0.92);
   opacity: 0;
 }
+
 
 @media (prefers-reduced-motion: reduce){
   body:not(.page-loaded) .site-header,
@@ -4129,8 +4131,9 @@ body:not(.page-loaded) .custom-cursor{
 
 /* START REVEAL */
 .page-loader.reveal{
-   animation: holeGrow 1500ms cubic-bezier(.16,.84,.28,1) forwards;
-}
+   animation: holeGrow 1100ms cubic-bezier(.16,84,28,1) forwards;
+}s
+
 .page-loader.reveal .page-loader__inner{
   transform: scale(0.94);
   opacity: 0;
@@ -4141,10 +4144,7 @@ body:not(.page-loaded) .custom-cursor{
 }
 
 
-@keyframes holeGrow{
-  from { --hole: 0px; }
-  to   { --hole: 200vmax; } /* pokrywa rogi na każdym ekranie */
-}
+
 
 /* UWAGA: nie chowaj loadera od razu po page-loaded */
 body.page-loaded .page-loader{
@@ -4460,5 +4460,95 @@ body.page-loaded .page-loader{
   .site-header-actions .nav-cta:focus-visible{
     outline: 2px solid rgba(56, 189, 248, 0.45);
     outline-offset: 2px;
+  }
+}
+
+
+/* =========================
+   LOADER: IMPACT / SHOCKWAVE REVEAL (drop / nuke)
+   ========================= */
+
+/* fala */
+.page-loader::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  transform: translate(-50%,-50%) scale(0.08);
+  opacity:0;
+  pointer-events:none;
+
+  background: radial-gradient(
+    circle,
+    rgba(255,255,255,0.28) 0%,
+    rgba(255,255,255,0.14) 24%,
+    rgba(255,255,255,0.06) 42%,
+    transparent 62%
+  );
+}
+
+/* start: jak loader dostanie .reveal */
+.page-loader.reveal::after{
+  animation: peShockwave 1100ms ease-out forwards;
+}
+
+/* implozja logo w punkt */
+.page-loader.reveal .page-loader__inner{
+  transition: transform 900ms cubic-bezier(.16,.84,.28,1), opacity 900ms ease, filter 900ms ease;
+  transform: scale(0.75);
+  opacity: 0;
+  filter: blur(8px);
+}
+
+@keyframes peShockwave{
+  0%   { opacity: .95; transform: translate(-50%,-50%) scale(0.08); }
+  60%  { opacity: .45; }
+  100% { opacity: 0;   transform: translate(-50%,-50%) scale(70); }
+}
+
+
+/* =========================
+   REVEAL: pokaż stronę od środka (bez czarnej dziury)
+   ========================= */
+.page-loader{
+  /* ważne: maska działa na tle loadera */
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #fff 0%, #fff 0%);
+  mask-image: radial-gradient(circle at 50% 50%, #fff 0%, #fff 0%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+/* START REVEAL */
+.page-loader.reveal{
+  animation: peCutout 1100ms cubic-bezier(.16,.84,.28,1) forwards;
+}
+
+@keyframes peCutout{
+  0%{
+    /* środek = przezroczysty (0), reszta = widoczna (1) */
+    -webkit-mask-image: radial-gradient(circle at 50% 50%,
+      transparent 0px,
+      #fff 1px
+    );
+    mask-image: radial-gradient(circle at 50% 50%,
+      transparent 0px,
+      #fff 1px
+    );
+  }
+  100%{
+    /* dziura rośnie i odsłania całą stronę */
+    -webkit-mask-image: radial-gradient(circle at 50% 50%,
+      transparent 160vmax,
+      #fff calc(160vmax + 1px)
+    );
+    mask-image: radial-gradient(circle at 50% 50%,
+      transparent 160vmax,
+      #fff calc(160vmax + 1px)
+    );
   }
 }
