@@ -5127,3 +5127,14 @@ body{
     border-top: 1px solid rgba(148,163,184,0.18);
   }
 }
+
+
+/* =========================
+   REMOVE CTA FROM MOBILE MENU
+   ========================= */
+@media (max-width: 720px){
+  .main-nav .nav-cta,
+  .main-nav .nav-cta-mobile{
+    display: none !important;
+  }
+}
