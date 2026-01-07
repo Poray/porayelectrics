@@ -3459,14 +3459,15 @@ body.no-scroll{
   }
 }
 
-/* === CENTER VOYAGER + INTRUDER (2 cards only) === */
-#pojazdy .cards-grid {
-  justify-content: center;
+/* === CENTER VOYAGER + INTRUDER (DESKTOP ONLY) === */
+@media (min-width: 721px){
+  #pojazdy .cards-grid { justify-content: center; }
+
+  #pojazdy .cards-grid > .product-card{
+    max-width: 360px;
+  }
 }
 
-#pojazdy .cards-grid > .product-card {
-  max-width: 360px;
-}
 
 /* gdy są dokładnie 2 karty */
 @media (min-width: 721px) {
@@ -4656,7 +4657,7 @@ body{
     background-color: rgba(10, 14, 28, 0.78) !important;
 
     /* szkło */
-    backdrop-filter: blur(5px) saturate(130%) !important;
+    backdrop-filter: blur(2px) saturate(130%) !important;
     -webkit-backdrop-filter: blur(14px) saturate(130%) !important;
   }
 }
@@ -4736,3 +4737,71 @@ body{
   }
 }
 
+
+/* =========================
+   FLOATING CALL TILE (FAB)
+   ========================= */
+.call-fab{
+  position: fixed;
+  right: calc(18px + env(safe-area-inset-right));
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  z-index: 4000;
+
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(148, 163, 184, 0.18);         /* elegancki szary */
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  text-decoration: none;
+  transform: translateZ(0);
+  transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.call-fab__icon{
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+}
+
+.call-fab svg{
+  width: 26px;
+  height: 26px;
+  fill: rgba(249, 250, 251, 0.92);
+  opacity: 0.95;
+}
+
+.call-fab:hover{
+  transform: translateY(-1px);
+  background: rgba(148, 163, 184, 0.24);
+  border-color: rgba(226, 232, 240, 0.45);
+  box-shadow: 0 22px 70px rgba(0,0,0,0.65);
+}
+
+.call-fab:active{
+  transform: translateY(0px);
+}
+
+.call-fab:focus-visible{
+  outline: 2px solid rgba(56, 189, 248, 0.55);
+  outline-offset: 4px;
+}
+
+/* Mobile: trochę większy tap target */
+@media (max-width: 720px){
+  .call-fab{
+    width: 58px;
+    height: 58px;
+    border-radius: 20px;
+    right: calc(14px + env(safe-area-inset-right));
+    bottom: calc(14px + env(safe-area-inset-bottom));
+  }
+}
