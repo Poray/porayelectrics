@@ -114,12 +114,8 @@
   <a href="#kontakt" class="nav-link nav-cta-mobile" data-i18n="header.cta">Porozmawiajmy</a>
 
 
-  <!-- LANG w menu (mobile) -->
-<div class="lang-switch lang-switch--mobile" aria-label="Language switch">
-  <button class="lang-btn lang-active" data-lang="pl">PL</button>
-  <span class="lang-sep">/</span>
-  <button class="lang-btn" data-lang="en">EN</button>
-</div>
+
+
 
 
 </nav>
@@ -143,11 +139,10 @@
     </svg>
   </a>
 
-      <div class="lang-switch">
-        <button class="lang-btn lang-active" data-lang="pl">PL</button>
-        <span class="lang-sep">/</span>
-        <button class="lang-btn" data-lang="en">EN</button>
-      </div>
+<div class="lang-switch lang-switch--seg" aria-label="Language switch">
+  <button class="lang-btn lang-active" data-lang="pl" type="button">PL</button>
+  <button class="lang-btn" data-lang="en" type="button">EN</button>
+</div>
 
       <button class="nav-toggle" aria-label="Otwórz menu" aria-controls="main-nav" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -623,7 +618,39 @@
       </div>
     </div>
   </div>
+
+  <!-- GOOGLE REVIEWS (AUTO) -->
+<div class="about-reviews">
+  <div class="about-reviews__head">
+    <p class="pill">OPINIE Z GOOGLE</p>
+    <h3>Co mówią klienci</h3>
+    <p class="about-reviews__sub" id="reviews-summary">
+      Ładowanie opinii…
+      <a class="about-reviews__link"
+         href="https://www.google.com/search?hl=pl-PL&num=20&q=Poray+Electric+Vehicles+Opinie&rflfq=1&rldimm=3372214790320219758&stick=H4sIAAAAAAAAAONgkxI2NjY3MjI0Mbc0MDYyMDK0NDe12MDI-IpRLiC_KLFSwTUnNbmkKDNZISw1IzM5J7VYwb8gMy8zdRErAQUA0TyaClwAAAA&tbm=lcl"
+         target="_blank" rel="noopener noreferrer">Zobacz w Google →</a>
+    </p>
+  </div>
+
+  <div class="reviews-wrap">
+    <button class="reviews-btn reviews-prev" type="button" aria-label="Poprzednia opinia">‹</button>
+
+    <div class="reviews-track" id="reviews-track" aria-label="Opinie klientów"></div>
+
+    <button class="reviews-btn reviews-next" type="button" aria-label="Następna opinia">›</button>
+  </div>
+</div>
+
+
+
 </section>
+
+
+
+
+
+
+
 
 <!-- KONTAKT / CTA -->
 <section class="section section-alt" id="kontakt">

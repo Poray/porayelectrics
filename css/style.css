@@ -4739,7 +4739,7 @@ body{
 
 
 /* =========================
-   FLOATING CALL TILE (FAB)
+   FLOATING CALL TILE – FINAL
    ========================= */
 .call-fab{
   position: fixed;
@@ -4749,59 +4749,348 @@ body{
 
   width: 54px;
   height: 54px;
-  border-radius: 18px;
+  border-radius: 16px;
 
   display: grid;
   place-items: center;
 
-  background: rgba(148, 163, 184, 0.18);         /* elegancki szary */
+  background: rgba(148, 163, 184, 0.18);
   border: 1px solid rgba(148, 163, 184, 0.28);
-  box-shadow: 0 18px 60px rgba(0,0,0,0.55);
+  box-shadow:
+    0 14px 45px rgba(0,0,0,0.55);
+
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 
   text-decoration: none;
   transform: translateZ(0);
-  transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+/* ✨ subtelny glow POD ikoną */
+.call-fab::after{
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 14px;
+
+  background: radial-gradient(
+    60% 60% at 50% 65%,
+    rgba(148, 163, 184, 0.35),
+    transparent 70%
+  );
+
+  filter: blur(8px);
+  opacity: .55;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .call-fab__icon{
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   display: grid;
   place-items: center;
 }
 
 .call-fab svg{
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   fill: rgba(249, 250, 251, 0.92);
-  opacity: 0.95;
 }
 
+/* hover – minimalny lift + glow */
 .call-fab:hover{
   transform: translateY(-1px);
-  background: rgba(148, 163, 184, 0.24);
   border-color: rgba(226, 232, 240, 0.45);
-  box-shadow: 0 22px 70px rgba(0,0,0,0.65);
+  box-shadow:
+    0 18px 60px rgba(0,0,0,0.65);
 }
 
-.call-fab:active{
-  transform: translateY(0px);
+.call-fab:hover::after{
+  opacity: .75;
 }
 
-.call-fab:focus-visible{
-  outline: 2px solid rgba(56, 189, 248, 0.55);
-  outline-offset: 4px;
-}
-
-/* Mobile: trochę większy tap target */
+/* mobile ergonomia */
 @media (max-width: 720px){
   .call-fab{
-    width: 58px;
-    height: 58px;
-    border-radius: 20px;
     right: calc(14px + env(safe-area-inset-right));
     bottom: calc(14px + env(safe-area-inset-bottom));
+  }
+}
+
+
+
+/* =========================
+   ABOUT: GOOGLE REVIEWS
+   ========================= */
+.about-reviews{
+  max-width: 1120px;
+  margin: 2.2rem auto 0;
+}
+
+.about-reviews__head{
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+
+.about-reviews__head h3{
+  margin: .65rem 0 .35rem;
+}
+
+.about-reviews__sub{
+  margin: 0;
+  color: rgba(148,163,184,0.9);
+  display: flex;
+  gap: .75rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.about-reviews__link{
+  color: var(--accent);
+  text-decoration: none;
+}
+.about-reviews__link:hover{ text-decoration: underline; }
+
+.reviews-wrap{
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: .9rem;
+  align-items: center;
+}
+
+.reviews-track{
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: .2rem;
+}
+.reviews-track::-webkit-scrollbar{ display:none; }
+
+.review-card{
+  flex: 0 0 340px;
+  scroll-snap-align: center;
+  padding: 1.15rem 1.15rem 1rem;
+  border-radius: 1.2rem;
+}
+
+.review-stars{
+  color: #fbbf24;
+  letter-spacing: .12em;
+  font-size: .95rem;
+  margin-bottom: .6rem;
+  text-shadow: 0 0 16px rgba(251,191,36,0.18);
+}
+
+.review-text{
+  color: rgba(226,232,240,0.88);
+  font-size: .92rem;
+  line-height: 1.6;
+  margin: 0 0 1rem;
+}
+
+.review-footer{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .9rem;
+  align-items: center;
+  padding-top: .85rem;
+  border-top: 1px solid rgba(148,163,184,0.16);
+}
+
+.review-author{
+  font-weight: 700;
+  font-size: .92rem;
+}
+.review-date{
+  font-size: .78rem;
+  color: rgba(148,163,184,0.85);
+  margin-top: .15rem;
+}
+
+.reviews-btn{
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(226,232,240,0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  line-height: 1;
+  transition: transform .15s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
+}
+
+.reviews-btn:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.22);
+}
+
+@media (max-width: 720px){
+  .reviews-wrap{ grid-template-columns: 1fr; }
+  .reviews-btn{ display:none; }
+  .review-card{ flex-basis: 86vw; }
+}
+
+/* =========================
+   LANG SWITCH – POLKADOT STYLE (SOFT, MODERN)
+   ========================= */
+
+.lang-switch.lang-switch--seg{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+
+  /* nowoczesny soft-rect */
+  border-radius: 16px;
+
+  /* miękki, ciemny "surface" */
+  background: linear-gradient(180deg,
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.02)
+  );
+
+  border: 1px solid rgba(255,255,255,0.10);
+
+  /* zamiast szkła -> miękki cień */
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  overflow: hidden;
+}
+
+/* usuń wszystkie pseudo-glossy z poprzednich wersji */
+.lang-switch.lang-switch--seg::before,
+.lang-switch.lang-switch--seg::after{
+  content: none !important;
+}
+
+.lang-switch.lang-switch--seg .lang-btn{
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+
+  padding: 8px 14px;
+  border-radius: 14px;
+
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+
+  color: rgba(255,255,255,0.55);
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.12s ease;
+}
+
+.lang-switch.lang-switch--seg .lang-btn:hover{
+  color: rgba(255,255,255,0.82);
+  background: rgba(255,255,255,0.04);
+}
+
+.lang-switch.lang-switch--seg .lang-btn:active{
+  transform: translateY(0.5px);
+}
+
+/* ACTIVE – jak "selected chip" na Polkadot: soft, bez gloss */
+.lang-switch.lang-switch--seg .lang-btn.lang-active{
+  color: rgba(255,255,255,0.92);
+
+  background: linear-gradient(180deg,
+    rgba(255,255,255,0.10),
+    rgba(255,255,255,0.04)
+  );
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.14),
+    0 8px 20px rgba(0,0,0,0.35);
+
+  /* zero szkła */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* bez shine na aktywnym */
+.lang-switch.lang-switch--seg .lang-btn.lang-active::before{
+  content: none !important;
+}
+
+/* =========================
+   LANG SWITCH – SMALLER SCALE
+   ========================= */
+
+.lang-switch.lang-switch--seg{
+  padding: 3px;          /* było 6px */
+  gap: 3px;              /* było 6px */
+  border-radius: 8px;   /* było 16px */
+}
+
+.lang-switch.lang-switch--seg .lang-btn{
+  padding: 4px 10px;     /* było 8px 14px */
+  border-radius: 82px;  /* było 14px */
+  font-size: 0.55rem;   /* było 0.7rem */
+  letter-spacing: 0.07em;
+}
+
+.lang-switch.lang-switch--seg .lang-btn.lang-active{
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.12),
+    0 6px 16px rgba(0,0,0,0.32);
+}
+
+
+
+@media (max-width: 720px){
+  .main-nav{
+    width: min(50vw, 340px);
+    border-radius: 20px 0 0 20px;
+  }
+}
+
+/* =========================
+   MOBILE NAV – REMOVE RIGHT GAP
+   ========================= */
+@media (max-width: 720px){
+
+  /* zapobiega overflow po X */
+  html, body{
+    overflow-x: hidden;
+  }
+
+  /* menu mobilne */
+  .main-nav{
+    right: 0;
+    left: auto;
+
+    /* kluczowe: nie wychodź poza viewport */
+    max-width: 100%;
+    box-sizing: border-box;
+
+    /* usuń każdy cień/obramowanie po prawej */
+    border-right: none !important;
+    box-shadow: none !important;
+  }
+
+  /* backdrop zawsze na całą szerokość */
+  .nav-backdrop{
+    inset: 0;
+    width: 100vw;
   }
 }

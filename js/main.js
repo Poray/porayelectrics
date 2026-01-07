@@ -1397,3 +1397,101 @@ const update = () => {
 document.addEventListener("DOMContentLoaded", initMobileCardsArrows);
 
 
+async function loadGoogleReviews() {
+  const track = document.getElementById("reviews-track");
+  const summary = document.getElementById("reviews-summary");
+  const prev = document.querySelector(".reviews-prev");
+  const next = document.querySelector(".reviews-next");
+  if (!track || !summary) return;
+
+  try {
+    const res = await fetch("/api/reviews", { cache: "no-store" });
+    if (!res.ok) throw new Error("reviews http " + res.status);
+    const data = await res.json();
+
+    // summary
+    const rating = (data.rating ?? "").toString();
+    const count = (data.user_ratings_total ?? "").toString();
+    summary.innerHTML = `
+      Google: <strong>${rating || "—"}</strong> / 5 • <strong>${count || "—"}</strong> opinii
+      <a class="about-reviews__link"
+         href="https://www.google.com/search?hl=pl-PL&num=20&q=Poray+Electric+Vehicles+Opinie&rflfq=1&rldimm=3372214790320219758&stick=H4sIAAAAAAAAAONgkxI2NjY3MjI0Mbc0MDYyMDK0NDe12MDI-IpRLiC_KLFSwTUnNbmkKDNZISw1IzM5J7VYwb8gMy8zdRErAQUA0TyaClwAAAA&tbm=lcl"
+         target="_blank" rel="noopener noreferrer">Zobacz w Google →</a>
+    `;
+
+    // cards
+    track.innerHTML = "";
+    const reviews = Array.isArray(data.reviews) ? data.reviews : [];
+    if (!reviews.length) {
+      track.innerHTML = `<article class="card review-card"><p class="review-text">Brak opinii do wyświetlenia.</p></article>`;
+      return;
+    }
+
+    for (const r of reviews) {
+      const stars = "★★★★★".slice(0, Math.max(0, Math.min(5, r.rating || 0)));
+      const date = r.relative_time_description || "";
+      const author = r.author_name || "Klient";
+
+      const card = document.createElement("article");
+      card.className = "card review-card";
+      card.innerHTML = `
+        <div class="review-stars" aria-label="${r.rating || 0} na 5">${stars}</div>
+        <p class="review-text">${escapeHtml(r.text || "")}</p>
+        <div class="review-footer">
+          <div>
+            <div class="review-author">${escapeHtml(author)}</div>
+            <div class="review-date">${escapeHtml(date)}</div>
+          </div>
+          <div class="review-google" aria-hidden="true"><span>G</span></div>
+        </div>
+      `;
+      track.appendChild(card);
+    }
+
+    // arrows scroll (desktop)
+    if (prev && next) {
+      const scrollByOne = (dir) => {
+        const card = track.querySelector(".review-card");
+        const step = card ? (card.getBoundingClientRect().width + 16) : 360;
+        track.scrollBy({ left: dir * step, behavior: "smooth" });
+      };
+      prev.onclick = () => scrollByOne(-1);
+      next.onclick = () => scrollByOne(1);
+    }
+  } catch (e) {
+    console.warn("reviews: load failed", e);
+    summary.textContent = "Nie udało się pobrać opinii z Google.";
+  }
+}
+
+function escapeHtml(s) {
+  return (s ?? "").toString()
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+document.addEventListener("DOMContentLoaded", loadGoogleReviews);
+
+
+const langToggle = document.getElementById("langToggle");
+
+if (langToggle) {
+  langToggle.addEventListener("click", (e) => {
+    const btn = e.target.closest(".lang-option");
+    if (!btn) return;
+
+    langToggle.querySelectorAll(".lang-option")
+      .forEach(b => b.classList.remove("active"));
+
+    btn.classList.add("active");
+
+    const lang = btn.dataset.lang;
+
+    // TU podłączasz swoją logikę językową
+    // np. setLanguage(lang);
+    console.log("Language:", lang);
+  });
+}
