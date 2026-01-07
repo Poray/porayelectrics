@@ -5065,32 +5065,65 @@ body{
 }
 
 /* =========================
-   MOBILE NAV – REMOVE RIGHT GAP
+   MOBILE HEADER – FINAL CLEAN LAYOUT
    ========================= */
 @media (max-width: 720px){
 
-  /* zapobiega overflow po X */
-  html, body{
-    overflow-x: hidden;
+  /* jeden layout – grid */
+  .site-header-inner{
+    display: grid !important;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1rem !important;
   }
 
-  /* menu mobilne */
-  .main-nav{
-    right: 0;
-    left: auto;
-
-    /* kluczowe: nie wychodź poza viewport */
-    max-width: 100%;
-    box-sizing: border-box;
-
-    /* usuń każdy cień/obramowanie po prawej */
-    border-right: none !important;
-    box-shadow: none !important;
+  /* logo */
+  .logo{
+    justify-self: start;
   }
 
-  /* backdrop zawsze na całą szerokość */
-  .nav-backdrop{
-    inset: 0;
-    width: 100vw;
+  /* akcje po prawej */
+  .site-header-actions{
+    display: contents !important; /* KLUCZ: bez flexa */
+  }
+
+  /* CTA */
+  .nav-cta{
+    justify-self: end;
+    padding: 0.45rem 0.7rem;
+  }
+
+  /* Instagram */
+  .instagram-link{
+    justify-self: center;
+    margin: 0 !important;
+    width: 40px;
+    height: 40px;
+  }
+
+  /* hamburger */
+  .nav-toggle{
+    justify-self: end;
+    margin: 0 !important;
+  }
+}
+
+/* =========================
+   MOBILE: LANGUAGE SWITCH ONLY IN MENU
+   ========================= */
+@media (max-width: 720px){
+
+  /* ukryj język w headerze */
+  .lang-switch{
+    display: none !important;
+  }
+
+  /* pokaż tylko w menu */
+  .lang-switch--mobile{
+    display: flex !important;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(148,163,184,0.18);
   }
 }
