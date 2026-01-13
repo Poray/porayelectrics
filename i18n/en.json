@@ -80,7 +80,8 @@
     "range": "Range",
     "geometry": "Geometry",
     "weightDist": "Weight distribution",
-    "range_offroad": "Up to 80 km in demanding off-road conditions"
+    "range_offroad": "Up to 80 km in demanding off-road conditions",
+    "chargingInfo": "8A (charging time 0 - 100%: about 7 hours)"
   },
   "tech": {
     "heading": "Technology fully under our control",

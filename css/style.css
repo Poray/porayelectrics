@@ -5138,3 +5138,44 @@ body{
     display: none !important;
   }
 }
+
+/* =========================
+   SPEC LIST – VERTICAL LINE (FLEX SAFE)
+   ========================= */
+
+.spec-list > div {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2.2rem;
+  padding: 0.25rem 0;
+}
+
+/* pionowa kreska */
+.spec-list > div::after {
+  content: "";
+  position: absolute;
+  left: 30%;
+  top: 0.15rem;
+  bottom: 0.15rem;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(148, 163, 184, 0.4),
+    transparent
+  );
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.spec-list dt {
+  width: 30%;
+  padding-right: 1.2rem;
+}
+
+.spec-list dd {
+  width: 50%;
+  margin: 0;
+  padding-left: 1.2rem;
+}
