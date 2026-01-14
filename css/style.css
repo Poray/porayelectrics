@@ -5872,3 +5872,49 @@ section.product-section > .show-more-btn{
     height: 160px !important;
   }
 }
+
+/* =========================
+   GOOGLE REVIEWS – iPhone/mobile FINAL OVERRIDE
+   (WKLEJ NA SAM KONIEC style.css)
+   ========================= */
+@media (max-width: 640px){
+
+  #google-reviews .ti__slider{
+    padding: 0 !important;      /* zabija 0 64px z desktopu */
+    overflow: visible !important;
+  }
+
+  /* Na mobile: swipe, bez strzałek */
+  #google-reviews .ti__nav{
+    display: none !important;
+  }
+
+  #google-reviews .ti__track{
+    padding: 0 14px !important;         /* oddech po bokach */
+    scroll-padding: 0 14px !important;
+    gap: 12px !important;
+  }
+
+  /* 1 karta na ekranie (uwzględnia padding tracka) */
+  #google-reviews .tiCard{
+    flex: 0 0 calc(100% - 28px) !important;
+    max-width: calc(100% - 28px) !important;
+    min-width: calc(100% - 28px) !important;
+    scroll-snap-align: center;
+  }
+
+  /* Żeby było „w całości” i czytelnie: miniatura pod tekst */
+  #google-reviews .tiCard__body{
+    flex-direction: column !important;
+  }
+
+  #google-reviews .tiThumb{
+    width: 100% !important;
+    height: 160px !important;
+  }
+
+  #google-reviews .tiText{
+    font-size: 1.05rem !important;
+    line-height: 1.45 !important;
+  }
+}

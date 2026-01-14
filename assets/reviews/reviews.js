@@ -37,6 +37,11 @@
     };
   }
 
+function isMobile(){
+  return window.matchMedia("(max-width: 640px)").matches;
+}
+
+
   // ---------- HELPERS ----------
   const esc = (s="") => String(s)
     .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
@@ -115,12 +120,16 @@
     `;
   }
 
-  function shortenTextNodes(){
-    track.querySelectorAll(".tiText").forEach(p => {
-      const full = p.getAttribute("data-full") || "";
-      if (full.length > 150) p.textContent = full.slice(0, 150).trim() + "...";
-    });
-  }
+function shortenTextNodes(){
+  // Na mobile NIE ucinamy – ma być pełna opinia w karcie
+  if (isMobile()) return;
+
+  track.querySelectorAll(".tiText").forEach(p => {
+    const full = p.getAttribute("data-full") || "";
+    if (full.length > 150) p.textContent = full.slice(0, 150).trim() + "...";
+  });
+}
+
 
   function scrollByOne(dir){
     const card = track.querySelector(".tiCard");
@@ -139,7 +148,8 @@
   }
 
   function startAuto(){
-    stopAuto();
+      stopAuto();
+  if (isMobile()) return;
     timer = setInterval(() => {
       if (paused) return;
 
