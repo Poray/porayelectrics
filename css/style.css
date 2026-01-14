@@ -6026,3 +6026,38 @@ section.product-section > .show-more-btn{
 #google-reviews .tiCard.is-expanded .tiMore{
   display: inline-flex !important;
 }
+
+
+/* =========================
+   ULTRA-NARROW PHONES (21:9, np. Motorola One Vision)
+   ========================= */
+@media (max-width: 360px) {
+
+  /* header: dajemy więcej „oddechu” po bokach */
+  .site-header-inner{
+    padding-left: 0.6rem !important;
+    padding-right: 0.6rem !important;
+    gap: 0.4rem !important;
+  }
+
+  /* logo mocniej w lewo */
+  .logo{
+    justify-self: start !important;
+    margin-left: -4px; /* mikro korekta optyczna */
+  }
+
+  /* CTA mocniej w prawo */
+  .nav-cta{
+    justify-self: end !important;
+    margin-right: -4px;
+    padding: 0.4rem 0.6rem !important;
+    font-size: 0.78rem !important;
+    white-space: nowrap;
+  }
+
+  /* hamburger trzymamy przy samej krawędzi */
+  .nav-toggle{
+    justify-self: end !important;
+    margin-right: -2px;
+  }
+}
