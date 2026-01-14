@@ -5785,7 +5785,7 @@ section.product-section > .show-more-btn{
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;          /* 🔥 usuwa przesunięcie fontu */
+  line-height: 1;         
 }
 
 /* =========================
@@ -5830,5 +5830,45 @@ section.product-section > .show-more-btn{
   .tiThumb{
     width: 100%;
     height: 160px;
+  }
+}
+
+/* =========================
+   REVIEWS — MOBILE FIX (iPhone)
+   1 opinia na raz, bez ucinania, bez strzałek
+   ========================= */
+@media (max-width: 640px){
+
+  /* usuń miejsce pod strzałki (to Ci obecnie psuje szerokość) */
+  .ti__slider{
+    padding: 0 !important;
+  }
+
+  /* strzałki chowamy na mobile (swipe palcem) */
+  .ti__nav{
+    display: none !important;
+  }
+
+  /* daj “oddech” po bokach */
+  .ti__track{
+    padding: 0 14px !important;
+    gap: 12px !important;
+    scroll-snap-type: x mandatory;
+  }
+
+  /* dokładnie 1 karta = szerokość viewportu (z uwzględnieniem paddingu tracka) */
+  .tiCard{
+    min-width: calc(100% - 28px) !important; /* 14px + 14px */
+    flex: 0 0 calc(100% - 28px) !important;
+    scroll-snap-align: center;
+  }
+
+  /* na mobile thumbnail pod tekst (żeby nie ścinało miejsca) */
+  .tiCard__body{
+    flex-direction: column !important;
+  }
+  .tiThumb{
+    width: 100% !important;
+    height: 160px !important;
   }
 }
