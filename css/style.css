@@ -6389,3 +6389,144 @@ html.light body::before{
 }
 
 
+/* =========================
+   LIGHT MODE – remove heavy shadows on reviews
+   ========================= */
+
+html.light .ti-review,
+html.light .review-card,
+html.light .ti-card,
+html.light .trustindex-card{
+  box-shadow: none !important;
+}
+
+/* jeśli masz pseudo-cienie / glow */
+html.light .ti-review::before,
+html.light .ti-review::after,
+html.light .review-card::before,
+html.light .review-card::after{
+  display: none !important;
+}
+
+
+/* =========================
+   LIGHT MODE – CONTRAST FIX
+   ========================= */
+
+/* GLOBAL text outside panels */
+html.light{
+  --light-text-main: rgba(15, 23, 42, 0.95);
+  --light-text-soft: rgba(15, 23, 42, 0.70);
+  --light-border: rgba(15, 23, 42, 0.22);
+}
+
+/* =========================
+   CONTACT INFO (Mail / Tel / Location)
+   ========================= */
+html.light .contact-info,
+html.light .contact-info p,
+html.light .contact-info li,
+html.light .contact-info span{
+  color: var(--light-text-main) !important;
+  opacity: 1 !important;
+}
+
+html.light .contact-info strong{
+  color: var(--light-text-main) !important;
+}
+
+/* badge "DANE KONTAKTOWE" */
+html.light .contact-info .badge,
+html.light .contact-info .pill{
+  color: var(--light-text-main) !important;
+  border-color: var(--light-border) !important;
+  background: rgba(15,23,42,0.04) !important;
+}
+
+/* =========================
+   SECTION HEADERS / PARAGRAPHS
+   ========================= */
+html.light .section-header h2,
+html.light .section-header p,
+html.light .about-grid p,
+html.light .bullets li{
+  color: var(--light-text-soft) !important;
+}
+
+html.light .section-header h2{
+  color: var(--light-text-main) !important;
+}
+
+/* =========================
+   HEADER (top nav)
+   ========================= */
+html.light .site-header-inner{
+  background: rgba(255,255,255,0.92) !important;
+  border-color: rgba(15,23,42,0.18) !important;
+  box-shadow: 0 12px 40px rgba(15,23,42,0.12) !important;
+}
+
+/* menu links */
+html.light .nav-link{
+  color: var(--light-text-soft) !important;
+  opacity: 1 !important;
+}
+
+html.light .nav-link:hover{
+  color: var(--light-text-main) !important;
+}
+
+/* =========================
+   CTA "Porozmawiajmy"
+   ========================= */
+html.light .nav-cta{
+  background: #020617 !important;
+  color: #ffffff !important;
+}
+
+/* =========================
+   LANGUAGE + ICONS
+   ========================= */
+html.light .lang-btn{
+  color: var(--light-text-soft) !important;
+}
+
+html.light .lang-btn.lang-active{
+  color: var(--light-text-main) !important;
+}
+
+html.light .instagram-link svg{
+  fill: var(--light-text-main) !important;
+}
+
+/* =========================
+   DARK PANELS – HARD LOCK
+   ========================= */
+html.light .card,
+html.light .product-card,
+html.light .tech-layout,
+html.light .tech-card,
+html.light .spec-card,
+html.light .contact-form{
+  color: var(--text) !important;
+}
+
+html.light .card *,
+html.light .product-card *,
+html.light .tech-layout *,
+html.light .contact-form *{
+  color: inherit !important;
+}
+
+/* =========================
+   "Pokaż więcej" — wyrównaj do prawej krawędzi zdjęć (stack 980px)
+   ========================= */
+
+section.product-section > .show-more-photos,
+section.product-section > .show-more-btn{
+  /* zamiast wyrównywania do prawej krawędzi sekcji */
+  max-width: 980px !important;      /* to samo co .musher-stack/.fenix-stack */
+  width: 100% !important;           /* zajmuje szerokość kontenera */
+  margin: 1.6rem auto 0 !important; /* centrowanie kontenera */
+  justify-content: flex-end !important;
+}
