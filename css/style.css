@@ -6029,33 +6029,34 @@ section.product-section > .show-more-btn{
 
 
 /* =========================
-   ULTRA-NARROW PHONES (21:9, np. Motorola One Vision)
+   TALL PHONES (21:9, 20:9)
+   Motorola One Vision, Xperia, Pixel tall
    ========================= */
-@media (max-width: 360px) {
+@media (max-width: 420px) and (min-aspect-ratio: 20/9) {
 
-  /* header: dajemy więcej „oddechu” po bokach */
+  /* header ma więcej miejsca */
   .site-header-inner{
-    padding-left: 0.6rem !important;
-    padding-right: 0.6rem !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
     gap: 0.4rem !important;
   }
 
-  /* logo mocniej w lewo */
+  /* LOGO — maksymalnie w lewo */
   .logo{
     justify-self: start !important;
-    margin-left: -4px; /* mikro korekta optyczna */
+    margin-left: -6px;
   }
 
-  /* CTA mocniej w prawo */
+  /* CTA — maksymalnie w prawo */
   .nav-cta{
     justify-self: end !important;
-    margin-right: -4px;
+    margin-right: -6px;
     padding: 0.4rem 0.6rem !important;
     font-size: 0.78rem !important;
     white-space: nowrap;
   }
 
-  /* hamburger trzymamy przy samej krawędzi */
+  /* hamburger przy samej krawędzi */
   .nav-toggle{
     justify-self: end !important;
     margin-right: -2px;
