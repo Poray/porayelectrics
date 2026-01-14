@@ -5918,3 +5918,53 @@ section.product-section > .show-more-btn{
     line-height: 1.45 !important;
   }
 }
+
+/* =========================
+   REVIEWS – iPhone/mobile: mniejsze karty + clamp
+   ========================= */
+@media (max-width: 640px){
+
+  /* mniejsze wypełnienia i delikatnie mniejsze elementy */
+  #google-reviews .tiCard{
+    padding: .9rem .95rem 1rem !important;
+    border-radius: 16px !important;
+  }
+
+  #google-reviews .tiAvatar{
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 1rem !important;
+  }
+
+  #google-reviews .tiName{
+    font-size: 1.12rem !important;
+  }
+
+  #google-reviews .tiText{
+    font-size: 1.02rem !important;
+    line-height: 1.45 !important;
+
+    /* KLUCZ: przytnij do stałej wysokości (wyrównuje karty) */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;  /* <- zmień na 5/6/7 jak chcesz */
+    overflow: hidden;
+  }
+
+  /* gdy rozwinięte – pokaż całość */
+  #google-reviews .tiCard.is-expanded .tiText{
+    -webkit-line-clamp: unset;
+    overflow: visible;
+    display: block;
+  }
+
+  /* "Czytaj więcej" domyślnie ukryte – JS pokaże tylko gdy potrzebne */
+  #google-reviews .tiMore{
+    display: none;
+    margin-top: .35rem;
+    font-weight: 700;
+  }
+  #google-reviews .tiMore.is-visible{
+    display: inline-flex;
+  }
+}

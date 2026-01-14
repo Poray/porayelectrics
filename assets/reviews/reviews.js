@@ -56,6 +56,7 @@ function isMobile(){
     return out;
   };
 
+// cardTemplate()
   function cardTemplate(r, lang){
     const tr = t(lang);
 
@@ -74,7 +75,7 @@ function isMobile(){
     const hasThumb = !!(r.photoThumb && String(r.photoThumb).trim());
     const thumb = hasThumb ? esc(r.photoThumb) : "";
 
-    const needsMore = rawText.length > 130;
+    const needsMore = true;
 
     return `
       <article class="tiCard" tabindex="0">
@@ -121,12 +122,24 @@ function isMobile(){
   }
 
 function shortenTextNodes(){
-  // Na mobile NIE ucinamy – ma być pełna opinia w karcie
-  if (isMobile()) return;
+  // Nie ucinamy tekstu w JS – robi to CSS clamp
+  return;
+}
 
-  track.querySelectorAll(".tiText").forEach(p => {
-    const full = p.getAttribute("data-full") || "";
-    if (full.length > 150) p.textContent = full.slice(0, 150).trim() + "...";
+function updateReadMoreVisibility(){
+  // tylko mobile – na desktop możesz zostawić jak było
+  if (!isMobile()) return;
+
+  track.querySelectorAll(".tiCard").forEach(card => {
+    const p = card.querySelector(".tiText");
+    const more = card.querySelector(".tiMore");
+    if (!p || !more) return;
+
+    // gdy clamp przycina: scrollHeight > clientHeight
+    const clipped = p.scrollHeight > p.clientHeight + 2;
+
+    if (clipped) more.classList.add("is-visible");
+    else more.classList.remove("is-visible");
   });
 }
 
@@ -195,18 +208,18 @@ function shortenTextNodes(){
       if (!p) return;
 
       const full = p.getAttribute("data-full") || p.textContent || "";
-      const expanded = a.getAttribute("data-expanded") === "1";
+      const expanded = card.classList.contains("is-expanded");
 
-      if (!expanded){
-        p.textContent = full;
-        a.textContent = tr.showLess;
-        a.setAttribute("data-expanded","1");
-      } else {
-        const short = full.length > 150 ? full.slice(0, 150).trim() + "..." : full;
-        p.textContent = short;
-        a.textContent = tr.readMore;
-        a.setAttribute("data-expanded","0");
-      }
+if (!expanded){
+  card.classList.add("is-expanded");
+  a.textContent = tr.showLess;
+  a.setAttribute("data-expanded","1");
+} else {
+  card.classList.remove("is-expanded");
+  a.textContent = tr.readMore;
+  a.setAttribute("data-expanded","0");
+}
+
     });
   }
 
@@ -260,6 +273,12 @@ function shortenTextNodes(){
 
     startAuto();
   }
+
+
+shortenTextNodes();
+updateReadMoreVisibility();
+
+
 
   // start
   loadForLang(getLang()).catch(() => cleanup());
