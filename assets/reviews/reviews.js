@@ -127,21 +127,21 @@ function shortenTextNodes(){
 }
 
 function updateReadMoreVisibility(){
-  // tylko mobile – na desktop możesz zostawić jak było
-  if (!isMobile()) return;
-
   track.querySelectorAll(".tiCard").forEach(card => {
+    // jak rozwinięta, to "Zwiń" ma zostać widoczne
+    if (card.classList.contains("is-expanded")) return;
+
     const p = card.querySelector(".tiText");
     const more = card.querySelector(".tiMore");
     if (!p || !more) return;
 
-    // gdy clamp przycina: scrollHeight > clientHeight
+    // jeśli tekst jest ucięty (clamp), to scrollHeight > clientHeight
     const clipped = p.scrollHeight > p.clientHeight + 2;
-
-    if (clipped) more.classList.add("is-visible");
-    else more.classList.remove("is-visible");
+    more.classList.toggle("is-visible", clipped);
   });
 }
+
+
 
 
   function scrollByOne(dir){
@@ -264,6 +264,13 @@ if (!expanded){
     track.innerHTML = reviews.map(r => cardTemplate(r, lang)).join("");
     shortenTextNodes();
 
+    // przelicz po wyrenderowaniu i po tym jak przeglądarka policzy layout (iOS ma laga)
+requestAnimationFrame(() => {
+  updateReadMoreVisibility();
+  // drugi raz dla Safari/iOS (często dopiero po 1 frame ma poprawne wysokości)
+  requestAnimationFrame(updateReadMoreVisibility);
+});
+
     // pause gdy poza ekranem
     io = new IntersectionObserver((entries) => {
       const on = entries.some(e => e.isIntersecting);
@@ -288,5 +295,15 @@ updateReadMoreVisibility();
     const lang = (e.detail?.lang || localStorage.getItem("lang") || "pl").toLowerCase();
     loadForLang(lang).catch(() => cleanup());
   });
+
+  window.addEventListener("resize", () => {
+  // małe opóźnienie, bo iOS przelicza layout z lagiem
+  requestAnimationFrame(() => updateReadMoreVisibility());
+});
+
+window.addEventListener("orientationchange", () => {
+  setTimeout(() => updateReadMoreVisibility(), 100);
+});
+
 
 })();

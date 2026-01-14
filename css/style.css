@@ -5968,3 +5968,61 @@ section.product-section > .show-more-btn{
     display: inline-flex;
   }
 }
+
+@media (max-width: 640px){
+
+  /* "Czytaj więcej" domyślnie ukryte – MUSI wygrać z "UNIFY LINKS" */
+  #google-reviews .tiMore{
+    display: none !important;
+    margin-top: .35rem;
+    font-weight: 700;
+  }
+
+  /* JS pokaże tylko gdy potrzebne */
+  #google-reviews .tiMore.is-visible{
+    display: inline-flex !important;
+  }
+}
+
+/* =========================
+   GOOGLE REVIEWS – "Czytaj więcej" tylko gdy potrzebne (ALL DEVICES)
+   WKLEJ NA SAM KONIEC style.css
+   ========================= */
+
+#google-reviews .tiText{
+  /* wyrównuje wysokości kart (desktop + mobile) */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 7;      /* desktop/tablet domyślnie */
+  overflow: hidden;
+}
+
+/* Mobile: trochę mocniej utnij, żeby było czytelnie */
+@media (max-width: 640px){
+  #google-reviews .tiText{
+    -webkit-line-clamp: 6;
+  }
+}
+
+/* Po rozwinięciu: pokaż całość */
+#google-reviews .tiCard.is-expanded .tiText{
+  -webkit-line-clamp: unset;
+  overflow: visible;
+  display: block;
+}
+
+/* Link domyślnie niewidoczny – pokaże go JS tylko gdy tekst ucięty */
+#google-reviews .tiMore{
+  display: none !important;
+  margin-top: .35rem !important;
+}
+
+/* Widoczny tylko gdy JS wykryje ucięcie */
+#google-reviews .tiMore.is-visible{
+  display: inline-flex !important;
+}
+
+/* Gdy karta rozwinięta – link ma być widoczny jako "Zwiń" */
+#google-reviews .tiCard.is-expanded .tiMore{
+  display: inline-flex !important;
+}
