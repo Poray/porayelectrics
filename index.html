@@ -359,7 +359,7 @@
     </div>
   </div>
 
-  <button class="show-more-photos" type="button">Pokaż więcej</button>
+  <button class="show-more-photos" type="button">Pokaż więcej →</button>
 </section>
 
 <!-- INTRUDER -->
@@ -476,7 +476,7 @@
 
   </div>
 
-  <button class="show-more-photos" type="button">Pokaż więcej</button>
+  <button class="show-more-photos" type="button">Pokaż więcej →</button>
 
 </section>
 
@@ -561,15 +561,33 @@
   </div>
 
 
-  <!-- GOOGLE REVIEWS (AUTO)  -->
+<!-- GOOGLE REVIEWS -->
+<div class="about-reviews">
   <div class="about-reviews__head">
-    </p>
     <p class="pill">OPINIE Z GOOGLE</p>
     <h3>Co mówią klienci</h3>
-    </p>
-    <script defer async src='https://cdn.trustindex.io/loader.js?30b8a9f6269d231d2d26ccce91a'></script>
+  </div>
 
-</section>
+  <section class="ti" id="google-reviews">
+    <div class="ti__shell">
+      <div class="ti__slider">
+        <button class="ti__nav ti__prev" type="button" aria-label="Poprzednia opinia">‹</button>
+
+        <div class="ti__track" id="tiTrack" aria-label="Opinie klientów"></div>
+
+        <button class="ti__nav ti__next" type="button" aria-label="Następna opinia">›</button>
+      </div>
+
+      <div class="ti__bottom">
+        <a class="ti__link" id="tiPlaceLink" href="#" target="_blank" rel="noopener noreferrer">
+          Zobacz w Google →
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+
 
 
 
@@ -663,5 +681,8 @@
 
 
   <script src="js/main.js"></script>
+  <script src="/assets/reviews/reviews.js"></script>
+
+
 </body>
 </html>

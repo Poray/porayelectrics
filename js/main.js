@@ -920,7 +920,10 @@ async function loadLanguage(lang) {
   if (target === "pl") {
     I18N.dict = {};
     applyTranslations(null);
-    return;
+window.dispatchEvent(new CustomEvent("languageChanged", { detail: { lang: "pl" } }));
+return;
+
+   
   }
 
   let res = null;
@@ -943,6 +946,8 @@ async function loadLanguage(lang) {
 
   I18N.dict = await res.json();
   applyTranslations(I18N.dict);
+window.dispatchEvent(new CustomEvent("languageChanged", { detail: { lang: "en" } }));
+
 }
 
 function applyTranslations(dict) {

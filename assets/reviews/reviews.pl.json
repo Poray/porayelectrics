@@ -1,0 +1,131 @@
+{
+  "source": "Google",
+  "rating": 5.0,
+  "count": 11,
+  "headline": "Top Rated Service",
+  "badgeText": "Verified by Trustindex",
+  "placeUrl": "https://www.google.com/search?q=Poray+Electric+Vehicles+Opinie",
+  "reviews": [
+    {
+      "author": "Łukasz",
+      "initials": "Ł",
+      "monthsAgo": "4 tygodnie temu",
+      "rating": 5,
+      "verified": true,
+      "text": "Serwisowałem dwa falcony, kontakt z właścicielem jak i wykonana praca bez zarzutów. Pasjonat który dobrze zna się na tym co robi. Gorąco polecam 👌",
+      "originalHint": "",
+      "originalUrl": "",
+      "photoThumb": ""
+    },
+    {
+      "author": "Michał",
+      "initials": "M",
+      "monthsAgo": "4 tygodnie temu",
+      "rating": 5,
+      "verified": true,
+      "text": "Przypadek był skomplikowany, bo chodziło o chiński skuter zepsuty od nowości, ale nie stanowiło to większego wyzwania – został doprowadzony do porządku!",
+      "originalHint": "",
+      "originalUrl": "",
+      "photoThumb": ""
+    },
+    {
+      "author": "Radosław",
+      "initials": "R",
+      "monthsAgo": "4 tygodnie temu",
+      "rating": 5,
+      "verified": true,
+      "text": "Z czystym sumieniem polecam ten serwis. Podjął się bardzo trudnej naprawy skutera, której wcześniej nie chciał wykonać żaden inny serwis. Od samego początku widać było profesjonalne podejście, rzetelną diagnozę i realne zaangażowanie w rozwiązanie problemu. Naprawa zakończyła się pełnym sukcesem, skuter działa bez zarzutu. Świetny kontakt, uczciwe podejście i wysoki poziom wiedzy technicznej. Jeśli ktoś szuka fachowców, którzy nie boją się wyzwań — to zdecydowanie właściwe miejsce.",
+      "originalHint": "",
+      "originalUrl": "",
+      "photoThumb": ""
+    },
+    {
+      "author": "Szymon",
+      "initials": "Sz",
+      "monthsAgo": "6 miesięcy temu",
+      "rating": 5,
+      "verified": true,
+      "text": "Polecam Poray Electric szybko bez owijania w bawełnę rozwiązał problemy w moim Feniksie!",
+      "originalHint": "",
+      "originalUrl": "",
+      "photoThumb": ""
+    },
+    {
+      "author": "Vds",
+      "initials": "V",
+      "monthsAgo": "8 miesięcy temu",
+      "rating": 5,
+      "verified": true,
+      "text": "Porządna robota. Dobry kontakt, sprawny przebieg zamówienia. Sprzęt na medal, bardzo mocny i solidny, dobrze trzyma się drogi, tryb pod górę jest mega. Sprawdzony na szlakach tatrzańskich. Polecam",
+      "originalHint": "",
+      "originalUrl": "",
+      "photoThumb": ""
+    },
+    {
+      "author": "Grzegorz",
+      "initials": "G",
+      "monthsAgo": "9 miesięcy temu",
+      "rating": 5,
+      "verified": true,
+      "text": "Kontakt z firmą jest na najwyższym poziomie, niezwykle profesjonalnie, rzeczowo i na temat. Świetny kontakt z klientem, otwartość na niestandardowe rozwiązania. Rowery budowane są nie tylko estetycznie, ale co najważniejsze z fachowym inżynierskim podejściem oraz szeroką wiedzą praktyczną w temacie co jest kluczowe dla długiej i bezawaryjnej eksploatacji. Gorąco polecam!",
+      "originalHint": "",
+      "originalUrl": "",
+      "photoThumb": ""
+    },
+    {
+      "author": "Marek",
+      "initials": "M",
+      "monthsAgo": "rok temu",
+      "rating": 5,
+      "verified": true,
+      "text": "Pan Filip i serwis na 6 z plusem. Wiarygodny, solidny, uczciwy i bardzo dobry kontakt!!! Z całego serca polecam!!!",
+      "originalHint": "",
+      "originalUrl": "",
+      "photoThumb": ""
+    },
+    {
+      "author": "Denis",
+      "initials": "D",
+      "monthsAgo": "rok temu",
+      "rating": 5,
+      "verified": true,
+      "text": "Polecam wszystkim, serwis spełnia wszystkie oczekiwania, nie drogo i szybko, robią \"jak dla siebie\". Na pewno wrócę",
+      "originalHint": "",
+      "originalUrl": "",
+      "photoThumb": ""
+    },
+    {
+      "author": "Kamila",
+      "initials": "K",
+      "monthsAgo": "rok temu",
+      "rating": 5,
+      "verified": true,
+      "text": "Rower składany na zamówienie. Pan Filip pomógł oraz doradził jakie komponenty (np. amortyzator, damper) będą najlepsze. Spotkanie online, podczas której w pełni odpowiada na pytania i rozwiewa wątpliwości. Po złożeniu roweru zapewnia serwis oraz. Pełny profesjonalizm i wiedza. Serdecznie polecam! :)",
+      "originalHint": "",
+      "originalUrl": "",
+      "photoThumb": ""
+    },
+    {
+      "author": "Michał",
+      "initials": "M",
+      "monthsAgo": "rok temu",
+      "rating": 5,
+      "verified": true,
+      "text": "Polecam serwis",
+      "originalHint": "",
+      "originalUrl": "",
+      "photoThumb": ""
+    },
+    {
+      "author": "Maciej",
+      "initials": "M",
+      "monthsAgo": "rok temu",
+      "rating": 5,
+      "verified": true,
+      "text": "Serwis z ogromną wiedzą i doświadczeniem. Świetny kontakt i rzeczowe podejście do klienta.",
+      "originalHint": "",
+      "originalUrl": "",
+      "photoThumb": ""
+    }
+  ]
+}
