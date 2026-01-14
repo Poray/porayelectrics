@@ -108,10 +108,8 @@
   <a href="#kontakt" class="nav-link nav-cta-mobile" data-i18n="header.cta">Porozmawiajmy</a>
 
 
-<div class="lang-switch lang-switch--mobile lang-switch--seg">
-  <button class="lang-btn" data-lang="pl" type="button">PL</button>
-  <button class="lang-btn" data-lang="en" type="button">EN</button>
-</div>
+
+
 
 
 
@@ -136,6 +134,15 @@
     </svg>
   </a>
 
+<div class="lang-switch">
+  <button class="lang-btn lang-active" data-lang="pl">PL</button>
+  <span class="lang-divider"></span>
+  <button class="lang-btn" data-lang="en">EN</button>
+</div>
+
+<!-- <button class="theme-toggle" aria-label="Toggle theme">
+  🌙
+</button> -->
 
 
 
@@ -562,11 +569,11 @@
 
 
 <!-- GOOGLE REVIEWS -->
-<div class="about-reviews">
-  <div class="about-reviews__head">
-    <p class="pill">OPINIE Z GOOGLE</p>
-    <h3>Co mówią klienci</h3>
-  </div>
+<div class="about-reviews__head">
+  <p class="pill" data-i18n="reviews.pill">OPINIE Z GOOGLE</p>
+  <h3 data-i18n="reviews.heading">Co mówią klienci</h3>
+</div>
+
 
   <section class="ti" id="google-reviews">
     <div class="ti__shell">
@@ -579,9 +586,11 @@
       </div>
 
       <div class="ti__bottom">
-        <a class="ti__link" id="tiPlaceLink" href="#" target="_blank" rel="noopener noreferrer">
-          Zobacz w Google →
-        </a>
+<a class="ti__link" id="tiPlaceLink" href="#" target="_blank" rel="noopener noreferrer"
+   data-i18n="reviews.seeGoogle">
+  Zobacz w Google →
+</a>
+
       </div>
     </div>
   </section>

@@ -1500,3 +1500,24 @@ if (langToggle) {
     console.log("Language:", lang);
   });
 }
+
+(function themeToggle(){
+  const btn = document.querySelector(".theme-toggle");
+  if(!btn) return;
+
+  const root = document.documentElement;
+
+  // load saved
+  const saved = localStorage.getItem("theme");
+  if(saved === "light"){
+    root.classList.add("light");
+    btn.textContent = "☀️";
+  }
+
+  btn.addEventListener("click", () => {
+    const isLight = root.classList.toggle("light");
+    localStorage.setItem("theme", isLight ? "light" : "dark");
+    btn.textContent = isLight ? "☀️" : "🌙";
+  });
+})();
+

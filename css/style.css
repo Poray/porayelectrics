@@ -6061,4 +6061,331 @@ section.product-section > .show-more-btn{
     justify-self: end !important;
     margin-right: -2px;
   }
+}/* =========================
+   LANG SWITCH – MODERN PL | EN
+   ========================= */
+
+.lang-switch{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  background: none;
+  border: 0;
+  padding: 0;
 }
+
+/* przyciski PL / EN */
+.lang-btn{
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  color: rgba(148,163,184,0.7);
+  cursor: pointer;
+
+  transition: color .2s ease, opacity .2s ease;
+}
+
+.lang-btn:hover{
+  color: rgba(226,232,240,0.95);
+}
+
+/* aktywny język */
+.lang-btn.lang-active{
+  color: rgba(249,250,251,0.95);
+  opacity: 1;
+}
+
+/* PIONOWA KRESKA – jak separator na screenie */
+.lang-divider{
+  width: 1px;
+  height: 14px;
+
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(148,163,184,0.9),
+    transparent
+  );
+
+  opacity: 0.85;
+}
+
+
+/* =========================
+   LANG SWITCH – INLINE (PL | EN) + FIXED WIDTH (DESKTOP)
+   ========================= */
+
+/* desktop only switch */
+.lang-switch--desktop{ display: inline-flex; }
+@media (max-width: 720px){
+  .lang-switch--desktop{ display: none !important; }
+}
+
+/* modern inline style */
+.lang-switch.lang-switch--inline{
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  gap: 10px;
+  border-radius: 0 !important;
+
+  /* stała szerokość => nie "pływa" przy zmianie języka / font-weight */
+  width: 78px;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.lang-switch.lang-switch--inline .lang-btn{
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-size: 0.82rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  color: rgba(148,163,184,0.92);
+  opacity: 1;
+}
+
+.lang-switch.lang-switch--inline .lang-btn:hover{
+  color: rgba(226,232,240,0.95);
+}
+
+.lang-switch.lang-switch--inline .lang-btn.lang-active{
+  color: rgba(249,250,251,0.98);
+}
+
+/* separator line like your vertical divider */
+.lang-divider{
+  width: 1px;
+  height: 16px;
+  border-radius: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(148, 163, 184, 0.65),
+    transparent
+  );
+  opacity: 0.9;
+}
+
+/* =========================
+   INSTAGRAM ICON – NO BACKGROUND
+   ========================= */
+
+.instagram-link{
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* SVG ikony */
+.instagram-link svg{
+  width: 22px;
+  height: 22px;
+  fill: rgba(249,250,251,0.9);
+
+  transition: transform .18s ease, opacity .18s ease;
+}
+
+/* hover – delikatny premium efekt */
+.instagram-link:hover svg{
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* usuń WSZYSTKIE pseudo-elementy (glow / swirl) */
+.instagram-link::before,
+.instagram-link::after{
+  display: none !important;
+}
+
+/* =========================
+   LIGHT MODE
+   ========================= */
+
+/* html.light{
+  --bg: #f8fafc;
+  --bg-soft: #eef2f7;
+  --bg-elevated: #ffffff;
+
+  --text: #020617;
+  --text-soft: #475569;
+
+  --border-subtle: rgba(15,23,42,0.15);
+
+  --accent: #0284c7;
+  --accent-soft: rgba(2,132,199,0.15);
+} */
+
+/* tło strony */
+html.light body{
+  background: linear-gradient(
+    to bottom,
+    #f8fafc,
+    #eef2f7
+  );
+}
+
+/* header w light */
+html.light .site-header-inner{
+  background:
+    linear-gradient(
+      to right,
+      rgba(255,255,255,0.9),
+      rgba(248,250,252,0.9)
+    );
+  border-color: rgba(15,23,42,0.15);
+  box-shadow:
+    0 18px 50px rgba(15,23,42,0.08);
+}
+
+/* linki */
+html.light .nav-link{
+  color: var(--text-soft);
+}
+html.light .nav-link:hover{
+  color: var(--text);
+}
+
+/* Instagram icon */
+html.light .instagram-link svg{
+  fill: rgba(2,6,23,0.9);
+}
+
+/* CTA */
+html.light .nav-cta{
+  background: #020617;
+  color: #fff;
+}
+
+/* =========================
+   THEME TOGGLE
+   ========================= */
+
+.theme-toggle{
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+
+  font-size: 18px;
+  line-height: 1;
+
+  color: var(--text-soft);
+  cursor: pointer;
+
+  transition: transform .2s ease, color .2s ease;
+}
+
+.theme-toggle:hover{
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+/* =========================
+   LIGHT MODE – only background behind panels
+   ========================= */
+
+/* nic nie zmieniamy w zmiennych UI! */
+html.light body{
+  /* jasne tło za “oknami” */
+  background: radial-gradient(circle at top, #f8fafc 0, #eef2f7 55%, #e6edf6 100%) !important;
+}
+
+/* jeżeli masz gdzieś body::before/after robiące efekt kosmosu – wyciszamy w light */
+html.light body::before,
+html.light body::after{
+  opacity: 0.08 !important;
+  filter: blur(18px) !important;
+}
+
+/* =========================
+   LIGHT MODE – readable page, panels stay dark
+   ========================= */
+
+html.light body{
+  background: radial-gradient(circle at top, #f8fafc 0, #eef2f7 55%, #e6edf6 100%) !important;
+
+  /* KLUCZ: tekst na stronie ma być ciemny */
+  color: #0b1220 !important;
+}
+
+/* zwykłe teksty (poza kartami/panelami) */
+html.light .eyebrow,
+html.light .hero h1,
+html.light .section-header h2,
+html.light .section-header p,
+html.light .hero-text,
+html.light .hero-footnote,
+html.light .pill,
+html.light .bullets,
+html.light .about-grid p{
+  color: rgba(11, 18, 32, 0.85) !important;
+}
+
+html.light .hero h1,
+html.light .section-header h2{
+  color: rgba(11, 18, 32, 0.95) !important;
+}
+
+/* linki na jasnym tle */
+html.light a{
+  color: rgba(2, 132, 199, 0.95);
+}
+
+/* PRZYCISKI w hero (żeby nie wyglądały “sprane”) */
+html.light .btn-ghost{
+  border-color: rgba(11,18,32,0.25) !important;
+  color: rgba(11,18,32,0.92) !important;
+}
+html.light .btn-secondary{
+  background: rgba(11,18,32,0.06) !important;
+  border-color: rgba(11,18,32,0.18) !important;
+  color: rgba(11,18,32,0.92) !important;
+}
+
+/* =========================
+   PANELS stay DARK (Twoje “okna”)
+   ========================= */
+html.light .card,
+html.light .product-card,
+html.light .tech-layout,
+html.light .tech-card,
+html.light .spec-card,
+html.light .contact-form,
+html.light .contact-info{
+  /* zostawiamy ich dark wygląd */
+  color: var(--text) !important;          /* to jest jasny tekst z dark theme */
+}
+
+/* pilnujemy, żeby tekst w środku paneli nie dziedziczył “light” */
+html.light .card *,
+html.light .product-card *,
+html.light .tech-layout *,
+html.light .spec-card *,
+html.light .contact-form *,
+html.light .contact-info *{
+  color: inherit;
+}
+
+/* jeśli masz topo/cosmos overlay na body::before – na jasnym tle może psuć czytelność */
+html.light body::before{
+  opacity: 0.06 !important;
+  mix-blend-mode: multiply !important;
+}
+
+

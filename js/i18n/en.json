@@ -15,7 +15,7 @@
   "hero": {
     "eyebrow": "Electric vehicles by Poray Electrics",
     "title": "Choose your electric vehicle.",
-    "text": "Different in character, built on the same solid platform: Voyager, Intruder and Musher. Scroll down to explore."
+    "text": "Different in character, built on the same solid platform: Voyager and Intruder. Scroll down to explore."
   },
   "vehicles": {
     "heading": "Poray Electrics Vehicles",
@@ -26,16 +26,7 @@
     "more": "Show more"
   },
   "products": {
-    "musher": {
-      "lead": "Musher combines the agility of a mountain bike with the capabilities of an enduro motorcycle. Designed for mountain trails, forest paths and technical climbs.",
-      "features": [
-        "200 mm front suspension, 223 mm rear",
-        "High ground clearance and off-road tires",
-        "Battery optimized for range",
-        "Progressive linkage inspired by enduro motorcycles",
-        "Planetary gearbox enables efficient pedaling at any speed"
-      ]
-    },
+    
     "voyager": {
       "lead": "Lightweight electric cross bike for sport riding. High power in a compact package for riders entering the e-offroad world.",
       "features": [
@@ -62,11 +53,8 @@
     "intruder": {
       "lead": "The most powerful platform setup — 22 kW with components selected for intensive riding.",
       "heading": "Intruder"
-    },
-    "musher": {
-      "lead": "A fusion of MTB geometry with a 6.3 kW electric drive, engineered for maximum off-road capability.",
-      "heading": "Musher"
     }
+    
   },
   "specs": {
     "maxSpeed": "Top speed",
@@ -141,5 +129,12 @@
   },
   "common": {
     "yes": "Yes"
-  }
+  },
+
+    "reviews": {
+  "pill": "GOOGLE REVIEWS",
+  "heading": "What our customers say",
+  "seeGoogle": "See on Google →"
+}
+
 }
