@@ -4133,7 +4133,7 @@ body:not(.page-loaded) .custom-cursor{
 /* START REVEAL */
 .page-loader.reveal{
    animation: holeGrow 1100ms cubic-bezier(.16,84,28,1) forwards;
-}s
+}
 
 .page-loader.reveal .page-loader__inner{
   transform: scale(0.94);
@@ -6606,3 +6606,204 @@ section.product-section > .show-more-btn{
     justify-content: center;
   }
 }
+
+.nav-label-inner{
+  display: flex;
+  flex-direction: column;
+  transform: translateY(0%);
+
+  /* accel -> decel (bardziej “cosmos”) */
+  transition-property: transform;
+  transition-duration: 480ms;
+  transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+  transition-delay: 10ms;
+
+  will-change: transform;
+}
+
+.nav-link:not(:hover) .nav-label-inner{
+  transition-duration: 650ms; /* wyjście minimalnie dłuższe */
+  transition-delay: 30ms;     /* lekkie opóźnienie hover-out */
+}
+
+/* na dotyku bez opóźnień */
+@media (hover: none){
+  .nav-label-inner,
+  .nav-link:not(:hover) .nav-label-inner{
+    transition-delay: 0ms;
+  }
+}
+
+
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+
+  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), #020617);
+  border-radius: 0.9rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+
+  /* zamiast display:none -> animujemy wejście */
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  z-index: 40;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-8px) scale(0.98);
+  transform-origin: top left;
+
+  transition:
+    opacity 180ms cubic-bezier(0.76, 0, 0.24, 1),
+    transform 260ms cubic-bezier(0.76, 0, 0.24, 1),
+    visibility 0s linear 260ms; /* schowaj dopiero po animacji */
+}
+
+
+.nav-has-dropdown:hover .nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+
+  transition-delay: 60ms, 60ms, 0s; /* lekkie “cosmosowe” opóźnienie wejścia */
+}
+
+
+
+
+/* lift tylko na desktopie, i tylko gdy zdjęcie już wjechało (side-in) */
+@media (hover: hover) and (pointer: fine){
+  .musher-photo.side-in:hover,
+  .fenix-photo.side-in:hover{
+    transform: translateX(0) translateY(-6px) scale(1.015);
+    box-shadow: 0 26px 70px rgba(15, 23, 42, 1);
+  }
+}
+
+@media (min-width: 901px){
+  .fenix-photo:nth-of-type(1) { margin-top: 0; }
+  .fenix-photo:nth-of-type(2) { margin-top: 2rem; }
+  .fenix-photo:nth-of-type(3) { margin-top: 0; }     /* było -1rem */
+  .fenix-photo:nth-of-type(4) { margin-top: 3rem; }
+  .fenix-photo:nth-of-type(5) { margin-top: 1rem; }
+  .fenix-photo:nth-of-type(6) { margin-top: 0; }     /* było -2rem */
+  .fenix-photo:nth-of-type(7) { margin-top: 2.5rem; }
+  .fenix-photo:nth-of-type(8) { margin-top: 0; }     /* było -1.5rem */
+  .fenix-photo:nth-of-type(9) { margin-top: 3rem; }
+}
+
+
+
+/* =========================
+   NAV: ACTIVE SECTION (desktop only)
+   ========================= */
+@media (min-width: 721px){
+  .nav-link.is-active{
+    color: var(--text);
+  }
+
+  .nav-link.is-active::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -7px;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(56,189,248,0.95),
+      transparent
+    );
+    opacity: 0.9;
+  }
+
+  .nav-dropdown-link.is-active{
+    color: var(--text);
+  }
+
+  .nav-dropdown-link.is-active::after{
+    opacity: 1;
+    transform: translateY(-50%) rotate(-45deg) translateX(0);
+  }
+}
+
+
+
+/* =========================
+   DESKTOP: moving underline for active section
+   ========================= */
+@media (min-width: 721px){
+  .main-nav{ position: relative; } /* potrzebne do absolute underline */
+
+  .nav-underline{
+    position: absolute;
+    left: 0;
+    bottom: -7px;        /* jak “kreska pod tekstem” */
+    height: 2px;
+    width: 20px;         /* nadpisywane w JS */
+    border-radius: 999px;
+
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(56,189,248,0.95),
+      transparent
+    );
+
+    opacity: 0;
+    transform: translateX(0px);
+    pointer-events: none;
+
+    transition:
+      transform 420ms cubic-bezier(0.76, 0, 0.24, 1),
+      width     420ms cubic-bezier(0.76, 0, 0.24, 1),
+      opacity   180ms ease;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .nav-underline{ transition: none !important; }
+  }
+}
+
+
+@media (min-width: 721px){
+  .main-nav{ position: relative; } /* u Ciebie .main-nav jest flexem na desktopie :contentReference[oaicite:0]{index=0} */
+
+  .nav-underline{
+    position: absolute;
+    left: 0;
+    bottom: -7px;
+    height: 2px;
+
+    width: 1px;                 /* bazowa szerokość -> skalujemy scaleX */
+    transform-origin: left center;
+
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(56,189,248,0.95),
+      transparent
+    );
+
+    opacity: 0;
+    transform: translateX(var(--u-x, 0px)) scaleX(var(--u-w, 1));
+    pointer-events: none;
+
+    transition:
+      transform 420ms cubic-bezier(0.76, 0, 0.24, 1),
+      opacity 160ms ease;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .nav-underline{ transition: none !important; }
+  }
+}
+
+

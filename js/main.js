@@ -230,6 +230,32 @@ function bindShowMoreButtons() {
 }
 bindShowMoreButtons();
 
+
+function preloadHiddenGalleryImages(){
+  const imgs = document.querySelectorAll(
+    ".musher-photo.musher-extra img, .fenix-photo.fenix-extra img"
+  );
+
+  imgs.forEach((img) => {
+    img.loading = "eager";
+    img.decoding = "async";
+
+    if (img.dataset.src && !img.src) img.src = img.dataset.src;
+    if (img.dataset.srcset && !img.srcset) img.srcset = img.dataset.srcset;
+
+    const pre = new Image();
+    pre.src = img.currentSrc || img.src;
+    if (img.srcset) pre.srcset = img.srcset;
+  });
+}
+
+if ("requestIdleCallback" in window) {
+  requestIdleCallback(preloadHiddenGalleryImages, { timeout: 1200 });
+} else {
+  setTimeout(preloadHiddenGalleryImages, 150);
+}
+
+
 let lightboxOverlay = null;
 let lightboxImage = null;
 
@@ -1520,4 +1546,98 @@ if (langToggle) {
     btn.textContent = isLight ? "☀️" : "🌙";
   });
 })();
+
+/* =========================
+   DESKTOP SCROLLSPY (active nav)
+   ========================= */
+(function initDesktopScrollSpy(){
+  const mq = window.matchMedia("(min-width: 721px) and (hover: hover) and (pointer: fine)");
+  let observer = null;
+  let currentId = null;
+  let resizeT = null;
+
+  function clearActive(){
+    document.querySelectorAll(".main-nav .is-active").forEach((el) => {
+      el.classList.remove("is-active");
+    });
+  }
+
+  function setActive(id){
+    if (!id || id === currentId) return;
+    currentId = id;
+
+    clearActive();
+
+    // podświetl linki do tej sekcji (także w dropdownie)
+    const selector = `.main-nav a[href="#${CSS.escape(id)}"]`;
+    document.querySelectorAll(selector).forEach((a) => a.classList.add("is-active"));
+  }
+
+  function setup(){
+    if (observer) { observer.disconnect(); observer = null; }
+    clearActive();
+    currentId = null;
+
+    if (!mq.matches) return;
+
+    const links = Array.from(document.querySelectorAll('.main-nav a[href^="#"]'))
+      .filter(a => (a.getAttribute("href") || "").length > 1);
+
+    const ids = Array.from(new Set(
+      links.map(a => decodeURIComponent(a.getAttribute("href").slice(1))).filter(Boolean)
+    ));
+
+    const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
+    if (!sections.length) return;
+
+    const offset = (typeof getHeaderOffsetPx === "function") ? getHeaderOffsetPx() : 0;
+
+    observer = new IntersectionObserver((entries) => {
+      // wybierz najbardziej "widoczną" sekcję
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a,b) => b.intersectionRatio - a.intersectionRatio);
+
+      if (visible[0]) setActive(visible[0].target.id);
+    }, {
+      threshold: [0.2, 0.35, 0.5, 0.65],
+      rootMargin: `-${offset + 12}px 0px -55% 0px`
+    });
+
+    sections.forEach(sec => observer.observe(sec));
+
+    // inicjalnie: wybierz sekcję najbliżej topu (po załadowaniu / refresh)
+    requestAnimationFrame(() => {
+      const y = offset + 18;
+      let best = null;
+      let bestDist = Infinity;
+
+      sections.forEach(sec => {
+        const r = sec.getBoundingClientRect();
+        const dist = Math.abs(r.top - y);
+        if (r.bottom > y && dist < bestDist) { bestDist = dist; best = sec; }
+      });
+
+      if (best) setActive(best.id);
+    });
+  }
+
+  // reakcja na breakpoint / resize (offset headera się zmienia)
+  const onResize = () => {
+    clearTimeout(resizeT);
+    resizeT = setTimeout(setup, 160);
+  };
+
+  if (mq.addEventListener) mq.addEventListener("change", setup);
+  else mq.addListener(setup);
+
+  window.addEventListener("resize", onResize, { passive: true });
+  window.addEventListener("load", setup, { passive: true });
+
+  // gdy zmieniasz język, layout menu może się minimalnie przeliczyć
+  window.addEventListener("languageChanged", () => setTimeout(setup, 50), { passive: true });
+
+  setup();
+})();
+
 

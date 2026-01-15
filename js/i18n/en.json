@@ -15,11 +15,11 @@
   "hero": {
     "eyebrow": "Electric vehicles by Poray Electrics",
     "title": "Choose your electric vehicle.",
-    "text": "Different in character, built on the same solid platform: Voyager and Intruder. Scroll down to explore."
+    "text": "Different in character, built on the same solid platform: Voyager and Intruder."
   },
   "vehicles": {
     "heading": "Poray Electrics Vehicles",
-    "lead": "Different platforms, one shared goal — fun, safety, performance and longevity."
+    "lead": "Different platforms, one shared goal - fun, safety, performance and longevity."
   },
   "cards": {
     "see": "See",
@@ -32,7 +32,7 @@
       "features": [
         "12 kW you can genuinely feel off-road",
         "Geometry designed for riding beyond asphalt",
-        "Suspension tuned to the rider — not the other way around",
+        "Suspension tuned to the rider - not the other way around",
         "Fully protected against overheating"
       ]
     },
@@ -47,11 +47,11 @@
   },
   "sections": {
     "voyager": {
-      "lead": "A lighter configuration on the same platform — 12 kW of power for sport riding and fast off-road escapes.",
+      "lead": "A lighter configuration - 12 kW of power for sport riding and fast off-road escapes.",
       "heading": "Voyager"
     },
     "intruder": {
-      "lead": "The most powerful platform setup — 22 kW with components selected for intensive riding.",
+      "lead": "The most powerful platform setup - 22 kW with components selected for intensive riding.",
       "heading": "Intruder"
     }
     
@@ -68,14 +68,15 @@
     "range": "Range",
     "geometry": "Geometry",
     "weightDist": "Weight distribution",
-    "range_offroad": "Up to 80 km in demanding off-road conditions"
+    "range_offroad": "Up to 80 km in demanding off-road conditions",
+    "chargingInfo": "8A charger, charging time from 0 to 100%: around 7 hours"
   },
   "tech": {
     "heading": "Technology under control",
-    "lead": "We develop our own solutions — from wiring design to controller tuning and BMS configuration.",
+    "lead": "We develop our own solutions - from wiring design to controller tuning and BMS configuration.",
     "platform": "Battery platform",
     "title": "Battery packs engineered for real-world use.",
-    "text": "Cell selection, pack architecture and safety systems are always tailored to the application — without compromises between range and safety.",
+    "text": "Cell selection, pack architecture and safety systems are always tailored to the application - without compromises between range and safety.",
     "bullets": [
       "High-voltage battery pack design",
       "Cell balancing, data logging and thermal protection",
@@ -96,19 +97,19 @@
     "title": "From prototypes to finished vehicles",
     "text": "Our focus is to build vehicles that are:",
     "bullets": [
-      "Reliability — solutions designed for long-term, trouble-free operation.",
-      "Attention to detail — even where it is not visually apparent, but critical to durability and safety.",
-      "Designed for real-world conditions — construction tailored to the environment and loads the vehicle is actually expected to face."
+      "Reliability - solutions designed for long-term, trouble-free operation.",
+      "Attention to detail - even where it is not visually apparent, but critical to durability and safety.",
+      "Designed for real-world conditions - construction tailored to the environment and loads the vehicle is actually expected to face."
     ],
     "stats": {
       "projects": "Where theory meets practice",
-      "projectsValue": "Our experience comes from hands-on work with electric vehicles — testing, modifications, and riding in the conditions these machines are actually built for. This allows us to distinguish between solutions that truly work and those that only look good on a specification sheet."
+      "projectsValue": "Our experience comes from hands-on work with electric vehicles - testing, modifications, and riding in the conditions these machines are actually built for. This allows us to distinguish between solutions that truly work and those that only look good on a specification sheet."
       
     }
   },
   "contact": {
     "heading": "Let’s talk about your electric vehicle",
-    "lead": "Describe your project — vehicle type, application and expected range. We’ll get back with the next steps.",
+    "lead": "Describe your project - vehicle type, application and expected range. We’ll get back with the next steps.",
     "name": "Name",
     "email": "Email address",
     "message": "Project description",
@@ -116,7 +117,7 @@
     "note": "The form can be connected to your email inbox or CRM.",
     "details": "Contact details",
     "location": "Małopolska, Poland",
-    "cta": "Call or message us — we usually respond the same day.",
+    "cta": "Call or message us - we usually respond the same day.",
     "emailPlaceholder": "name@company.com",
     "messagePlaceholder": "Briefly describe the vehicle and its use…",
     "mail": "Email:",
