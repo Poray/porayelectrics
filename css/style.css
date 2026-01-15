@@ -6579,3 +6579,30 @@ section.product-section > .show-more-btn{
   height: 100%;
   object-fit: contain;
 }
+
+@media (max-width: 720px){
+  .main-nav{
+    display: flex !important;      /* ZAWSZE flex */
+    transform: translateX(110%);   /* schowane */
+  }
+
+  body.nav-open .main-nav,
+  .main-nav.open{
+    transform: translateX(0);      /* widoczne */
+  }
+}
+
+@media (min-width: 721px){
+  .main-nav .lang-switch--mobile{ display: none !important; }
+}
+
+
+
+@media (max-width: 720px){
+  .lang-switch--mobile{
+    margin-top: 1.6rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(148,163,184,.18);
+    justify-content: center;
+  }
+}
