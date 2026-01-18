@@ -6807,3 +6807,11 @@ section.product-section > .show-more-btn{
 }
 
 
+@media (min-width: 721px){
+  .nav-link.is-active{
+    color: var(--text);
+  }
+
+  /* underline robi .nav-underline (przesuwana kreska), więc wyłącz pseudo-element */
+  .nav-link.is-active::after{ content: none; }
+}

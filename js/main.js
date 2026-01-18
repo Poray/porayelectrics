@@ -1562,16 +1562,32 @@ if (langToggle) {
     });
   }
 
-  function setActive(id){
-    if (!id || id === currentId) return;
-    currentId = id;
+function setActive(id){
+  if (!id || id === currentId) return;
+  currentId = id;
 
-    clearActive();
+  clearActive();
 
-    // podświetl linki do tej sekcji (także w dropdownie)
-    const selector = `.main-nav a[href="#${CSS.escape(id)}"]`;
-    document.querySelectorAll(selector).forEach((a) => a.classList.add("is-active"));
+  // sekcje, które mają podświetlać też "Pojazdy"
+  const groupFor = {
+    voyager: "pojazdy",
+    intruder: "pojazdy",
+  };
+
+  // 1) podświetl link tej sekcji (np. w dropdownie)
+  document
+    .querySelectorAll(`.main-nav a[href="#${CSS.escape(id)}"]`)
+    .forEach((a) => a.classList.add("is-active"));
+
+  // 2) jeśli jesteśmy w voyager/intruder -> podświetl też nagłówek "Pojazdy"
+  const groupId = groupFor[id];
+  if (groupId) {
+    document
+      .querySelectorAll(`.main-nav a[href="#${CSS.escape(groupId)}"]`)
+      .forEach((a) => a.classList.add("is-active"));
   }
+}
+
 
   function setup(){
     if (observer) { observer.disconnect(); observer = null; }
