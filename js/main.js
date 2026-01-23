@@ -2372,3 +2372,65 @@ window.addEventListener("languageChanged", () => {
     if (e.key === 'Escape') closeAll(null);
   });
 })();
+
+
+/* =========================
+   COLOR PICKER – use HEX from label to paint tiles
+   ========================= */
+(function initColorHexTiles(){
+  const options = document.querySelectorAll(".color-option");
+  if (!options.length) return;
+
+  const normHex = (h) => {
+    if (!h) return null;
+    h = h.trim();
+    if (!h.startsWith("#") && /^[0-9a-fA-F]{6}$/.test(h)) h = "#" + h; // np. 6c7884
+    if (/^#[0-9a-fA-F]{3}$/.test(h) || /^#[0-9a-fA-F]{6}$/.test(h)) return h.toLowerCase();
+    return null;
+  };
+
+  options.forEach((opt) => {
+    const name = opt.querySelector(".color-name")?.textContent || "";
+    const swatch = opt.querySelector(".color-swatch");
+    if (!swatch) return;
+
+    // wyciągnij hexy: #xxxxxx, #xxx oraz 6-znakowe bez #
+    const matches = [
+      ...name.matchAll(/#[0-9a-fA-F]{3,6}\b/g),
+      ...name.matchAll(/\b[0-9a-fA-F]{6}\b/g)
+    ].map(m => m[0]);
+
+    const c1 = normHex(matches[0]);
+    const c2 = normHex(matches[1]);
+
+    if (c1) swatch.style.setProperty("--c1", c1);
+    if (c2) {
+      swatch.style.setProperty("--c2", c2);
+      swatch.classList.add("is-duo");
+    } else {
+      swatch.classList.remove("is-duo");
+    }
+
+    // ... po ustawieniu --c1 / --c2
+
+// usuń hexy z nazwy (zostaw opis)
+const nameEl = opt.querySelector(".color-name");
+if (nameEl) {
+  nameEl.textContent = nameEl.textContent
+    // usuń #xxxxxx i #xxx
+    .replace(/#[0-9a-fA-F]{3,6}\b/g, "")
+    // usuń hexy bez #
+    .replace(/\b[0-9a-fA-F]{6}\b/g, "")
+    // usuń “+” jeśli zostało samo
+    .replace(/\s*\+\s*/g, " + ")
+    // posprzątaj wielokrotne spacje
+    .replace(/\s{2,}/g, " ")
+    .trim();
+
+  // jeśli zaczyna się od '+' (po wycięciu) – usuń
+  nameEl.textContent = nameEl.textContent.replace(/^\+\s*/, "");
+}
+
+
+  });
+})();
