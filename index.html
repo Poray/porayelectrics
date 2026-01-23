@@ -324,11 +324,11 @@
        
         <dl class="spec-list">
           <div>
-            <dt data-i18n="specs.maxSpeed">prędkość maksymalna</dt><dd>90 km/h</dd>
+            <dt data-i18n="specs.maxSpeed">Prędkość maksymalna</dt><dd>90 km/h</dd>
           </div>
 
                          <div>
-            <dt data-i18n="specs.range">zasięg</dt><dd>150 km</dd>
+            <dt data-i18n="specs.range">Zasięg</dt><dd>150 km</dd>
           </div>
 
           <div>
@@ -336,25 +336,25 @@
           </div>
 
           <div>
-            <dt data-i18n="specs.reverse">bieg wsteczny</dt><dd><span data-i18n="common.yes">Tak</span></dd>
+            <dt data-i18n="specs.reverse">Bieg wsteczny</dt><dd><span data-i18n="common.yes">Tak</span></dd>
           </div>
           <div>
-            <dt data-i18n="specs.modes">tryby prędkości</dt><dd>25/50/90 km/h</dd>
+            <dt data-i18n="specs.modes">Tryby prędkości</dt><dd>25/50/90 km/h</dd>
           </div>
                     <div>
-            <dt data-i18n="specs.motor">silnik</dt><dd>QSmotor 205</dd>
+            <dt data-i18n="specs.motor">Silnik</dt><dd>QSmotor 205</dd>
           </div>
 
 
         
                     <div>
-            <dt data-i18n="specs.battery">bateria</dt><dd>72V | Samsung 50s | 5040 Wh (60Ah)
+            <dt data-i18n="specs.battery">Bateria</dt><dd>72V | Samsung 50s | 5040 Wh (60Ah)
 </dd>
           </div>
 
           <div>
             <dt data-i18n="specs.led">Oświetlenie</dt>
-<dd data-i18n="specs.ledInfoVoyager">Przód: LED, 1000 lumenów | Tył: 2x LED (rozjaśniane przy hamowaniu)  </dd>
+<dd data-i18n="specs.ledInfoVoyager">Przód: LED, 1000 lub 2200 lumenów | Tył: 2x LED (rozjaśniane przy hamowaniu)  </dd>
 
           </div>
 
@@ -365,28 +365,277 @@
 
                            <div>
             <dt data-i18n="specs.charging">ładowanie</dt>
-<dd data-i18n="specs.chargingInfo">ładowarka 8A z wyświetlaczem | czas ładowania od 0 do 100%: około 7 godzin</dd>
+<dd data-i18n="specs.chargingInfo">Ładowarka 8A z wyświetlaczem | czas ładowania od 0 do 100%: około 7 godzin</dd>
 
           </div>
         </dl>
       </div>
-      <div class="spec-image">
-        <img src="img/1f12.webp" alt="Poray Electrics Voyager - główne ujęcie" loading="lazy" />
+<div class="spec-media">
+  <div class="spec-image">
+    <img src="img/1f12.webp" alt="Poray Electrics Voyager - główne ujęcie" loading="lazy" />
+  </div>
+
+<!-- Price hint (collapsed state) -->
+<div class="spec-startsfrom" data-price-model="voyager" aria-live="polite"></div>
+
+  <button
+    class="config-toggle"
+    type="button"
+    aria-controls="config-voyager"
+    aria-expanded="false"
+    data-i18n="configurator.toggle"
+  >
+    Konfiguruj
+  </button>
+</div>
+
+<div class="config-panel" id="config-voyager" hidden>
+  <div class="config-panel__inner">
+    <div class="config-head">
+      <h3 class="config-title" data-i18n="configurator.title">Konfigurator</h3>
+      <p class="config-sub" data-i18n="configurator.subtitle">
+        Wybierz opcje i skopiuj konfigurację do wiadomości.
+      </p>
+    </div>
+
+    <form class="config-form" data-model="voyager" autocomplete="off">
+      <div class="config-grid">
+<div class="config-field">
+  <div class="config-label" data-i18n="configurator.color">Kolor</div>
+
+<div class="color-picker" role="radiogroup" aria-label="Kolor">
+    <label class="color-option">
+      <input type="radio" name="color" value="RAL 1021 + Grey" checked>
+      <span class="color-card">
+        <span class="color-swatch color-swatch--duo">
+          <span class="color-swatch__imgs" aria-hidden="true">
+            <img src="img/grey.jpg" alt="" loading="lazy">
+            <img src="img/ral1021.webp" alt="" loading="lazy">
+            
+          </span>
+          <button class="color-zoom" type="button" aria-label="Podgląd koloru">⤢</button>
+        </span>
+        <span class="color-name">6c7884 (grey frame) + #f7ba01 (yellow coil)</span>
+      </span>
+    </label>
+
+    <label class="color-option">
+      <input type="radio" name="color" value="#144c4c (green) + yellow">
+      <span class="color-card">
+        <span class="color-swatch color-swatch--duo">
+          <span class="color-swatch__imgs" aria-hidden="true">
+            <img src="img/green.jpg" alt="" loading="lazy">
+            <img src="img/yellow.jpg" alt="" loading="lazy">
+          </span>
+          <button class="color-zoom" type="button" aria-label="Podgląd koloru">⤢</button>
+        </span>
+        <span class="color-name">#144c4c (green frame) + #e4a53c (yellow coil)</span>
+      </span>
+    </label>
+
+    <label class="color-option">
+      <input type="radio" name="color" value="Sand">
+      <span class="color-card">
+        <span class="color-swatch">
+          <span class="color-swatch__imgs" aria-hidden="true">
+            <img src="img/sand.jpg" alt="" loading="lazy">
+          </span>
+          <button class="color-zoom" type="button" aria-label="Podgląd koloru">⤢</button>
+        </span>
+        <span class="color-name">#e7d090 (sand/yellow - frame and coil)</span>
+      </span>
+    </label>
+
+    <label class="color-option">
+      <input type="radio" name="color" value="RAL 9005">
+      <span class="color-card">
+        <span class="color-swatch">
+          <span class="color-swatch__imgs" aria-hidden="true">
+            <img src="img/RAL9005.jpg" alt="" loading="lazy">
+          </span>
+          <button class="color-zoom" type="button" aria-label="Podgląd koloru">⤢</button>
+        </span>
+        <span class="color-name">#0e0f11 (black - frame and coil)</span>
+      </span>
+    </label>
+
+    <label class="color-option">
+      <input type="radio" name="color" value="RAL 3020">
+      <span class="color-card">
+        <span class="color-swatch">
+          <span class="color-swatch__imgs" aria-hidden="true">
+            <img src="img/ral_3020.jpg" alt="" loading="lazy">
+          </span>
+          <button class="color-zoom" type="button" aria-label="Podgląd koloru">⤢</button>
+        </span>
+        <span class="color-name">#bf1f10 (Honda Red - frame and coil)</span>
+      </span>
+    </label>
+  </div>
+
+
+  <input
+    id="voy-color-code"
+    name="colorCode"
+    class="config-control config-control--compact"
+    type="text"
+    placeholder="Własny kod: np. RAL 3020 / #FF0000"
+    data-i18n-placeholder="configurator.colorCodePlaceholder"
+    autocomplete="off"
+  />
+</div>
+
+        <div class="config-field">
+          <label class="config-label" for="voy-led" data-i18n="configurator.lighting">Oświetlenie</label>
+<select id="voy-led" name="lighting" class="config-control">
+  <option value="Brak" selected>Brak</option>
+  <option value="Standard 1000 lm">Standard 1000 lumenów</option>
+  <option value="Pro 2200 lm">Pro 2200 lumenów</option>
+</select>
+
+        </div>
+
+        <div class="config-field">
+          <label class="config-label" for="voy-tires" data-i18n="configurator.tires">Opony</label>
+          <select id="voy-tires" name="tires" class="config-control">
+<option value="Teren">Teren</option>
+<option value="Uniwersalne">Uniwersalne</option>
+<option value="Szosowe">Szosowe</option>
+
+          </select>
+        </div>
+
+        <div class="config-field">
+          <label class="config-label" for="voy-usb" data-i18n="configurator.usb">Gniazdo USB</label>
+<select id="voy-usb" name="usb" class="config-control">
+  <option value="Brak" selected>Brak</option>
+  <option value="USB-A + USB-C">USB-A + USB-C</option>
+</select>
+
+        </div>
+
+        <div class="config-field">
+          <div class="config-label" data-i18n="configurator.seat">Kanapa</div>
+          <div class="pill-group" role="radiogroup" aria-label="Kanapa">
+  <label class="pill">
+    <input type="radio" name="seat" value="Moto">
+    <span>Moto</span>
+  </label>
+  <label class="pill">
+    <input type="radio" name="seat" value="Siodło rowerowe" checked>
+    <span>Siodło rowerowe</span>
+  </label>
+</div>
+
+        </div>
+
+        <div class="config-field">
+          <label class="config-label" for="voy-fork" data-i18n="configurator.frontSusp">Amortyzator przód</label>
+          <div class="susp-picker" role="radiogroup" aria-label="Amortyzator przód">
+            <label class="susp-card">
+              <input type="radio" name="frontSusp" value="Moto (standard)" checked>
+              <span class="susp-card__inner">
+                <span class="susp-card__title">Moto (standard)</span>
+                <span class="susp-card__thumb susp-card__thumb--text" aria-hidden="true">Moto</span>
+              </span>
+            </label>
+
+            <label class="susp-card">
+              <input type="radio" name="frontSusp" value="Marzocchi Bomber 58 Red">
+              <span class="susp-card__inner">
+                <span class="susp-card__title">Marzocchi Bomber 58 (Red)</span>
+                <span class="susp-card__thumb" aria-hidden="true">
+                  <img src="img/bomber_red.png" alt="" loading="lazy">
+                </span>
+              </span>
+            </label>
+
+            <label class="susp-card">
+              <input type="radio" name="frontSusp" value="Marzocchi Bomber 58 Black">
+              <span class="susp-card__inner">
+                <span class="susp-card__title">Marzocchi Bomber 58 (Black)</span>
+                <span class="susp-card__thumb" aria-hidden="true">
+                  <img src="img/bomber_black.png" alt="" loading="lazy">
+                </span>
+              </span>
+            </label>
+
+            <label class="susp-card">
+              <input type="radio" name="frontSusp" value="Rock Shox Boxxer">
+              <span class="susp-card__inner">
+                <span class="susp-card__title">Rock Shox Boxxer</span>
+                <span class="susp-card__thumb" aria-hidden="true">
+                  <img src="img/boxxer_black.png" alt="" loading="lazy">
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="config-field">
+          <label class="config-label" for="voy-shock" data-i18n="configurator.rearSusp">Amortyzator tył</label>
+          <div class="susp-picker" role="radiogroup" aria-label="Amortyzator tył">
+            <label class="susp-card">
+              <input type="radio" name="rearSusp" value="Moto (standard)" checked>
+              <span class="susp-card__inner">
+                <span class="susp-card__title">Moto (standard)</span>
+                <span class="susp-card__thumb susp-card__thumb--text" aria-hidden="true">Moto</span>
+              </span>
+            </label>
+
+            <label class="susp-card">
+              <input type="radio" name="rearSusp" value="Rock Shox Vivid Coil">
+              <span class="susp-card__inner">
+                <span class="susp-card__title">Rock Shox Vivid Coil</span>
+                <span class="susp-card__thumb" aria-hidden="true">
+                  <img src="img/vivid.png" alt="" loading="lazy">
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
       </div>
+
+<div class="config-total" data-total-price aria-live="polite"></div>
+
+      <div class="config-actions">
+        <button type="button" class="config-copy" data-i18n="configurator.copy">Kopiuj konfigurację</button>
+        <button type="button" class="config-ask" data-i18n="configurator.ask">Zapytaj o tą konfigurację</button>
+      </div>
+
+      <textarea class="config-output" readonly rows="1" aria-label="Podsumowanie konfiguracji"></textarea>
+
+</form>
+  </div>
+</div>
+
     </article>
   </div>
 
   <div class="fenix-stack">
     <div class="fenix-photo reveal">
-      <img src="img/i3.webp" alt="Poray Electrics Voyager - zdjęcie 1" loading="lazy" />
+      <img src="img/i5.webp" alt="Poray Electrics Voyager - zdjęcie 1" loading="lazy" />
     </div>
     <div class="fenix-photo reveal">
-      <img src="img/i1.webp" alt="Poray Electrics Voyager - zdjęcie 2" loading="lazy" />
+      <img src="img/i6.webp" alt="Poray Electrics Voyager - zdjęcie 2" loading="lazy" />
     </div>
 
     <div class="fenix-photo reveal fenix-extra">
       <img src="img/i2.webp" alt="Poray Electrics Voyager - zdjęcie 3" loading="lazy" />
     </div>
+
+    <div class="fenix-photo reveal fenix-extra">
+      <img src="img/i4.webp" alt="Poray Electrics Voyager - zdjęcie 4" loading="lazy" />
+    </div>
+
+        <div class="fenix-photo reveal fenix-extra">
+      <img src="img/i1.webp" alt="Poray Electrics Voyager - zdjęcie 5" loading="lazy" />
+    </div>
+
+            <div class="fenix-photo reveal fenix-extra">
+      <img src="img/i3.webp" alt="Poray Electrics Voyager - zdjęcie 6" loading="lazy" />
+    </div>
+
   </div>
 
   <button class="show-more-photos" type="button">Pokaż więcej →</button>
@@ -436,7 +685,7 @@
 
                     <div>
             <dt data-i18n="specs.led">Oświetlenie</dt>
-<dd data-i18n="specs.ledInfoIntruder">Przód: LED, 2200 lumenów | Tył: 2x LED (rozjaśniane przy hamowaniu)  </dd>
+<dd data-i18n="specs.ledInfoIntruder">Przód: LED, 1000 lub 2200 lumenów | Tył: 2x LED (rozjaśniane przy hamowaniu)  </dd>
 
           </div>
 
@@ -448,14 +697,252 @@
  <div>
     <dt data-i18n="specs.charging">ładowanie</dt>
     <dd data-i18n="specs.chargingInfo">
-      ładowarka 8A z wyświetlaczem | czas ładowania od 0 do 100%: około 7 godzin
+      Ładowarka 8A z wyświetlaczem | czas ładowania od 0 do 100%: około 7 godzin
     </dd>
   </div>
         </dl>
       </div>
-      <div class="spec-image">
-        <img src="img/1i.webp" alt="Poray Electrics Intruder - główne ujęcie" loading="lazy" />
+      <div class="spec-media">
+  <div class="spec-image">
+    <img src="img/1i.webp" alt="Poray Electrics Intruder - główne ujęcie" loading="lazy" />
+  </div>
+
+<!-- Price hint (collapsed state) -->
+<div class="spec-startsfrom" data-price-model="intruder" aria-live="polite"></div>
+
+  <button
+    class="config-toggle"
+    type="button"
+    aria-controls="config-intruder"
+    aria-expanded="false"
+    data-i18n="configurator.toggle"
+  >
+    Konfiguruj
+  </button>
+</div>
+
+<div class="config-panel" id="config-intruder" hidden>
+  <div class="config-panel__inner">
+    <div class="config-head">
+      <h3 class="config-title" data-i18n="configurator.title">Konfigurator</h3>
+      <p class="config-sub" data-i18n="configurator.subtitle">
+        Wybierz opcje i skopiuj konfigurację do wiadomości.
+      </p>
+    </div>
+
+    <form class="config-form" data-model="intruder" autocomplete="off">
+      <div class="config-grid">
+<div class="config-field">
+  <div class="config-label" data-i18n="configurator.color">Kolor</div>
+
+<div class="color-picker" role="radiogroup" aria-label="Kolor">
+    <label class="color-option">
+      <input type="radio" name="color" value="RAL 1021 + Grey" checked>
+      <span class="color-card">
+        <span class="color-swatch color-swatch--duo">
+          <span class="color-swatch__imgs" aria-hidden="true">
+            <img src="img/grey.jpg" alt="" loading="lazy">
+            <img src="img/ral1021.webp" alt="" loading="lazy">
+            
+          </span>
+          <button class="color-zoom" type="button" aria-label="Podgląd koloru">⤢</button>
+        </span>
+        <span class="color-name">6c7884 (grey frame) + #f7ba01 (yellow coil)</span>
+      </span>
+    </label>
+
+    <label class="color-option">
+      <input type="radio" name="color" value="#144c4c (green) + yellow">
+      <span class="color-card">
+        <span class="color-swatch color-swatch--duo">
+          <span class="color-swatch__imgs" aria-hidden="true">
+            <img src="img/green.jpg" alt="" loading="lazy">
+            <img src="img/yellow.jpg" alt="" loading="lazy">
+          </span>
+          <button class="color-zoom" type="button" aria-label="Podgląd koloru">⤢</button>
+        </span>
+        <span class="color-name">#144c4c (green frame) + #e4a53c (yellow coil)</span>
+      </span>
+    </label>
+
+    <label class="color-option">
+      <input type="radio" name="color" value="Sand">
+      <span class="color-card">
+        <span class="color-swatch">
+          <span class="color-swatch__imgs" aria-hidden="true">
+            <img src="img/sand.jpg" alt="" loading="lazy">
+          </span>
+          <button class="color-zoom" type="button" aria-label="Podgląd koloru">⤢</button>
+        </span>
+        <span class="color-name">#e7d090 (sand/yellow - frame and coil)</span>
+      </span>
+    </label>
+
+    <label class="color-option">
+      <input type="radio" name="color" value="RAL 9005">
+      <span class="color-card">
+        <span class="color-swatch">
+          <span class="color-swatch__imgs" aria-hidden="true">
+            <img src="img/RAL9005.jpg" alt="" loading="lazy">
+          </span>
+          <button class="color-zoom" type="button" aria-label="Podgląd koloru">⤢</button>
+        </span>
+        <span class="color-name">#0e0f11 (black - frame and coil)</span>
+      </span>
+    </label>
+
+    <label class="color-option">
+      <input type="radio" name="color" value="RAL 3020">
+      <span class="color-card">
+        <span class="color-swatch">
+          <span class="color-swatch__imgs" aria-hidden="true">
+            <img src="img/ral_3020.jpg" alt="" loading="lazy">
+          </span>
+          <button class="color-zoom" type="button" aria-label="Podgląd koloru">⤢</button>
+        </span>
+        <span class="color-name">#bf1f10 (Honda Red - frame and coil)</span>
+      </span>
+    </label>
+  </div>
+
+
+  <input
+    id="voy-color-code"
+    name="colorCode"
+    class="config-control config-control--compact"
+    type="text"
+    placeholder="Własny kod: np. RAL 3020 / #FF0000"
+    data-i18n-placeholder="configurator.colorCodePlaceholder"
+    autocomplete="off"
+  />
+</div>
+
+        <div class="config-field">
+          <label class="config-label" for="voy-led" data-i18n="configurator.lighting">Oświetlenie</label>
+<select id="voy-led" name="lighting" class="config-control">
+  <option value="Brak" selected>Brak</option>
+  <option value="Standard 1000 lm">Standard 1000 lumenów</option>
+  <option value="Pro 2200 lm">Pro 2200 lumenów</option>
+</select>
+
+        </div>
+
+        <div class="config-field">
+          <label class="config-label" for="voy-tires" data-i18n="configurator.tires">Opony</label>
+          <select id="voy-tires" name="tires" class="config-control">
+<option value="Teren">Teren</option>
+<option value="Uniwersalne">Uniwersalne</option>
+<option value="Szosowe">Szosowe</option>
+
+          </select>
+        </div>
+
+        <div class="config-field">
+          <label class="config-label" for="voy-usb" data-i18n="configurator.usb">Gniazdo USB</label>
+<select id="voy-usb" name="usb" class="config-control">
+  <option value="Brak" selected>Brak</option>
+  <option value="USB-A + USB-C">USB-A + USB-C</option>
+</select>
+
+        </div>
+
+        <div class="config-field">
+          <div class="config-label" data-i18n="configurator.seat">Kanapa</div>
+          <div class="pill-group" role="radiogroup" aria-label="Kanapa">
+  <label class="pill">
+    <input type="radio" name="seat" value="Moto">
+    <span>Moto</span>
+  </label>
+  <label class="pill">
+    <input type="radio" name="seat" value="Siodło rowerowe" checked>
+    <span>Siodło rowerowe</span>
+  </label>
+</div>
+
+        </div>
+
+        <div class="config-field">
+          <label class="config-label" for="voy-fork" data-i18n="configurator.frontSusp">Amortyzator przód</label>
+          <div class="susp-picker" role="radiogroup" aria-label="Amortyzator przód">
+            <label class="susp-card">
+              <input type="radio" name="frontSusp" value="Moto (standard)" checked>
+              <span class="susp-card__inner">
+                <span class="susp-card__title">Moto (standard)</span>
+                <span class="susp-card__thumb susp-card__thumb--text" aria-hidden="true">Moto</span>
+              </span>
+            </label>
+
+            <label class="susp-card">
+              <input type="radio" name="frontSusp" value="Marzocchi Bomber 58 Red">
+              <span class="susp-card__inner">
+                <span class="susp-card__title">Marzocchi Bomber 58 (Red)</span>
+                <span class="susp-card__thumb" aria-hidden="true">
+                  <img src="img/bomber_red.png" alt="" loading="lazy">
+                </span>
+              </span>
+            </label>
+
+            <label class="susp-card">
+              <input type="radio" name="frontSusp" value="Marzocchi Bomber 58 Black">
+              <span class="susp-card__inner">
+                <span class="susp-card__title">Marzocchi Bomber 58 (Black)</span>
+                <span class="susp-card__thumb" aria-hidden="true">
+                  <img src="img/bomber_black.png" alt="" loading="lazy">
+                </span>
+              </span>
+            </label>
+
+            <label class="susp-card">
+              <input type="radio" name="frontSusp" value="Rock Shox Boxxer">
+              <span class="susp-card__inner">
+                <span class="susp-card__title">Rock Shox Boxxer</span>
+                <span class="susp-card__thumb" aria-hidden="true">
+                  <img src="img/boxxer_black.png" alt="" loading="lazy">
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="config-field">
+          <label class="config-label" for="voy-shock" data-i18n="configurator.rearSusp">Amortyzator tył</label>
+          <div class="susp-picker" role="radiogroup" aria-label="Amortyzator tył">
+            <label class="susp-card">
+              <input type="radio" name="rearSusp" value="Moto (standard)" checked>
+              <span class="susp-card__inner">
+                <span class="susp-card__title">Moto (standard)</span>
+                <span class="susp-card__thumb susp-card__thumb--text" aria-hidden="true">Moto</span>
+              </span>
+            </label>
+
+            <label class="susp-card">
+              <input type="radio" name="rearSusp" value="Rock Shox Vivid Coil">
+              <span class="susp-card__inner">
+                <span class="susp-card__title">Rock Shox Vivid Coil</span>
+                <span class="susp-card__thumb" aria-hidden="true">
+                  <img src="img/vivid.png" alt="" loading="lazy">
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
       </div>
+
+<div class="config-total" data-total-price aria-live="polite"></div>
+
+      <div class="config-actions">
+        <button type="button" class="config-copy" data-i18n="configurator.copy">Kopiuj konfigurację</button>
+        <button type="button" class="config-ask" data-i18n="configurator.ask">Zapytaj o tą konfigurację</button>
+      </div>
+
+      <textarea class="config-output" readonly rows="1" aria-label="Podsumowanie konfiguracji"></textarea>
+
+</form>
+  </div>
+</div>
+
+
+      
     </article>
   </div>
 
@@ -672,7 +1159,8 @@
           </label>
           <label>
             <span data-i18n="contact.message">Opis projektu</span>
-            <textarea name="message" rows="4" placeholder="Krótko opisz pojazd i zastosowanie…" data-i18n-placeholder="contact.messagePlaceholder" required></textarea>
+            <textarea name="message" rows="4" placeholder="Krótko opisz pojazd i zastosowanie…" data-i18n-placeholder="contact.messagePlaceholder" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" required></textarea>
+
           </label>
           <button type="submit" class="btn btn-primary" data-i18n="contact.send">Wyślij zapytanie</button>
           <p id="form-status" class="form-note" aria-live="polite"></p>
@@ -729,6 +1217,22 @@
 
   <script src="js/main.js"></script>
   <script src="/assets/reviews/reviews.js"></script>
+
+<!-- COLOR PREVIEW MODAL -->
+<div class="color-modal" id="color-modal" hidden>
+  <div class="color-modal__backdrop" data-color-close></div>
+
+  <div class="color-modal__panel" role="dialog" aria-modal="true" aria-labelledby="color-modal-title">
+    <button class="color-modal__close" type="button" data-color-close aria-label="Zamknij">×</button>
+
+    <div class="color-modal__imgs" aria-hidden="true"></div>
+
+    <div class="color-modal__meta">
+      <div class="color-modal__title" id="color-modal-title"></div>
+      <div class="color-modal__note">Próbka poglądowa – realny odcień może się różnić.</div>
+    </div>
+  </div>
+</div>
 
 
 </body>

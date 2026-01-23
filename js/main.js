@@ -78,6 +78,7 @@ const rafThrottle = (fn) => {
   };
 };
 
+
 /* =========================
    PERFECT ANCHOR SCROLL
    ========================= */
@@ -1444,7 +1445,7 @@ async function loadGoogleReviews() {
     const rating = (data.rating ?? "").toString();
     const count = (data.user_ratings_total ?? "").toString();
     summary.innerHTML = `
-      Google: <strong>${rating || "—"}</strong> / 5 • <strong>${count || "—"}</strong> opinii
+      Google: <strong>${rating || "-"}</strong> / 5 • <strong>${count || "-"}</strong> opinii
       <a class="about-reviews__link"
          href="https://www.google.com/search?hl=pl-PL&num=20&q=Poray+Electric+Vehicles+Opinie&rflfq=1&rldimm=3372214790320219758&stick=H4sIAAAAAAAAAONgkxI2NjY3MjI0Mbc0MDYyMDK0NDe12MDI-IpRLiC_KLFSwTUnNbmkKDNZISw1IzM5J7VYwb8gMy8zdRErAQUA0TyaClwAAAA&tbm=lcl"
          target="_blank" rel="noopener noreferrer">Zobacz w Google →</a>
@@ -1656,4 +1657,589 @@ function setActive(id){
   setup();
 })();
 
+
+
+
+/* =========================
+   SPEC CARD CONFIGURATOR
+   ========================= */
+(function initSpecConfigurator(){
+  const cards = Array.from(document.querySelectorAll(".spec-card"));
+  if (!cards.length) return;
+
+  const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const titleCase = (s) => (s ? (s.charAt(0).toUpperCase() + s.slice(1)) : "");
+
+  // =========================
+  // PRICING (Voyager)
+  // =========================
+  // Base: 28.000 zł (PL) / 6800 euro (EN)
+const PLN_PER_EUR = 4.25;
+
+const PRICE = {
+  voyager: {
+    basePLN: 28000,
+    baseEUR: Math.round(28000 / PLN_PER_EUR),
+    extrasPLN: {
+      // amortyzator przód
+      "Marzocchi Bomber 58": 1000,                 // legacy
+      "Marzocchi Bomber 58 Red": 1000,
+      "Marzocchi Bomber 58 Black": 1000,
+      "Rock Shox Boxxer": 2000,
+
+      // oświetlenie
+      "Standard 1000 lm": 200,
+      "Pro 2200 lm": 400,
+
+      // amortyzator tył
+      "Rock Shox Vivid Coil": 1400,
+
+      // kanapa
+      "Moto": 650,
+
+      // usb
+      "USB-A + USB-C": 150,
+    },
+  },
+
+  intruder: {
+    basePLN: 29800,
+    baseEUR: Math.round(29800 / PLN_PER_EUR),
+    extrasPLN: {
+      // amortyzator przód
+      "Marzocchi Bomber 58": 1000,                 // legacy
+      "Marzocchi Bomber 58 Red": 1000,
+      "Marzocchi Bomber 58 Black": 1000,
+      "Rock Shox Boxxer": 2000,
+
+      // oświetlenie
+      "Standard 1000 lm": 200,
+      "Pro 2200 lm": 400,
+
+      // amortyzator tył
+      "Rock Shox Vivid Coil": 1400,
+
+      // kanapa
+      "Moto": 650,
+
+      // usb
+      "USB-A + USB-C": 150,
+    },
+  },
+};
+
+
+
+
+const fxEUR = 1 / PLN_PER_EUR;
+
+
+
+const formatMoney = (amount, lang) => {
+  const n = Math.round(Number(amount) || 0);
+  const s = n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return (lang === "en") ? `${s} €` : `${s} PLN`;
+};
+
+
+  const currentLang = () => (window.I18N && window.I18N.current) ? window.I18N.current : (document.documentElement.lang || "pl");
+
+const calcTotalPLN = (fd, model) => {
+  const mKey = (model || "voyager").toLowerCase();
+  const cfg = PRICE[mKey] || PRICE.voyager;
+
+  const base = cfg.basePLN;
+  const keys = ["frontSusp", "lighting", "rearSusp", "usb", "seat"];
+
+  let extra = 0;
+  keys.forEach((k) => {
+    const v = (fd.get(k) || "").toString();
+    extra += cfg.extrasPLN[v] || 0;
+  });
+
+  return base + extra;
+};
+
+
+  const updateStartsFrom = () => {
+    const lang = currentLang();
+    document.querySelectorAll(".spec-startsfrom[data-price-model]").forEach((el) => {
+      const model = (el.getAttribute("data-price-model") || "").toLowerCase();
+      const cfg = PRICE[model];
+      if (!cfg) return;
+
+      const base = lang === "en" ? formatMoney(cfg.baseEUR, "en") : formatMoney(cfg.basePLN, "pl");
+      el.textContent = lang === "en" ? `Starts from ${base}` : `Cena od ${base}`;
+    });
+  };
+
+const updateForkOptionLabels = () => {
+  const lang = currentLang();
+
+const applyToSelect = (name) => {
+  document.querySelectorAll(`select[name="${name}"] option`).forEach((opt) => {
+    const baseText = opt.getAttribute("data-base-text") || opt.textContent;
+    if (!opt.hasAttribute("data-base-text")) opt.setAttribute("data-base-text", baseText);
+
+    const value = (opt.value || "").toString();
+    const model = ((opt.closest("form") && opt.closest("form").getAttribute("data-model")) || "voyager").toLowerCase();
+    const cfg = PRICE[model] || PRICE.voyager;
+    const extraPLN = cfg.extrasPLN[value] || 0;
+
+    const label =
+      (VALUE_LABELS[name] && VALUE_LABELS[name][lang] && VALUE_LABELS[name][lang][value])
+        ? VALUE_LABELS[name][lang][value]
+        : baseText;
+
+    if (!extraPLN) {
+      opt.textContent = label;
+      return;
+    }
+
+    const extra = (lang === "en")
+      ? formatMoney(extraPLN * fxEUR, "en")
+      : formatMoney(extraPLN, "pl");
+
+    opt.textContent = `${label} (+${extra})`;
+  });
+};
+
+
+  // selecty z dopłatami
+["frontSusp", "lighting", "rearSusp", "usb", "tires"].forEach(applyToSelect);
+
+
+// kanapa (radio pills)
+document.querySelectorAll('input[type="radio"][name="seat"]').forEach((inp) => {
+  const label = inp.closest("label");
+  const span = label ? label.querySelector("span") : null;
+  if (!span) return;
+
+  // zapamiętaj oryginalny (PL) tekst bazowy
+  const baseText = span.getAttribute("data-base-text") || span.textContent;
+  if (!span.hasAttribute("data-base-text")) span.setAttribute("data-base-text", baseText);
+
+  const value = (inp.value || "").toString();
+  const model = ((inp.closest("form") && inp.closest("form").getAttribute("data-model")) || "voyager").toLowerCase();
+  const cfg = PRICE[model] || PRICE.voyager;
+  const extraPLN = cfg.extrasPLN[value] || 0;
+
+  // tłumaczenie wartości tylko dla EN (UI pills)
+  const seatLabel =
+    (lang === "en")
+      ? (value === "Siodło rowerowe" ? "Bicycle saddle" : baseText)  // Moto zostaje Moto
+      : baseText;
+
+  if (!extraPLN) {
+    span.textContent = seatLabel;
+    return;
+  }
+
+  const extra = lang === "en"
+    ? formatMoney(extraPLN * fxEUR, "en")
+    : formatMoney(extraPLN, "pl");
+
+  span.textContent = `${seatLabel} (+${extra})`;
+});
+
+};
+
+
+const updateSummary = (form) => {
+  const totalEl = form.querySelector("[data-total-price]");
+  if (!totalEl) return;
+
+  const lang = currentLang();
+  const model = ((form.getAttribute("data-model")) || "voyager").toLowerCase();
+  const cfg = PRICE[model] || PRICE.voyager;
+
+  const fd = new FormData(form);
+
+  const keys = ["frontSusp", "lighting", "rearSusp", "usb", "seat"];
+  let extrasPLN = 0;
+
+  keys.forEach((k) => {
+    const v = (fd.get(k) || "").toString();
+    extrasPLN += cfg.extrasPLN[v] || 0;
+  });
+
+  const totalPLN = cfg.basePLN + extrasPLN;
+  const totalEUR = cfg.baseEUR + (extrasPLN * fxEUR);
+
+  totalEl.textContent =
+    lang === "en"
+      ? `Total: ${formatMoney(totalEUR, "en")}`
+      : `Razem: ${formatMoney(totalPLN, "pl")}`;
+};
+
+
+
+// =========================
+// VALUE LABELS (PL/EN) – do podsumowania i wiadomości
+// =========================
+const VALUE_LABELS = {
+  tires: {
+    pl: { "Teren": "Teren", "Uniwersalne": "Uniwersalne", "Szosowe": "Szosowe" },
+    en: { "Teren": "Off-road", "Uniwersalne": "All-purpose", "Szosowe": "Street" },
+  },
+  lighting: {
+    pl: { "Brak": "Brak", "Standard 1000 lm": "Standard 1000 lumenów", "Pro 2200 lm": "Pro 2200 lumenów" },
+    en: { "Brak": "None", "Standard 1000 lm": "Standard 1000 lumens", "Pro 2200 lm": "Pro 2200 lumens" },
+  },
+  usb: {
+    pl: { "Brak": "Brak", "USB-A + USB-C": "USB-A + USB-C" },
+    en: { "Brak": "None", "USB-A + USB-C": "USB-A + USB-C" },
+  },
+  seat: {
+    pl: { "Moto": "Moto", "Siodło rowerowe": "Siodło rowerowe" },
+    en: { "Moto": "Motorcycle seat", "Siodło rowerowe": "Bike saddle" },
+  },
+  frontSusp: {
+    pl: { "Moto (standard)": "Moto (standard)", "Marzocchi Bomber 58": "Marzocchi Bomber 58", "Rock Shox Boxxer": "Rock Shox Boxxer" },
+    en: { "Moto (standard)": "Motorcycle (standard)", "Marzocchi Bomber 58": "Marzocchi Bomber 58", "Rock Shox Boxxer": "Rock Shox Boxxer" },
+  },
+  rearSusp: {
+    pl: { "Moto (standard)": "Moto (standard)", "Rock Shox Vivid Coil": "Rock Shox Vivid Coil" },
+    en: { "Moto (standard)": "Motorcycle (standard)", "Rock Shox Vivid Coil": "Rock Shox Vivid Coil" },
+  }
+};
+
+const SUMMARY_LABELS = {
+  pl: {
+    titleSuffix: "konfiguracja",
+    color: "Kolor",
+    tires: "Opony",
+    lighting: "Oświetlenie",
+    usb: "USB",
+    seat: "Kanapa",
+    frontSusp: "Amortyzator przód",
+    rearSusp: "Amortyzator tył",
+    total: "Razem",
+  },
+  en: {
+    titleSuffix: "configuration",
+    color: "Color",
+    tires: "Tires",
+    lighting: "Lighting",
+    usb: "USB",
+    seat: "Seat",
+    frontSusp: "Front suspension",
+    rearSusp: "Rear suspension",
+    total: "Total",
+  }
+};
+
+const vLabel = (key, rawValue, lang) => {
+  const m = VALUE_LABELS[key] && VALUE_LABELS[key][lang];
+  return (m && m[rawValue]) ? m[rawValue] : rawValue;
+};
+
+const buildConfigMessage = (form) => {
+  const lang = currentLang();
+  const model = (form.getAttribute("data-model") || "").toString();
+  const modelName = model ? titleCase(model) : "Model";
+
+  const fd = new FormData(form);
+  const pick = (name) => (fd.get(name) || "").toString().trim();
+
+  const color = pick("color");
+  const colorCode = pick("colorCode");
+  const lighting = pick("lighting");
+  const tires = pick("tires");
+  const usb = pick("usb");
+  const seat = pick("seat");
+  const frontSusp = pick("frontSusp");
+  const rearSusp = pick("rearSusp");
+
+  // cena (na razie tylko voyager ma pricing)
+  let priceLine = "";
+  if (model.toLowerCase() === "voyager") {
+    const totalPLN = calcTotalPLN(fd, model);
+    const cfg = PRICE[model] || PRICE.voyager;
+    const totalEUR = cfg.baseEUR + ((totalPLN - cfg.basePLN) * fxEUR);
+
+    priceLine = lang === "en"
+      ? `Total: ${formatMoney(totalEUR, "en")}`
+      : `Razem: ${formatMoney(totalPLN, "pl")}`;
+  }
+
+  const L = SUMMARY_LABELS[lang] || SUMMARY_LABELS.pl;
+
+  const lines = [];
+  lines.push(`${modelName} - ${L.titleSuffix}`);
+  lines.push("");
+
+    // --- Base specs z lewej specyfikacji (spec-list) ---
+  const card = form.closest(".spec-card");
+  const baseRows = [];
+
+  if (card) {
+    card.querySelectorAll(".spec-list div").forEach((row) => {
+      const dt = row.querySelector("dt");
+      const dd = row.querySelector("dd");
+      const k = (dt?.textContent || "").trim();
+      const v = (dd?.textContent || "").trim();
+      const keyLower = k.toLowerCase();
+if (k && v && keyLower !== "lighting" && keyLower !== "oświetlenie") {
+  baseRows.push([k, v]);
+}
+
+    });
+  }
+
+  if (baseRows.length) {
+    lines.push(lang === "en" ? "Base specs:" : "Parametry podstawowe:");
+    baseRows.forEach(([k, v]) => lines.push(`• ${k}: ${v}`));
+    lines.push("");
+  }
+
+
+  
+  // kolor
+  if (color) {
+    const c = colorCode ? `${color} (${colorCode})` : color;
+    lines.push(`• ${L.color}: ${c}`);
+  }
+
+  if (tires) lines.push(`• ${L.tires}: ${vLabel("tires", tires, lang)}`);
+  if (lighting) lines.push(`• ${L.lighting}: ${vLabel("lighting", lighting, lang)}`);
+  if (usb && usb !== "Brak") lines.push(`• ${L.usb}: ${vLabel("usb", usb, lang)}`);
+  if (seat) lines.push(`• ${L.seat}: ${vLabel("seat", seat, lang)}`);
+  if (frontSusp) lines.push(`• ${L.frontSusp}: ${vLabel("frontSusp", frontSusp, lang)}`);
+  if (rearSusp) lines.push(`• ${L.rearSusp}: ${vLabel("rearSusp", rearSusp, lang)}`);
+
+  if (priceLine) {
+    lines.push("");
+    lines.push(priceLine.replace(/^Razem:/, `${L.total}:`).replace(/^Total:/, `${L.total}:`));
+  }
+
+  return lines.join("\n").trim() + "\n";
+};
+
+
+const autoGrow = (ta) => {
+  if (!ta) return;
+  ta.style.height = "auto";
+  ta.style.overflow = "hidden";
+  ta.style.resize = "none";
+  ta.style.height = `${ta.scrollHeight}px`;
+};
+
+
+const updateConfigOutput = (form) => {
+  const out = form.querySelector(".config-output");
+  if (!out) return;
+  out.value = buildConfigMessage(form);
+
+  // auto-grow textarea to fit content (no scroll)
+  out.style.height = "auto";
+  out.style.height = `${out.scrollHeight}px`;
+};
+
+
+  const closeCard = (card, instant = false) => {
+    const btn = card.querySelector(".config-toggle");
+    const panel = card.querySelector(".config-panel");
+    if (!btn || !panel) return;
+
+    if (!card.classList.contains("is-config-open") && panel.hidden) return;
+
+    card.classList.remove("is-config-open");
+    btn.setAttribute("aria-expanded", "false");
+
+    if (instant || prefersReduced) {
+      panel.style.height = "0px";
+      panel.hidden = true;
+      return;
+    }
+
+    const startH = panel.scrollHeight;
+    panel.style.height = `${startH}px`;
+    void panel.offsetHeight;
+    panel.style.height = "0px";
+
+    panel.addEventListener("transitionend", (e) => {
+      if (e.propertyName !== "height") return;
+      if (!card.classList.contains("is-config-open")) panel.hidden = true;
+    }, { once: true });
+  };
+
+const openCard = (card) => {
+  const btn = card.querySelector(".config-toggle");
+  const panel = card.querySelector(".config-panel");
+  if (!btn || !panel) return;
+
+  card.classList.add("is-config-open");
+  btn.setAttribute("aria-expanded", "true");
+
+  panel.hidden = false;
+
+  // <-- DODAJ TO:
+  const form = card.querySelector(".config-form");
+  if (form) { updateSummary(form); updateConfigOutput(form); }
+
+panel.style.height = "0px";
+  void panel.offsetHeight;
+
+  panel.style.height = `${panel.scrollHeight}px`;
+};
+
+
+
+
+
+  const recalcOpenHeights = () => {
+    document.querySelectorAll(".spec-card.is-config-open .config-panel").forEach((panel) => {
+      panel.style.height = `${panel.scrollHeight}px`;
+    });
+  };
+
+  cards.forEach((card) => {
+    const btn = card.querySelector(".config-toggle");
+    const panel = card.querySelector(".config-panel");
+    if (!btn || !panel) return;
+
+    panel.style.height = "0px";
+
+    const form = card.querySelector(".config-form");
+    if (form) {
+      updateSummary(form);
+      updateConfigOutput(form);
+      form.addEventListener("input", () => { updateSummary(form); updateConfigOutput(form); });
+      form.addEventListener("change", () => { updateSummary(form); updateConfigOutput(form); });
+
+      const copyBtn = form.querySelector(".config-copy");
+      if (copyBtn) {
+        copyBtn.addEventListener("click", async () => {
+          const out = form.querySelector(".config-output");
+          if (!out) return;
+
+          try {
+            await navigator.clipboard.writeText(out.value);
+            const prev = copyBtn.textContent;
+            copyBtn.textContent = "Skopiowano ✓";
+            setTimeout(() => (copyBtn.textContent = prev), 1200);
+          } catch (_) {
+            out.focus();
+            out.select();
+          }
+        });
+      }
+
+      const askBtn = form.querySelector(".config-ask");
+      if (askBtn) {
+        askBtn.addEventListener("click", () => {
+          const message = buildConfigMessage(form);
+
+          const contactSection = document.querySelector("#kontakt");
+          if (contactSection) contactSection.scrollIntoView({ behavior: "smooth", block: "start" });
+
+          const contactForm = document.querySelector("#contact-form");
+          const msgField = contactForm ? contactForm.querySelector('textarea[name="message"]') : null;
+if (msgField) {
+  msgField.value = message;
+  autoGrow(msgField); // <-- TO DODAJ
+
+  msgField.focus();
+  msgField.setSelectionRange(msgField.value.length, msgField.value.length);
+}
+
+        });
+      }
+
+    }
+
+    btn.addEventListener("click", () => {
+      const isOpen = card.classList.contains("is-config-open");
+      if (isOpen) {
+        closeCard(card);
+      } else {
+        // czytelnie: jeden otwarty na raz
+        cards.forEach((c) => { if (c !== card) closeCard(c, true); });
+        openCard(card);
+      }
+    });
+  });
+
+  // initial pricing UI
+  updateStartsFrom();
+  updateForkOptionLabels();
+
+  let rT = 0;
+  window.addEventListener("resize", () => {
+    clearTimeout(rT);
+    rT = setTimeout(recalcOpenHeights, 120);
+  }, { passive: true });
+
+window.addEventListener("languageChanged", () => {
+  updateStartsFrom();
+  updateForkOptionLabels();
+  document.querySelectorAll(".config-form").forEach((f) => { updateSummary(f); updateConfigOutput(f); });
+  setTimeout(recalcOpenHeights, 60);
+}, { passive: true });
+
+})();
+
+
+
+/* =========================
+   COLOR PICKER – PREVIEW MODAL
+   ========================= */
+(function initColorPreviewModal(){
+  const modal = document.getElementById("color-modal");
+  if (!modal) return;
+
+  const imgsWrap = modal.querySelector(".color-modal__imgs");
+  const titleEl = modal.querySelector(".color-modal__title");
+  const closeEls = modal.querySelectorAll("[data-color-close]");
+
+  const open = (title, srcs) => {
+    if (!imgsWrap) return;
+
+    imgsWrap.innerHTML = "";
+    imgsWrap.classList.toggle("is-duo", srcs.length > 1);
+
+    srcs.forEach((src) => {
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = "";
+      img.loading = "lazy";
+      imgsWrap.appendChild(img);
+    });
+
+    if (titleEl) titleEl.textContent = title || "";
+
+    modal.hidden = false;
+    document.body.classList.add("is-modal-open");
+  };
+
+  const close = () => {
+    modal.hidden = true;
+    document.body.classList.remove("is-modal-open");
+  };
+
+  closeEls.forEach((el) => el.addEventListener("click", close));
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.hidden) close();
+  });
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".color-zoom");
+    if (!btn) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const opt = btn.closest(".color-option");
+    if (!opt) return;
+
+    const title = (opt.querySelector(".color-name")?.textContent || "").trim();
+    const srcs = Array.from(opt.querySelectorAll(".color-swatch__imgs img"))
+      .map((img) => img.getAttribute("src"))
+      .filter(Boolean);
+
+    if (srcs.length) open(title, srcs);
+  });
+})();
 

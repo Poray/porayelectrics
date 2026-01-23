@@ -69,7 +69,7 @@
     "geometry": "Geometry",
     "weightDist": "Weight distribution",
     "range_offroad": "Up to 80 km in demanding off-road conditions",
-    "usb": "smartphone charger",
+    "usb": "Smartphone charger",
     "chargingInfo": "8A charger with screen, charging time from 0 to 100%: around 7 hours",
     "led": "Lighting",
     "ledInfoVoyager": "Front: 1000 lumens LED | Rear: 2x LED (brightens when braking)",
@@ -140,6 +140,79 @@
   "pill": "GOOGLE REVIEWS",
   "heading": "What our customers say",
   "seeGoogle": "See on Google →"
-}
+},
+
+  "configurator": {
+    "toggle": "Configure",
+    "title": "Configurator",
+    "subtitle": "Select options and copy the configuration to your message.",
+
+    "color": "Color",
+    "colorCodePlaceholder": "Custom code: e.g. RAL 3020 / #FF0000",
+
+    "lighting": "Lighting",
+    "tires": "Tires",
+    "usb": "USB port",
+    "seat": "Seat",
+    "frontSusp": "Front suspension",
+    "rearSusp": "Rear suspension",
+
+    "totalLabel": "Configuration summary",
+    "totalPrice": "Total price",
+
+    "copy": "Copy configuration",
+    "ask": "Ask about this configuration"
+  },
+
+  
+  "configValues": {
+    "colors": {
+      "ral1021_grey": "RAL 1021 + Grey",
+      "green_yellow": "Green + Yellow",
+      "sand": "Sand",
+      "ral9005": "RAL 9005",
+      "ral3020": "RAL 3020"
+    }
+  },
+
+   "lighting": {
+    "none": "None",
+    "standard": "Standard 1000 lumens",
+    "pro": "Pro 2200 lumens"
+  }, 
+
+  
+  "tires": {
+    "offroad": "Off-road",
+    "universal": "All-purpose",
+    "street": "Street"
+  },
+
+    "seat": {
+    "moto": "Motorcycle seat",
+    "bike": "Bicycle saddle"
+  },
+
+    "suspension": {
+    "moto": "Motorcycle (standard)",
+    "marzocchi": "Marzocchi Bomber 58",
+    "boxxer": "RockShox Boxxer",
+    "vivid": "RockShox Vivid Coil"
+  },
+
+   "summary": {
+    "title": "configuration",
+    "color": "Color",
+    "tires": "Tires",
+    "seat": "Seat",
+    "frontSusp": "Front suspension",
+    "rearSusp": "Rear suspension",
+    "total": "Total"
+  }
+
+
+
+
 
 }
+
