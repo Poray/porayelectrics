@@ -2017,13 +2017,36 @@ if (k && v && keyLower !== "lighting" && keyLower !== "oświetlenie") {
 };
 
 
-const autoGrow = (ta) => {
+// AUTO-GROW textarea, ale z limitem i przewijaniem po przekroczeniu
+const autoGrow = (ta, maxPx = 300) => {
   if (!ta) return;
-  ta.style.height = "auto";
-  ta.style.overflow = "hidden";
+
   ta.style.resize = "none";
-  ta.style.height = `${ta.scrollHeight}px`;
+
+  // reset height, żeby scrollHeight policzył się poprawnie
+  ta.style.height = "auto";
+
+  const next = Math.min(ta.scrollHeight, maxPx);
+  ta.style.height = `${next}px`;
+
+  // jeśli przekracza limit — włącz scrollbar
+  ta.style.overflowY = ta.scrollHeight > maxPx ? "auto" : "hidden";
 };
+
+
+(function initContactTextareaAutoGrow() {
+  const ta = document.querySelector('#contact-form textarea[name="message"]');
+  if (!ta) return;
+
+  const MAX = 240; // możesz zmienić np. 200/280/320
+
+  // startowo dopasuj (np. gdy wklejona konfiguracja)
+  autoGrow(ta, MAX);
+
+  // na bieżąco podczas pisania
+  ta.addEventListener("input", () => autoGrow(ta, MAX));
+})();
+
 
 
 const updateConfigOutput = (form) => {
@@ -2243,3 +2266,109 @@ window.addEventListener("languageChanged", () => {
   });
 })();
 
+
+(function enhanceConfiguratorSelects(){
+  const selects = document.querySelectorAll('.config-panel select');
+  if (!selects.length) return;
+
+  const makeChevron = () => `
+    <svg class="cselect__chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `;
+
+  const closeAll = (except=null) => {
+    document.querySelectorAll('.cselect[data-open="true"]').forEach(cs => {
+      if (cs !== except) cs.dataset.open = "false";
+    });
+  };
+
+  selects.forEach(sel => {
+    // jeśli już przerobiony
+    if (sel.closest('.cselect')) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'cselect';
+    wrap.dataset.open = "false";
+
+    // przenieś select do wrappera
+    sel.parentNode.insertBefore(wrap, sel);
+    wrap.appendChild(sel);
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'cselect__btn';
+    btn.setAttribute('aria-haspopup', 'listbox');
+    btn.setAttribute('aria-expanded', 'false');
+
+    const value = document.createElement('span');
+    value.className = 'cselect__value';
+
+    const list = document.createElement('div');
+    list.className = 'cselect__list';
+    list.setAttribute('role', 'listbox');
+
+    const build = () => {
+      list.innerHTML = '';
+      [...sel.options].forEach((opt, idx) => {
+        const o = document.createElement('button');
+        o.type = 'button';
+        o.className = 'cselect__opt';
+        o.setAttribute('role', 'option');
+        o.dataset.value = opt.value;
+        o.dataset.index = String(idx);
+        o.textContent = opt.textContent;
+
+        const selected = sel.selectedIndex === idx;
+        o.setAttribute('aria-selected', selected ? 'true' : 'false');
+
+        o.addEventListener('click', () => {
+          sel.value = opt.value;
+          sel.dispatchEvent(new Event('change', { bubbles: true }));
+          sync();
+          wrap.dataset.open = "false";
+          btn.setAttribute('aria-expanded', 'false');
+        });
+
+        list.appendChild(o);
+      });
+    };
+
+    const sync = () => {
+      const txt = sel.options[sel.selectedIndex]?.textContent ?? '';
+      value.textContent = txt;
+
+      list.querySelectorAll('.cselect__opt').forEach(o => {
+        o.setAttribute('aria-selected', (o.dataset.index == sel.selectedIndex) ? 'true' : 'false');
+      });
+    };
+
+    btn.appendChild(value);
+    btn.insertAdjacentHTML('beforeend', makeChevron());
+
+    wrap.appendChild(btn);
+    wrap.appendChild(list);
+
+    build();
+    sync();
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const willOpen = wrap.dataset.open !== "true";
+      closeAll(wrap);
+      wrap.dataset.open = willOpen ? "true" : "false";
+      btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    });
+
+    // gdy zmiana przychodzi z zewnątrz (np. JS liczący cenę)
+    sel.addEventListener('change', () => {
+      build();
+      sync();
+    });
+  });
+
+  document.addEventListener('click', () => closeAll(null), { passive: true });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAll(null);
+  });
+})();
