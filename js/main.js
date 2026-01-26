@@ -2434,3 +2434,20 @@ if (nameEl) {
 
   });
 })();
+
+
+
+const voyUsbSelect = document.querySelector('#voy-usb');
+const voyUsbSpec = document.querySelector('#voyager .spec-usb');
+const voyUsbValue = document.querySelector('#voyager [data-usb-value]');
+
+if (voyUsbSelect && voyUsbSpec) {
+  voyUsbSelect.addEventListener('change', () => {
+    if (voyUsbSelect.value === 'USB-A + USB-C') {
+      voyUsbValue.textContent = 'USB-A: 2.4A (18W) | USB-C: 3.75A (45W)';
+      voyUsbSpec.hidden = false;
+    } else {
+      voyUsbSpec.hidden = true;
+    }
+  });
+}
